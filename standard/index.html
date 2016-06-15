@@ -26,11 +26,11 @@
 				</div>
 				<nav id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li class="active"><a href="/efui/index.html">首页</a></li>
-						<li><a href="/efui/standard/">编码规范</a></li>
+						<li><a href="/efui/index.html">首页</a></li>
+						<li class="active"><a href="/efui/standard/">规范</a></li>
 						<li><a href="#">元素</a></li>
 						<li><a href="#">组件</a></li>
-						<li><a href="#">jQuery插件</a></li>
+						<li><a href="#">javascript插件</a></li>
 						<li><a href="#">进阶</a></li>
 					</ul>
 				</nav>
@@ -38,36 +38,44 @@
 		</header>
 		<div class="docs-header">
 		  	<div class="container animation-scale-up" id="docs-con">
-		  		<h1>Easy Fast UI Frame</h1>
-		    	<p>EFUI为一款轻量级前端UI框架，通俗易懂的写法及模块式的拼装方便自由扩展，简单易用，轻量快捷。</p>
+		  		<h2>规范</h2>
+		    	<p>CSS、HTML、JS规范</p>
 		  	</div>
 		</div>
 		<div class="container">
 
-			<div class="row feature-list">
-				<div class="col-xs-12 col-sm-4">
-					<div class="feature-list-item">
-						<h4 class="feature-tit">平台适配</h4>
-						<div class="feature-icon"><img src="/efui/assets/img/icon1.png"></div>
-						<p class="feature-desc">支持桌面及移动平台、浏览器及混合应用开发，所有屏幕适配</p>
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-4">
-					<div class="feature-list-item">		
-						<h4 class="feature-tit">组件丰富</h4>
-						<div class="feature-icon"><img src="/efui/assets/img/icon2.png"></div>
-						<p class="feature-desc">含多个 CSS组件、JS组件和 Web组件，可快速构建出色的跨屏页面</p>
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-4">
-					<div class="feature-list-item">			
-						<h4 class="feature-tit">高效体验</h4>
-						<div class="feature-icon"><img src="/efui/assets/img/icon3.png"></div>
-						<p class="feature-desc">面向 HTML5 开发，使用 CSS3 来做动画交互，给用户带来不一般的视觉体验</p>
-					</div>
-				</div>
-			</div>
+			<div class="row main-container clearfix">
 
+				<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
+					<section>
+						<div class="sidebar-menu">
+							<dl>
+								<dt><a href="#">CSS规范</a></dt>
+								<dd><a href="#" class="active">代码格式</a></dd>
+								<dd><a href="#">命名规范</a></dd>
+								<dd><a href="#">分类方法</a></dd>
+								<dd><a href="#">优化方案</a></dd>
+								<dd><a href="#">CSS Hack</a></dd>
+							</dl>
+							<dl>
+								<dt><a href="#">HTML规范</a></dt>
+								<dd><a href="#">代码格式</a></dd>
+								<dd><a href="#">命名规范</a></dd>
+							</dl>	
+							<dl>
+								<dt><a href="#">javascript规范</a></dt>
+								<dd><a href="#">代码格式</a></dd>
+								<dd><a href="#">命名规范</a></dd>
+							</dl>	
+						</div>
+					</section>
+				</div>
+				<div class="col-xs-12 col-sm-9 col-md-9">
+					选择器、属性和值都使用小写
+					在xhtml标准中规定了所有标签、属性和值都小写，CSS也是如此。
+				</div>
+
+			</div>
 		</div>
 
 		<footer class="footer navbar-fixed-bottom">
@@ -82,8 +90,8 @@
 			</div>
 		</footer>
 		
-		<script src="assets/js/jquery-1.9.0.min.js"></script>
-		<script src="assets/js/efui.js"></script>
+		<script src="/efui/assets/js/jquery-1.9.0.min.js"></script>
+		<script src="/efui/assets/js/efui.js"></script>
 	</body>
 
 </html>
