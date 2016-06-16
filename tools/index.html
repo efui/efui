@@ -27,19 +27,19 @@
 				<nav id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="/efui/index.html">首页</a></li>
-						<li class="active"><a href="/efui/standard/">规范</a></li>
+						<li><a href="/efui/standard/">规范</a></li>
 						<li><a href="/efui/element/">元素</a></li>
 						<li><a href="/efui/component/">组件</a></li>
-						<li><a href="/efui/plugin/">JS插件</a></li>
-						<li><a href="/efui/tools/">进阶</a></li>
+						<li><a href="/efui/plugin/">jQuery插件</a></li>
+						<li class="active"><a href="/efui/tools/">进阶</a></li>
 					</ul>
 				</nav>
 			</div>
 		</header>
 		<div class="docs-header">
 		  	<div class="container animation-scale-up" id="docs-con">
-		  		<h2>规范</h2>
-		    	<p>CSS、HTML、JS规范</p>
+		  		<h2>进阶</h2>
+		    	<p>前端技能进阶</p>
 		  	</div>
 		</div>
 		<div class="container">
@@ -50,29 +50,26 @@
 					<section>
 						<div class="sidebar-menu">
 							<dl>
-								<dt><a href="javascript:;">CSS规范</a></dt>
-								<dd><a href="index.html" class="active">代码格式</a></dd>
-								<dd><a href="#">命名规范</a></dd>
-								<dd><a href="#">分类方法</a></dd>
-								<dd><a href="#">优化方案</a></dd>
-								<dd><a href="css-hack.html">CSS Hack</a></dd>
+								<dt><a href="#">技能进阶</a></dt>
+								<dd><a href="index.html" class="active">模块化开发</a></dd>
+								<dd><a href="#">前端MVC-AngularJs</a></dd>
+								<dd><a href="#">正则表达式</a></dd>
+								<dd><a href="#">json</a></dd>
+								<dd><a href="#">ajax</a></dd>
+								<dd><a href="#">less</a></dd>
 							</dl>
-							<dl>
-								<dt><a href="javascript:;">HTML规范</a></dt>
-								<dd><a href="#">代码格式</a></dd>
-								<dd><a href="#">命名规范</a></dd>
-							</dl>	
-							<dl>
-								<dt><a href="javascript:;">javascript规范</a></dt>
-								<dd><a href="#">代码格式</a></dd>
-								<dd><a href="#">命名规范</a></dd>
-							</dl>	
 						</div>
 					</section>
 				</div>
 				<div class="col-xs-12 col-sm-9 col-md-9">
-					选择器、属性和值都使用小写
-					在xhtml标准中规定了所有标签、属性和值都小写，CSS也是如此。
+					前端模块化开发解决了两大问题:
+					一、恼人的命名冲突： 
+这个确实够烦人，为了解决之，我们动用闭包作用域、我们动用命名空间，再或者... 
+二、烦琐的文件依赖： 
+这个问题更不必说，我们做前端支持的，常常要替后端同学们解决这类问题，我们自己也常常忽略这类问题。平常的开发中，我们要对我们的JS文件的加载顺序要小心加小心。 
+现在，我们有SeaJS了，这两大问题变得很轻松就能搞定了。 
+针对第一个问题：通过 exports 暴露接口 。这意味着不需要命名空间了，更不需要全局变量。这是一种彻底的命名冲突解决方案。 
+针对第二个问题：通过 require 引入依赖 。这可以让依赖内置，开发者只需关心当前模块的依赖，其他事情 SeaJS 都会自动处理好。对模块开发者来说，这是一种很好的 关注度分离。
 				</div>
 
 			</div>

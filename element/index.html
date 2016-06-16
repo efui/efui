@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title>EFUI - Easy Fast front-end UI frame</title>
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="/efui/assets/css/efui.css" rel="stylesheet">
+		<link href="/efui/assets/css/animation.css" rel="stylesheet">
+	</head>
+
+	<body>
+
+		<header class="navbar navbar-fixed-top navbar-inverse navbar-shadows">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			            <span class="sr-only"></span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+		          	</button>
+					<a class="navbar-brand" href="/efui/"><img src="/efui/logo.png"></a>
+				</div>
+				<nav id="navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/efui/index.html">首页</a></li>
+						<li><a href="/efui/standard/">规范</a></li>
+						<li class="active"><a href="/efui/element/">元素</a></li>
+						<li><a href="/efui/component/">组件</a></li>
+						<li><a href="/efui/plugin/">JS插件</a></li>
+						<li><a href="/efui/tools/">进阶</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<div class="docs-header">
+		  	<div class="container animation-scale-up" id="docs-con">
+		  		<h2>元素</h2>
+		    	<p>CSS样式、HTML标签</p>
+		  	</div>
+		</div>
+		<div class="container">
+
+			<div class="row main-container clearfix">
+
+				<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
+					<section>
+						<div class="sidebar-menu">
+							<dl>
+								<dt><a href="javascript:;">CSS　样式</a></dt>
+								<dd><a href="#" class="active">样式统一</a></dd>
+								<dd><a href="#">网页布局</a></dd>
+								<dd><a href="#">文字排版</a></dd>
+								<dd><a href="#">字体图标</a></dd>
+							</dl>	
+							<dl>
+								<dt><a href="javascript:;">HTML 标签</a></dt>
+								<dd><a href="index.html">按钮 <span>Button</span></a></dd>
+								<dd><a href="#">代码 <span>Code</span></a></dd>
+								<dd>
+									<a href="javascript:;" data-toggleclass="active">表单 <span>Form</span><i class="f-icon icon-angle"></i></a>
+									<p>
+										<a href="#">- input</a>
+										<a href="#">- textarea</a>
+										<a href="#">- select</a>
+									</p>
+								</dd>
+								<dd><a href="#">表格 <span>Table</span></a></dd>
+								<dd><a href="#">图片 <span>Image</span></a></dd>
+							</dl>
+						</div>
+					</section>
+				</div>
+				<div class="col-xs-12 col-sm-9 col-md-9">
+					<pre class="prettyprint linenums">*{word-wrap:break-word}
+html,body,h1,h2,h3,h4,h5,h6,hr,p,iframe,dl,dt,dd,ul,ol,li,pre,form,button,input,textarea,th,td,fieldset{margin:0;padding:0}
+ul,ol,dl{list-style-type:none}
+html,body{*position:static}
+html{font-family: sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+address,caption,cite,code,dfn,em,th,var{font-style:normal;font-weight:400}
+input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit}
+input,button{overflow: visible;vertical-align:middle;outline:none}
+body,th,td,button,input,select,textarea{font-family:"Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";font-size:12px;color: #333;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing:grayscale}
+body{line-height:1.6}
+h1,h2,h3,h4,h5,h6{font-size:100%}
+a,area{outline:none;blr:expression(this.onFocus=this.blur())}
+a{text-decoration:none;cursor: pointer}
+a:hover{text-decoration:underline;outline:none}
+a.ie6:hover{zoom:1}
+a:focus{outline:none}
+a:hover,a:active{outline:none}:focus{outline:none}
+sub,sup{vertical-align:baseline}
+button,input[type="button"], input[type="submit"] {line-height:normal !important;}
+/*img*/
+img{border:0;vertical-align:middle}
+a img,img{-ms-interpolation-mode:bicubic}
+.img-responsive{max-width: 100%;height: auto}
+ 
+/*IE下a:hover 背景闪烁*/
+*html{overflow:-moz-scrollbars-vertical;zoom:expression(function(ele){ele.style.zoom = "1";document.execCommand("BackgroundImageCache",false,true)}(this))}
+ 
+/*HTML5 reset*/
+header,footer,section,aside,details,menu,article,section,nav,address,hgroup,figure,figcaption,legend{display:block;margin:0;padding:0}time{display:inline}
+audio,canvas,video{display:inline-block;*display:inline;*zoom:1}
+audio:not([controls]){display:none}
+legend{width:100%;margin-bottom:20px;font-size:21px;line-height:40px;border:0;border-bottom:1px solid #e5e5e5}
+legend small{font-size:15px;color:#999}
+svg:not(:root) {overflow: hidden}
+fieldset {border-width:0;padding: 0.35em 0.625em 0.75em;margin: 0 2px;border: 1px solid #c0c0c0}
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button {height: auto}
+input[type="search"] {-webkit-appearance: textfield; /* 1 */-moz-box-sizing: content-box;-webkit-box-sizing: content-box; /* 2 */box-sizing: content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration {-webkit-appearance: none}
+/*
+Name:			style_clearfix
+Example:		class="clearfix|cl"
+Explain:		Clearfix（简写cl）避免因子元素浮动而导致的父元素高度缺失能问题
+*/
+.cl:after,.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}.cl,.clearfix{zoom:1}</pre>
+				</div>
+
+			</div>
+		</div>
+
+		<footer class="footer navbar-fixed-bottom">
+			<div class="container al-c">
+				<div class="footer-links">
+					<label>前端推荐：</label>
+					<a href="http://www.bootcss.com/">Bootstrap中文网</a>
+					|
+					<a href="http://www.jquery123.com/">jQuery API</a>
+					
+				</div>
+			</div>
+		</footer>
+		
+		<script src="/efui/assets/js/jquery-1.9.0.min.js"></script>
+		<script src="/efui/assets/js/efui.js"></script>
+		<script src="/efui/assets/js/prettify.js"></script>
+	</body>
+
+</html>

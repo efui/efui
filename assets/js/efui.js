@@ -678,8 +678,19 @@
     var $target = getTargetFromTrigger($this)
     var data    = $target.data('bs.collapse')
     var option  = data ? 'toggle' : $this.data()
-
+    
     Plugin.call($target, option)
   })
 
+}(jQuery);
+
+
++function ($) {
+  	'use strict';
+	$(document).on('click.data', '[data-toggleClass]', function (e) {
+	    var $this   = $(this);
+	    var option  = $this.data();
+	    var toggleClass = option.toggleclass? option.toggleclass:'';
+	    $this.toggleClass(toggleClass);
+	})
 }(jQuery);

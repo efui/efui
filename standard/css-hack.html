@@ -46,16 +46,16 @@
 
 			<div class="row main-container clearfix">
 
-				<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2" id="sidebar">
 					<section>
 						<div class="sidebar-menu">
 							<dl>
 								<dt><a href="javascript:;">CSS规范</a></dt>
-								<dd><a href="index.html" class="active">代码格式</a></dd>
+								<dd><a href="index.html">代码格式</a></dd>
 								<dd><a href="#">命名规范</a></dd>
 								<dd><a href="#">分类方法</a></dd>
 								<dd><a href="#">优化方案</a></dd>
-								<dd><a href="css-hack.html">CSS Hack</a></dd>
+								<dd><a href="css-hack.html" class="active">CSS Hack</a></dd>
 							</dl>
 							<dl>
 								<dt><a href="javascript:;">HTML规范</a></dt>
@@ -70,9 +70,15 @@
 						</div>
 					</section>
 				</div>
-				<div class="col-xs-12 col-sm-9 col-md-9">
-					选择器、属性和值都使用小写
-					在xhtml标准中规定了所有标签、属性和值都小写，CSS也是如此。
+				<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
+					<h5>原则上不允许使用Hack</h5>
+					<p>很多不兼容问题可以通过改变方法和思路来解决，并非一定需要Hack，根据经验你完全可以绕过某些兼容问题。</p>
+					<p>一种合理的结构和合理的样式，是极少会碰到兼容问题的。</p>
+					<p>由于浏览器自身缺陷，我们无法避开的时候，可以允许使用适当的Hack。</p>
+					<h5>统一Hack方法</h5>
+					<p>统一使用“*”和“_”分别对IE7和6进行Hack。如下代码所示：</p>					
+					<pre class="prettyprint linenums">/* IE7会显示灰色#888，IE6会显示白色#fff，其他浏览器显示黑色#000 */
+.m-list{color:#000;*color:#888;_color:#fff;}</pre>
 				</div>
 
 			</div>
@@ -92,6 +98,7 @@
 		
 		<script src="/efui/assets/js/jquery-1.9.0.min.js"></script>
 		<script src="/efui/assets/js/efui.js"></script>
+		<script src="/efui/assets/js/prettify.js"></script>
 	</body>
 
 </html>
