@@ -1,133 +1,91 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<div class="docs-header">
+	<div class="container animation-scale-up" id="docs-con">
+		<h2>组件</h2>
+		<p>基本组件、web组件</p>
+	</div>
+</div>
+<div class="container">
 
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-		<title>EFUI - Easy Fast front-end UI frame</title>
-		<link rel="shortcut icon" href="favicon.ico">
-		<link href="/efui/assets/css/efui.css" rel="stylesheet">
-		<link href="/efui/assets/css/animation.css" rel="stylesheet">
-	</head>
+	<div class="row main-container clearfix">
 
-	<body>
-
-		<header class="navbar navbar-fixed-top navbar-inverse navbar-shadows">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-			            <span class="sr-only"></span>
-			            <span class="icon-bar"></span>
-			            <span class="icon-bar"></span>
-			            <span class="icon-bar"></span>
-		          	</button>
-					<a class="navbar-brand" href="/efui/"><img src="/efui/logo.png"></a>
+		<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
+			<section>
+				<div class="sidebar-menu">
+					<dl>
+						<dt><a href="javascript:;">基本组件</a></dt>
+						<dd><a href="index.html" class="active">按钮组</a></dd>
+						<dd><a href="#">输入框组</a></dd>
+						<dd><a href="#">下拉菜单</a></dd>
+						<dd><a href="#">输入框组</a></dd>
+						<dd><a href="#">标签组</a></dd>
+					</dl>
+					<dl>
+						<dt><a href="javascript:;">web组件</a></dt>
+						<dd><a href="#">头部页头</a></dd>
+						<dd><a href="#">导航</a></dd>
+						<dd><a href="#">菜单</a></dd>
+						<dd><a href="#">搜索框</a></dd>
+						<dd>
+							<a href="javascript:;" data-toggleclass="active">提示 <i class="f-icon icon-angle"></i></a>
+							<p>
+								<a href="#">- 状态警告</a>
+								<a href="#">- 新消息提示</a>
+								<a href="#">- 浮层提示</a>
+							</p>
+						</dd>
+						<dd><a href="#">选项卡</a></dd>
+						<dd><a href="#">折叠面板</a></dd>
+						<dd><a href="#">标题栏</a></dd>
+						<dd><a href="#">侧边栏</a></dd>
+						<dd>
+							<a href="javascript:;" data-toggleclass="active">列表 <i class="f-icon icon-angle"></i></a>
+							<p>
+								<a href="#">- 内容列表</a>
+								<a href="#">- 缩略图</a>
+								<a href="#">- 图文列表</a>
+								<a href="#">- 评论列表</a>
+							</p>
+						</dd>
+						<dd>
+							<a href="javascript:;" data-toggleclass="active">便签与标号 <i class="f-icon icon-angle"></i></a>
+							<p>
+								<a href="#">- 徽标</a>
+								<a href="#">- 角标</a>
+								<a href="#">- 图文列表</a>
+								<a href="#">- 评论列表</a>
+							</p>
+						</dd>
+						<dd><a href="#">进度条加载</a></dd>
+						<dd><a href="#">弹出层</a></dd>
+						<dd><a href="#">广告</a></dd>
+						<dd><a href="#">分页</a></dd>
+						<dd><a href="#">回到顶部</a></dd>
+						<dd><a href="#">底部页脚</a></dd>
+					</dl>
+					<dl>
+						<dt><a href="javascript:;">css3动画</a></dt>
+					</dl>
 				</div>
-				<nav id="navbar" class="collapse navbar-collapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/efui/index.html">首页</a></li>
-						<li><a href="/efui/standard/">规范</a></li>
-						<li><a href="/efui/element/">元素</a></li>
-						<li class="active"><a href="/efui/component/">组件</a></li>
-						<li><a href="/efui/plugin/">JS插件</a></li>
-						<li><a href="/efui/tools/">进阶</a></li>
-					</ul>
-				</nav>
-			</div>
-		</header>
-		<div class="docs-header">
-		  	<div class="container animation-scale-up" id="docs-con">
-		  		<h2>组件</h2>
-		    	<p>基本组件、web组件</p>
-		  	</div>
+			</section>
 		</div>
-		<div class="container">
-
-			<div class="row main-container clearfix">
-
-				<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
-					<section>
-						<div class="sidebar-menu">
-							<dl>
-								<dt><a href="javascript:;">基本组件</a></dt>
-								<dd><a href="index.html" class="active">按钮组</a></dd>
-								<dd><a href="#">输入框组</a></dd>
-								<dd><a href="#">下拉菜单</a></dd>
-								<dd><a href="#">输入框组</a></dd>
-								<dd><a href="#">标签组</a></dd>
-							</dl>
-							<dl>
-								<dt><a href="javascript:;">web组件</a></dt>
-								<dd><a href="#">头部页头</a></dd>
-								<dd><a href="#">导航</a></dd>
-								<dd><a href="#">菜单</a></dd>
-								<dd><a href="#">搜索框</a></dd>
-								<dd>
-									<a href="javascript:;" data-toggleclass="active">提示 <i class="f-icon icon-angle"></i></a>
-									<p>
-										<a href="#">- 状态警告</a>
-										<a href="#">- 新消息提示</a>
-										<a href="#">- 浮层提示</a>
-									</p>
-								</dd>
-								<dd><a href="#">选项卡</a></dd>
-								<dd><a href="#">折叠面板</a></dd>
-								<dd><a href="#">标题栏</a></dd>
-								<dd><a href="#">侧边栏</a></dd>
-								<dd>
-									<a href="javascript:;" data-toggleclass="active">列表 <i class="f-icon icon-angle"></i></a>
-									<p>
-										<a href="#">- 内容列表</a>
-										<a href="#">- 缩略图</a>
-										<a href="#">- 图文列表</a>
-										<a href="#">- 评论列表</a>
-									</p>
-								</dd>
-								<dd>
-									<a href="javascript:;" data-toggleclass="active">便签与标号 <i class="f-icon icon-angle"></i></a>
-									<p>
-										<a href="#">- 徽标</a>
-										<a href="#">- 角标</a>
-										<a href="#">- 图文列表</a>
-										<a href="#">- 评论列表</a>
-									</p>
-								</dd>
-								<dd><a href="#">进度条加载</a></dd>
-								<dd><a href="#">弹出层</a></dd>
-								<dd><a href="#">广告</a></dd>
-								<dd><a href="#">分页</a></dd>
-								<dd><a href="#">回到顶部</a></dd>
-								<dd><a href="#">底部页脚</a></dd>
-							</dl>	
-							<dl>
-								<dt><a href="javascript:;">css3动画</a></dt>
-							</dl>
-						</div>
-					</section>
+		<div class="col-xs-12 col-sm-9 col-md-9">
+			<section id="button">
+				<div class="page-header">
+					<h1>Button</h1>
 				</div>
-				<div class="col-xs-12 col-sm-9 col-md-9">
-					选择器、属性和值都使用小写
-					在xhtml标准中规定了所有标签、属性和值都小写，CSS也是如此。
-				</div>
-
-			</div>
+				<p>
+					<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Default</span></button>
+					<button class="ui-button-primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Primary</span></button>
+					<button class="ui-button-success ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Success</span></button>
+					<button class="ui-button-info ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Info</span></button>
+					<button class="ui-button-warning ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Warning</span></button>
+					<button class="ui-button-danger ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Danger</span></button>
+					<button class="ui-button-inverse ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Inverse</span></button>
+					<a class="button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Anchor</span></a>
+					<input type="submit" class="button ui-button ui-widget ui-state-default ui-corner-all" value="Submit" role="button" aria-disabled="false">
+				</p>
+			</section>
 		</div>
 
-		<footer class="footer navbar-fixed-bottom">
-			<div class="container al-c">
-				<div class="footer-links">
-					<label>前端推荐：</label>
-					<a href="http://www.bootcss.com/">Bootstrap中文网</a>
-					|
-					<a href="http://www.jquery123.com/">jQuery API</a>
-					
-				</div>
-			</div>
-		</footer>
-		
-		<script src="/efui/assets/js/jquery-1.9.0.min.js"></script>
-		<script src="/efui/assets/js/efui.js"></script>
-	</body>
-
-</html>
+	</div>
+</div>
