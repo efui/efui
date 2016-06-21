@@ -1,7 +1,7 @@
 <div class="docs-header">
 	<div class="container animation-scale-up" id="docs-con">
-		<h2>规范</h2>
-		<p>CSS、HTML、JS规范</p>
+		<h2>{{docsTit}}</h2>
+		<p>{{docsMsg}}</p>		
 	</div>
 </div>
 <div class="container">
@@ -13,8 +13,8 @@
 				<div class="sidebar-menu">
 					<dl>
 						<dt><a href="javascript:;">CSS规范</a></dt>
-						<dd><a href="index.html" class="active">代码格式</a></dd>
-						<dd><a href="#">命名规范</a></dd>
+						<dd><a ui-sref="standard" class="active">代码格式</a></dd>
+						<dd><a ui-sref="standard.">命名规范</a></dd>
 						<dd><a href="#">分类方法</a></dd>
 						<dd><a href="#">优化方案</a></dd>
 						<dd><a href="css-hack.html">CSS Hack</a></dd>
@@ -33,7 +33,9 @@
 			</section>
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-9">
-			选择器、属性和值都使用小写 在xhtml标准中规定了所有标签、属性和值都小写，CSS也是如此。
+			<div ui-view>
+				选择器、属性和值都使用小写 在xhtml标准中规定了所有标签、属性和值都小写，CSS也是如此。
+			</div>			
 		</div>
 
 	</div>

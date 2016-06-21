@@ -18,14 +18,14 @@
 
 	<body ng-controller="EfuiCtrl">
 		<div ng-include=" 'common/header.html' " class="navbar navbar-inverse navbar-shadows navbar-fixed-top"></div>
-		<div ng-view class="main-container"></div>
+		<div ui-view class="main-container"></div>
 		<div ng-include=" 'common/footer.html' " class="navbar-fixed-bottom"></div>
 		
 		<script src="assets/js/jquery-1.9.0.min.js"></script>
 		<script src="assets/js/efui.js"></script>		
 	    <script src="bower_components/angular/angular.js"></script>
-	    <script src="bower_components/angular-route/angular-route.js"></script>
-	    <script src="app.js"></script>
+	    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+	    <script src="apptest.js"></script>
 	</body>
 
 </html>

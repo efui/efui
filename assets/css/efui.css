@@ -1508,17 +1508,7 @@ pre ol.linenums li {
 	color: #2F486F;
 }
 
-.sidebar-menu .icon-angle:before {
-	content: "\f107";
-	position: absolute;
-	right: 10px;
-	top: 0.3em;
-	font-size: 20px;
-}
 
-.sidebar-menu .active .icon-angle:before {
-	content: "\f106";
-}
 
 @media (min-width: 768px) {
 	.sidebar-menu {

@@ -507,3 +507,17 @@ ol.linenums li {
 /* table */
 
 /* img */
+
+
+/* others */
+.sidebar-menu .f-keyboard_arrow_down:before {
+	content: "\e313";
+	position: absolute;
+	right: 10px;
+	top: 0.3em;
+	font-size: 20px;
+}
+
+.sidebar-menu .active .f-keyboard_arrow_down:before {
+	content: "\e316";
+}

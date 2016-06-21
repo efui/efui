@@ -1,7 +1,7 @@
 <div class="docs-header">
 	<div class="container animation-scale-up" id="docs-con">
-		<h2>组件</h2>
-		<p>基本组件、web组件</p>
+		<h2>{{docsTit}}</h2>
+		<p>{{docsMsg}}</p>		
 	</div>
 </div>
 <div class="container">
@@ -13,8 +13,8 @@
 				<div class="sidebar-menu">
 					<dl>
 						<dt><a href="javascript:;">基本组件</a></dt>
-						<dd><a href="index.html" class="active">按钮组</a></dd>
-						<dd><a href="#">输入框组</a></dd>
+						<dd><a ui-sref="component" class="active">按钮组</a></dd>
+						<dd><a ui-sref="component.">输入框组</a></dd>
 						<dd><a href="#">下拉菜单</a></dd>
 						<dd><a href="#">输入框组</a></dd>
 						<dd><a href="#">标签组</a></dd>
@@ -26,7 +26,7 @@
 						<dd><a href="#">菜单</a></dd>
 						<dd><a href="#">搜索框</a></dd>
 						<dd>
-							<a href="javascript:;" data-toggleclass="active">提示 <i class="f-icon icon-angle"></i></a>
+							<a href="javascript:;" data-toggleclass="active">提示 <i class="f-keyboard_arrow_down"></i></a>
 							<p>
 								<a href="#">- 状态警告</a>
 								<a href="#">- 新消息提示</a>
@@ -38,7 +38,7 @@
 						<dd><a href="#">标题栏</a></dd>
 						<dd><a href="#">侧边栏</a></dd>
 						<dd>
-							<a href="javascript:;" data-toggleclass="active">列表 <i class="f-icon icon-angle"></i></a>
+							<a href="javascript:;" data-toggleclass="active">列表 <i class="f-keyboard_arrow_down"></i></a>
 							<p>
 								<a href="#">- 内容列表</a>
 								<a href="#">- 缩略图</a>
@@ -47,7 +47,7 @@
 							</p>
 						</dd>
 						<dd>
-							<a href="javascript:;" data-toggleclass="active">便签与标号 <i class="f-icon icon-angle"></i></a>
+							<a href="javascript:;" data-toggleclass="active">便签与标号 <i class="f-keyboard_arrow_down"></i></a>
 							<p>
 								<a href="#">- 徽标</a>
 								<a href="#">- 角标</a>
@@ -69,6 +69,7 @@
 			</section>
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-9">
+			<div ui-view>
 			<section id="button">
 				<div class="page-header">
 					<h1>Button</h1>
@@ -85,6 +86,7 @@
 					<input type="submit" class="button ui-button ui-widget ui-state-default ui-corner-all" value="Submit" role="button" aria-disabled="false">
 				</p>
 			</section>
+			</div>
 		</div>
 
 	</div>
