@@ -6,26 +6,26 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
 		<title>EFUI - Easy Fast front-end UI frame</title>
-		<link rel="shortcut icon" href="/efui/favicon.ico">
-		<link href="/efui/assets/css/reset.css" rel="stylesheet">
-		<link href="/efui/assets/css/main.css" rel="stylesheet">
-		<link href="/efui/assets/css/efui.css" rel="stylesheet">
-		<link href="/efui/assets/css/animation.css" rel="stylesheet">
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="assets/css/reset.css" rel="stylesheet">
+		<link href="assets/css/main.css" rel="stylesheet">
+		<link href="assets/css/efui.css" rel="stylesheet">
+		<link href="assets/css/animation.css" rel="stylesheet">
 		<!--[if lt IE 8]><!-->
-	    <link rel="stylesheet" href="/efui/ie7/ie7.css">
+	    <link rel="stylesheet" href="ie7/ie7.css">
 	    <!--<![endif]-->
 	</head>
 
 	<body ng-controller="EfuiCtrl">
-		<div ng-include=" 'common/header.html' " class="navbar navbar-inverse navbar-shadows navbar-fixed-top"></div>
+		<ng-include src="'common/header.html'" class="navbar navbar-inverse navbar-shadows navbar-fixed-top"></ng-include>
 		<div ui-view class="main-container"></div>
-		<div ng-include=" 'common/footer.html' " class="navbar-fixed-bottom"></div>
+		<ng-include src="'common/footer.html'" class="navbar-fixed-bottom"></ng-include>
 		
 		<script src="assets/js/jquery-1.9.0.min.js"></script>
 		<script src="assets/js/efui.js"></script>		
 	    <script src="bower_components/angular/angular.js"></script>
 	    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-	    <script src="apptest.js"></script>
+	    <script src="controller.js"></script>
 	</body>
 
 </html>

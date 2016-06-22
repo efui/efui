@@ -24,12 +24,25 @@
          		$scope.docsMsg="EFUI为一款轻量级前端UI框架，通俗易懂的写法及模块式的拼装方便自由扩展，简单易用，轻量快捷。";
          	}
    		})
+//   	.state('standard', {
+//		   	url: "/standard",
+//		   	templateUrl: "standard/index.html",
+//		   	controller:function($scope,$location,$stateParams){
+//       		$scope.docsTit="规范";
+//       		$scope.docsMsg="CSS规范、HTML规范";
+//       	}
+// 		})
      	.state('standard', {
-		   	url: "/standard",
-		   	templateUrl: "standard/index.html",
-		   	controller:function($scope,$location){
-         		$scope.docsTit="规范";
-         		$scope.docsMsg="CSS规范、HTML规范";
+		   	url: "/standard/:id",
+		   	//templateUrl: "standard/css-hack.html",
+		   	//templateUrl: function($routeParams){console.log("$routeParams")},
+		   	controller:function($scope,$location,$stateParams){
+         		if($location.path().indexOf('/',1)!=-1){
+         			console.log($location);         			
+         			console.log($location.path().indexOf('/',-1));
+         		}         		
+         		console.log($stateParams.id);
+         		//$location.path(_c_path);
          	}
    		})
      	.state('element', {
