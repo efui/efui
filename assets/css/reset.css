@@ -1,10 +1,11 @@
 /********** common reset **********/
-*{word-wrap:break-word}
-html{font-family:"Microsoft Yahei";-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+
+html{font-family:"arial","Microsoft Yahei";-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
 body{font-size: 14px;line-height: 1.42857143;}
-html,body,h1,h2,h3,h4,h5,h6,hr,p,iframe,dl,dt,dd,ul,ol,li,pre,form,button,input,textarea,th,td,fieldset{margin:0;padding:0}
-caption,cite,code,dfn,em,var{font-style:normal;font-weight:400}
+html,body,h1,h2,h3,h4,h5,h6,hr,p,iframe,dl,dt,dd,li,pre,form,button,input,textarea,th,td,fieldset{margin:0;padding:0}
+caption,cite,code,pre,dfn,em,var{font-style:normal;font-weight:400;font-family: inherit;}
 th,td,button,input,select,textarea,optgroup,option{font: inherit;}
+th{text-align: left;}
 textarea{overflow: auto;}
 select,optgroup,option{margin: 0;}
 input,button{overflow: visible;vertical-align:middle;outline:none}
@@ -18,8 +19,17 @@ input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit
 input[type="checkbox"],input[type="radio"]{box-sizing: border-box;padding: 0;}
 ::-webkit-input-placeholder{color: inherit;opacity: 0.54;}
 ::-webkit-file-upload-button{-webkit-appearance: button;font: inherit; }
-h1,h2,h3,h4,h5,h6{font-family: inherit;color: inherit;font-weight: 500;font-size:100%}
-ul,ol,dl{list-style-type:none}
+h1,h2,h3,h4,h5,h6{font-family: inherit;color: inherit;font-weight: 700;font-size:100%}
+ul,ol{padding-left:2em;margin:1em 0;}
+ul{list-style-type: disc;}
+ol>li>ol, ol>li>ul, ul>li>ol, ul>li>ul {margin: 1em 0;}
+ol ol li, ul ul li {margin: 0.5em 0;}
+ol > li {padding: 0.5em 0;}
+ol>li>ol{list-style-type: lower-latin;}
+ol>li>ol>li>ol{list-style-type: lower-roman;}
+ul ul, ol ul {list-style-type: circle;}
+ol ol ul, ol ul ul, ul ol ul, ul ul ul {list-style-type: square;}
+table{max-width: 100%;border-collapse: collapse;border-spacing: 0;}
 a,area{outline:none;blr:expression(this.onFocus=this.blur())}
 a{text-decoration:none;background-color: transparent;cursor: pointer}
 a:hover{text-decoration:none;}

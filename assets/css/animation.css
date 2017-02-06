@@ -1,4 +1,4 @@
-}@-webkit-keyframes scale-up{
+@-webkit-keyframes scale-up{
 	0%{opacity:0;-webkit-transform:scale(.2);transform:scale(.2)}
 	100%{opacity:1;-webkit-transform:scale(1);transform:scale(1)}
 }
@@ -19,95 +19,26 @@
     animation-name: scale-up;
 }
 
-@-webkit-keyframes rotate {
-	from {
-		-webkit-transform: rotate(0deg);
+
+@-webkit-keyframes icon-spin {
+	0% {
+		-webkit-transform: rotate(0);
 	}
-	to {
-		-webkit-transform: rotate(360deg);
+	100% {
+		-webkit-transform: rotate(359deg);
 	}
 }
 
-@-webkit-keyframes spinner-spin {
+@keyframes icon-spin {
 	0% {
-		-webkit-transform: rotate(0deg)
-	}
-	8.33333333% {
-		-webkit-transform: rotate(30deg)
-	}
-	16.66666667% {
-		-webkit-transform: rotate(60deg)
-	}
-	25% {
-		-webkit-transform: rotate(90deg)
-	}
-	33.33333333% {
-		-webkit-transform: rotate(120deg)
-	}
-	41.66666667% {
-		-webkit-transform: rotate(150deg)
-	}
-	50% {
-		-webkit-transform: rotate(180deg)
-	}
-	58.33333333% {
-		-webkit-transform: rotate(210deg)
-	}
-	66.66666667% {
-		-webkit-transform: rotate(240deg)
-	}
-	75% {
-		-webkit-transform: rotate(270deg)
-	}
-	83.33333333% {
-		-webkit-transform: rotate(300deg)
-	}
-	91.66666667% {
-		-webkit-transform: rotate(330deg)
+		transform: rotate(0)
 	}
 	100% {
-		-webkit-transform: rotate(360deg)
+		transform: rotate(359deg)
 	}
 }
 
-@keyframes spinner-spin {
-	0% {
-		transform: rotate(0deg)
-	}
-	8.33333333% {
-		transform: rotate(30deg)
-	}
-	16.66666667% {
-		transform: rotate(60deg)
-	}
-	25% {
-		transform: rotate(90deg)
-	}
-	33.33333333% {
-		transform: rotate(120deg)
-	}
-	41.66666667% {
-		transform: rotate(150deg)
-	}
-	50% {
-		transform: rotate(180deg)
-	}
-	58.33333333% {
-		transform: rotate(210deg)
-	}
-	66.66666667% {
-		transform: rotate(240deg)
-	}
-	75% {
-		transform: rotate(270deg)
-	}
-	83.33333333% {
-		transform: rotate(300deg)
-	}
-	91.66666667% {
-		transform: rotate(330deg)
-	}
-	100% {
-		transform: rotate(360deg)
-	}
+.icon-spin {
+	-webkit-animation: icon-spin 2s infinite linear;
+	animation: icon-spin 2s infinite linear
 }
