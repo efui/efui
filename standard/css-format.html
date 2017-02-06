@@ -1,181 +1,67 @@
-<pre>  1. 页面编码规范
-    1.1. 统一使用 UTF-8 编码,用@charset "utf-8"指定页面编码。
-    1.2. 全局字体设置：
-         windows 7系统：微软雅黑 Arial；
-         windows XP及以下：新宋体，宋体，Arial
-         MAC默认字体：Helvetica Neue和Helvetica Hiragino Sans GB。
-         font-family:"Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";
-    1.3. 中文字体使用编码转换，请参阅下节“<a href="Hui-notes-cnFont.shtml" class="maincolor"><u>中文字体css编码转换</u></a>”
-    1.4. 推荐使用<a class="maincolor" href="websafecolors.shtml" target="_blank"><u>216web安全色</u></a>
-  2. 属性写在一行内，属性之间、属性名和值之间以及属性与“{}”之间应减少空格，去掉最后一个“;”，例如：.class{width:200px;height:100px}
-  3. 属性的书写顺序：
-    3.1. 按照元素模型由外及内，由整体到细节书写，大致分为五组：
-      位置：position,left,right,float
-      盒模型属性：display,margin,padding,width,height
-      边框与背景：border,background
-      段落与文本：line-height,text-indent,font,color,text-decoration,...
-      其他属性：overflow,cursor,visibility,...
-    3.2. 针对特殊浏览器的属性，应写在标准属性之前，例如：-webkit-box-shadow:;-moz-box-shadow:;box-shaow:;
-  4. 带有前缀的属性，单独一行，通过缩进，让每个属性的值垂直对齐，方便编辑维护。
-  5. 谨慎添加新的选择符规则，尤其不可滥用 id，尽可能继承和复用已有样式
-  6. 选择符、属性、值均用小写（格式的颜色值除外），缩写的选择符名称须说明缩写前的全称，例如 .cl -&gt; Clearfix
-  7. 避免使用各种CSS Hack，如需对 IE 进行特殊定义，请参阅下节“关于 <a href="Hui-notes-cssHack.shtml" class="maincolor"><u>CSS Hack</u></a> 的说明”
-  8. 勿使用冗余低效的 CSS 写法，例如：ul li a span{... }
-  9. 慎用 !important
-  10. 建议使用具有语义化的classname或id，请参阅下节“<a href="Hui-notes-cssHame.shtml" class="maincolor"><u>css命名规范</u></a>”。
-  11.避免使用兼容性不好的使用滤镜 
-  12.开发过程中的未定事项，须用 [!] 标出，以便于后续讨论整理。
-  13.注释格式，统一使用双斜杠加*。
-  14.上下模块之间的间距统一使用下一个模块的margin-top来实现，好处是：如果没有下一个模块也不会多出一段空隙。
-  15.hover，selected，disabled，current等具有特定意义的请勿直接占用。
-  16.:link :visited :hover :active书写顺序 L-V-H-A，速记：LoVe（喜欢）HAte（讨厌）。
-  17.不要使用 @import
-</pre>
-				<dl>
-					<dt>选择器、属性和值都使用小写</dt>
-					<dd>
-						<p>在xhtml标准中规定了所有标签、属性和值都小写，CSS也是如此。</p>
-					</dd>
-					<dt>单行写完一个选择器定义</dt>
-					<dd>
-						<p>便于选择器的寻找和阅读，也便于插入新选择器和编辑，便于模块等的识别。去除多余空格，使代码紧凑减少换行。</p>
-						<p>如果有嵌套定义，可以采取内部单行的形式。</p>
-						<div>
-							<div id="highlighter_931808" class="syntaxhighlighter  css">
-								<div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-								<table border="0" cellpadding="0" cellspacing="0">
-									<tbody>
-										<tr>
-											<td class="gutter">
-												<div class="line number1 index0 alt2">1</div>
-												<div class="line number2 index1 alt1">2</div>
-												<div class="line number3 index2 alt2">3</div>
-												<div class="line number4 index3 alt1">4</div>
-												<div class="line number5 index4 alt2">5</div>
-												<div class="line number6 index5 alt1">6</div>
-												<div class="line number7 index6 alt2">7</div>
-												<div class="line number8 index7 alt1">8</div>
-												<div class="line number9 index8 alt2">9</div>
-												<div class="line number10 index9 alt1">10</div>
-												<div class="line number11 index10 alt2">11</div>
-											</td>
-											<td class="code">
-												<div class="container">
-													<div class="line number1 index0 alt2"><code class="css comments">/* 单行定义一个选择器 */</code></div>
-													<div class="line number2 index1 alt1"><code class="css plain">.m-list li,.m-list h3{</code><code class="css keyword">width</code><code class="css plain">:</code><code class="css value">100px</code><code class="css plain">;</code><code class="css keyword">padding</code><code class="css plain">:</code>
-														<code
-															class="css value">10px</code><code class="css plain">;</code><code class="css keyword">border</code><code class="css plain">:</code><code class="css value">1px</code> <code class="css value">solid</code> <code class="css value">#ddd</code><code class="css plain">;} </code></div>
-													<div
-														class="line number3 index2 alt2"><code class="css comments">/* 这是一个有嵌套定义的选择器 */</code></div>
-												<div class="line number4 index3 alt1"><code class="css plain">@media all and (</code><code class="css keyword">max-width</code><code class="css plain">:</code><code class="css value">600px</code><code class="css plain">){ </code></div>
-												<div class="line number5 index4 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">.m-class1 .itm{</code><code class="css keyword">height</code><code class="css plain">:</code><code class="css value">17px</code><code class="css plain">;</code>
-													<code
-														class="css keyword">line-height</code><code class="css plain">:</code><code class="css value">17px</code><code class="css plain">;</code><code class="css keyword">font-size</code><code class="css plain">:</code><code class="css value">12px</code><code class="css plain">;} </code></div>
-												<div
-													class="line number6 index5 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">.m-class2 .itm{</code><code class="css keyword">width</code><code class="css plain">:</code><code class="css value">100px</code><code class="css plain">;</code>
-													<code
-														class="css keyword">overflow</code><code class="css plain">:</code><code class="css value">hidden</code><code class="css plain">;} </code></div>
-							<div class="line number7 index6 alt2"><code class="css plain">} </code></div>
-							<div class="line number8 index7 alt1"><code class="css plain">@-webkit-keyframes showitm{ </code></div>
-							<div class="line number9 index8 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css value">0%</code><code class="css plain">{</code><code class="css keyword">height</code><code class="css plain">:</code><code class="css value">0;</code><code class="css keyword">opacity</code>
-								<code
-									class="css plain">:</code><code class="css value">0;</code><code class="css plain">} </code></div>
-							<div class="line number10 index9 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css value">100%</code><code class="css plain">{</code><code class="css keyword">height</code><code class="css plain">:</code><code class="css value">100px</code><code class="css plain">;</code>
-								<code
-									class="css keyword">opacity</code><code class="css plain">:</code><code class="css value">1;</code><code class="css plain">} </code></div>
-							<div class="line number11 index10 alt2"><code class="css plain">} </code></div>
+<ol>
+	<li>
+		<h3>页面编码规范</h3>
+		<ol>
+			<li>
+				<h5>css文件</h5>
+				应放到body的前面head里面。而且要使用rel属性。
+				<div class="html">
+					<pre>&lt;link href="assets/css/index.css" rel="stylesheet"></pre>
+				</div>
+			</li>
+			<li>
+				<h5>统一使用 UTF-8 编码,用@charset "utf-8"指定页面编码。</h5>
+			</li>
+			<li>
+				<h5>全局字体设置：</h5>
+				<ul>
+					<li>windows 7系统：微软雅黑, Arial</li>
+					<li>windows XP及以下：新宋体，宋体，Arial</li>
+					<li>MAC默认字体：Helvetica Neue和Helvetica Hiragino Sans GB</li>
+					<li>font-family:"Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";</li>
+				</ul>
+			</li>
+			<li>
+				<h5>中文字体使用编码转换</h5>
+			</li>
+		</ol>
+	</li>
+	<li>
+		<h3>书写规范</h3>
+		<ol>
+			<li>
+				<h5>书写建议：</h5>
+				<ul>
+					<li>选择符、属性、值均用小写（格式的颜色值除外）,在xhtml标准中规定了所有标签、属性和值都小写，CSS也是如此</li>
+					<li>属性写在一行内，属性之间、属性名和值之间以及属性与“{}”之间应减少空格，最后一个值也以分号结尾
+						<div class="html">
+							<pre>例如：
+.class{width:200px;height:100px;}</pre>
 						</div>
-						</td>
-						</tr>
-						</tbody>
-						</table>
-			</div>
-		</div>
-		</dd>
-		<dt>最后一个值也以分号结尾</dt>
-		<dd>
-			<p>通常在大括号结束前的值可以省略分号，但是这样做会对修改、添加和维护工作带来不必要的失误和麻烦。</p>
-		</dd>
-		<dt>省略值为0时的单位</dt>
-		<dd>
-			<p>为节省不必要的字节同时也使阅读方便，我们将0px、0em、0%等值缩写为0。</p>
-			<div>
-				<div id="highlighter_260179" class="syntaxhighlighter  css">
-					<div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-					<table border="0" cellpadding="0" cellspacing="0">
-						<tbody>
-							<tr>
-								<td class="gutter">
-									<div class="line number1 index0 alt2">1</div>
-								</td>
-								<td class="code">
-									<div class="container">
-										<div class="line number1 index0 alt2"><code class="css plain">.m-box{</code><code class="css keyword">margin</code><code class="css plain">:0 </code><code class="css value">10px</code><code class="css plain">;</code><code class="css keyword">background-position</code><code class="css plain">:</code>
-											<code
-												class="css value">50%</code> <code class="css value">0;</code><code class="css plain">} </code></div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</dd>
-		<dt>使用单引号</dt>
-		<dd>
-			<p>省略url引用中的引号，其他需要引号的地方使用单引号。</p>
-			<div>
-				<div id="highlighter_413425" class="syntaxhighlighter  css">
-					<div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-					<table border="0" cellpadding="0" cellspacing="0">
-						<tbody>
-							<tr>
-								<td class="gutter">
-									<div class="line number1 index0 alt2">1</div>
-									<div class="line number2 index1 alt1">2</div>
-								</td>
-								<td class="code">
-									<div class="container">
-										<div class="line number1 index0 alt2"><code class="css plain">.m-box{</code><code class="css keyword">background</code><code class="css plain">:</code><code class="css value">url</code><code class="css plain">(bg.png);} </code></div>
-										<div class="line number2 index1 alt1"><code class="css plain">.m-box:after{</code><code class="css keyword">content</code><code class="css plain">:</code><code class="css string">'.'</code><code class="css plain">;} </code></div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</dd>
-		<dt>使用16进制表示颜色值</dt>
-		<dd>
-			<p>除非你需要透明度而使用rgba，否则都使用#f0f0f0这样的表示方法，并尽量缩写。</p>
-			<div>
-				<div id="highlighter_135091" class="syntaxhighlighter  css">
-					<div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-					<table border="0" cellpadding="0" cellspacing="0">
-						<tbody>
-							<tr>
-								<td class="gutter">
-									<div class="line number1 index0 alt2">1</div>
-								</td>
-								<td class="code">
-									<div class="container">
-										<div class="line number1 index0 alt2"><code class="css plain">.m-box{</code><code class="css keyword">color</code><code class="css plain">:</code><code class="css value">#f00</code><code class="css plain">;</code><code class="css keyword">background</code><code class="css plain">:rgba(0,0,0,0.5);} </code></div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</dd>
-		<dt>根据属性的重要性按顺序书写</dt>
-		<dd>
-			<p>只遵循横向顺序即可，先显示定位布局类属性，后盒模型等自身属性，最后是文本类及修饰类属性。</p>
-			<table>
+					</li>
+					<li>省略值为0时的单位
+						<div class="html">
+							<pre>.m-box{margin:0 10px;background-position:  50% 0;} </pre>
+						</div>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h5>书写顺序：</h5>
+				<ol>
+					<li>
+						<h6>按照元素模型由外及内，由整体到细节书写，大致分为五组：(显示属性->自身属性->文本属性和其他修饰)</h6>
+						<ul>
+							<li>位置：position,left,right,float</li>
+							<li>盒模型属性：display,margin,padding,width,height</li>
+							<li>边框与背景：border,background</li>
+							<li>段落与文本：line-height,text-indent,font,color,text-decoration,...</li>
+							<li>其他属性：overflow,cursor,visibility,...</li>
+						</ul>
+						<table class="table">
 				<thead>
 					<tr>
-						<th>→</th>
+						<th> </th>
 						<th>显示属性</th>
 						<th>自身属性</th>
 						<th>文本属性和其他修饰</th>
@@ -226,231 +112,75 @@
 					</tr>
 				</tbody>
 			</table>
-			<div>
-				<div id="highlighter_860074" class="syntaxhighlighter  css">
-					<div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-					<table border="0" cellpadding="0" cellspacing="0">
-						<tbody>
-							<tr>
-								<td class="gutter">
-									<div class="line number1 index0 alt2">1</div>
-								</td>
-								<td class="code">
-									<div class="container">
-										<div class="line number1 index0 alt2"><code class="css plain">.m-box{</code><code class="css keyword">position</code><code class="css plain">:</code><code class="css value">relative</code><code class="css plain">;</code><code class="css keyword">width</code><code class="css plain">:</code>
-											<code
-												class="css value">600px</code><code class="css plain">;</code><code class="css keyword">margin</code><code class="css plain">:0 </code><code class="css value">auto</code> <code class="css value">10px</code><code class="css plain">;</code><code class="css keyword">text-align</code>
-												<code
-													class="css plain">:</code><code class="css value">center</code><code class="css plain">;</code><code class="css keyword">color</code><code class="css plain">:</code><code class="css value">#000</code><code class="css plain">;} </code></div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+						<div class="html"><span class="red">针对特殊浏览器的属性，应写在标准属性之前，遵循<b>私有在前，标准在后</b>原则</span>
+							<pre>例如：
+-webkit-box-shadow:;
+-moz-box-shadow:;
+box-shaow:;</pre>
+						</div>
+					</li>
+					<li>
+						<h6>伪类书写顺序：</h6>
+						<ul>
+							<li>:link :visited :hover :active书写顺序 L-V-H-A，速记：LoVe（喜欢）HAte（讨厌）</li>
+						</ul>
+					</li>
+				</ol>
+			</li>
+		</ol>
+	</li>
+	<li>
+		<h3>注释格式</h3>
+		<ol>
+			<li>
+				<h5>对选择器的注释统一写在被注释对象的上一行</h5>
+				<div class="html">
+					<pre>/* 单行注释文字 */
+.m-list li em{color:#666;} </pre>
 				</div>
-			</div>
-			<p>如果属性间存在关联性，则不要隔开写。</p>
-			<div>
-				<div id="highlighter_113972" class="syntaxhighlighter  css">
-					<div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-					<table border="0" cellpadding="0" cellspacing="0">
-						<tbody>
-							<tr>
-								<td class="gutter">
-									<div class="line number1 index0 alt2">1</div>
-									<div class="line number2 index1 alt1">2</div>
-								</td>
-								<td class="code">
-									<div class="container">
-										<div class="line number1 index0 alt2"><code class="css comments">/* 这里的height和line-height有关联性 */</code></div>
-										<div class="line number2 index1 alt1"><code class="css plain">.m-box{</code><code class="css keyword">position</code><code class="css plain">:</code><code class="css value">relative</code><code class="css plain">;</code><code class="css keyword">height</code><code class="css plain">:</code>
-											<code
-												class="css value">20px</code><code class="css plain">;</code><code class="css keyword">line-height</code><code class="css plain">:</code><code class="css value">20px</code><code class="css plain">;</code><code class="css keyword">padding</code><code class="css plain">:</code>
-												<code
-													class="css value">5px</code><code class="css plain">;</code><code class="css keyword">color</code><code class="css plain">:</code><code class="css value">#000</code><code class="css plain">;} </code></div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+			</li>
+			<li>
+				<h5>对属性及值的注释写于分号后</h5>
+				<div class="html">
+					<pre>.m-list li{height:20px;line-height:  20px;/* 这里是对line-height的一个注释 */overflow:hidden;}  </pre>
 				</div>
-			</div>
-		</dd>
-		<dt>私有在前，标准在后</dt>
-		<dd>
-			<p>先写带有浏览器私有标志的，后写W3C标准的。</p>
-			<div>
-				<div id="highlighter_551561" class="syntaxhighlighter  css">
-					<div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-					<table border="0" cellpadding="0" cellspacing="0">
-						<tbody>
-							<tr>
-								<td class="gutter">
-									<div class="line number1 index0 alt2">1</div>
-								</td>
-								<td class="code">
-									<div class="container">
-										<div class="line number1 index0 alt2"><code class="css plain">.m-box{-webkit-</code><code class="css keyword">box-shadow</code><code class="css plain">:0 0 0 </code><code class="css value">#000</code><code class="css plain">;-moz-</code><code class="css keyword">box-shadow</code>
-											<code
-												class="css plain">:0 0 0 </code><code class="css value">#000</code><code class="css plain">;</code><code class="css keyword">box-shadow</code><code class="css plain">:0 0 0 </code><code class="css value">#000</code><code class="css plain">;} </code></div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+			</li>
+			<li>
+				<h5>块状注释，块状注释保持统一的缩进对齐</h5>
+				<div class="html">
+					<pre>/* 块状注释文字 
+ * 块状注释文字 
+ * 块状注释文字 
+ */
+.m-list{width:500px;} </pre>
 				</div>
-			</div>
-		</dd>
-		<dt>注释格式：/* 注释文字 */</dt>
-		<dd>
-			<p>对选择器的注释统一写在被注释对象的上一行，对属性及值的注释写于分号后。</p>
-			<p>注释内容两端需空格，已确保即使在编码错误的情况下也可以正确解析样式。</p>
-			<p>在必要的情况下，可以使用块状注释，块状注释保持统一的缩进对齐。</p>
-			<p>原则上每个系列的样式都需要有一个注释，言简意赅的表明名称、用途、注意事项等。</p>
-			<div>
-				<div id="highlighter_566024" class="syntaxhighlighter  css">
-					<div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-					<table border="0" cellpadding="0" cellspacing="0">
-						<tbody>
-							<tr>
-								<td class="gutter">
-									<div class="line number1 index0 alt2">1</div>
-									<div class="line number2 index1 alt1">2</div>
-									<div class="line number3 index2 alt2">3</div>
-									<div class="line number4 index3 alt1">4</div>
-									<div class="line number5 index4 alt2">5</div>
-									<div class="line number6 index5 alt1">6</div>
-									<div class="line number7 index6 alt2">7</div>
-									<div class="line number8 index7 alt1">8</div>
-									<div class="line number9 index8 alt2">9</div>
-								</td>
-								<td class="code">
-									<div class="container">
-										<div class="line number1 index0 alt2"><code class="css comments">/* 块状注释文字 </code></div>
-										<div class="line number2 index1 alt1"><code class="css spaces">&nbsp;</code><code class="css comments">* 块状注释文字 </code></div>
-										<div class="line number3 index2 alt2"><code class="css spaces">&nbsp;</code><code class="css comments">* 块状注释文字 </code></div>
-										<div class="line number4 index3 alt1"><code class="css spaces">&nbsp;</code><code class="css comments">*/</code></div>
-										<div class="line number5 index4 alt2"><code class="css plain">.m-list{</code><code class="css keyword">width</code><code class="css plain">:</code><code class="css value">500px</code><code class="css plain">;} </code></div>
-										<div class="line number6 index5 alt1"><code class="css plain">.m-list li{</code><code class="css keyword">height</code><code class="css plain">:</code><code class="css value">20px</code><code class="css plain">;</code><code class="css keyword">line-height</code><code class="css plain">:</code>
-											<code
-												class="css value">20px</code><code class="css plain">;</code><code class="css comments">/* 这里是对line-height的一个注释 */</code><code class="css keyword">overflow</code><code class="css plain">:</code><code class="css value">hidden</code><code class="css plain">;} </code></div>
-										<div
-											class="line number7 index6 alt2"><code class="css plain">.m-list li a{</code><code class="css keyword">color</code><code class="css plain">:</code><code class="css value">#333</code><code class="css plain">;} </code></div>
-									<div class="line number8 index7 alt1"><code class="css comments">/* 单行注释文字 */</code></div>
-									<div class="line number9 index8 alt2"><code class="css plain">.m-list li em{</code><code class="css keyword">color</code><code class="css plain">:</code><code class="css value">#666</code><code class="css plain">;} </code></div>
-				</div>
-				</td>
-				</tr>
-				</tbody>
-				</table>
-			</div>
-	</div>
-	</dd>
-	<dt>原则上不允许使用Hack</dt>
-	<dd>
-		<p>很多不兼容问题可以通过改变方法和思路来解决，并非一定需要Hack，根据经验你完全可以绕过某些兼容问题。</p>
-		<p>一种合理的结构和合理的样式，是极少会碰到兼容问题的。</p>
-		<p>由于浏览器自身缺陷，我们无法避开的时候，可以允许使用适当的Hack。</p>
-	</dd>
-	<dt>统一Hack方法</dt>
-	<dd>
-		<p>统一使用“*”和“_”分别对IE7和6进行Hack。如下代码所示：</p>
-		<div>
-			<div id="highlighter_293699" class="syntaxhighlighter  css">
-				<div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-				<table border="0" cellpadding="0" cellspacing="0">
-					<tbody>
-						<tr>
-							<td class="gutter">
-								<div class="line number1 index0 alt2">1</div>
-								<div class="line number2 index1 alt1">2</div>
-							</td>
-							<td class="code">
-								<div class="container">
-									<div class="line number1 index0 alt2"><code class="css comments">/* IE7会显示灰色#888，IE6会显示白色#fff，其他浏览器显示黑色#000 */</code></div>
-									<div class="line number2 index1 alt1"><code class="css plain">.m-list{</code><code class="css keyword">color</code><code class="css plain">:</code><code class="css value">#000</code><code class="css plain">;*</code><code class="css keyword">color</code><code class="css plain">:</code>
-										<code
-											class="css value">#888</code><code class="css plain">;</code><code class="css keyword">_color</code><code class="css plain">:</code><code class="css value">#fff</code><code class="css plain">;} </code></div>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</dd>
-	<dt>建议并适当缩写值</dt>
-	<dd>
-		<p>“建议并适当”是因为缩写总是会包含一系列的值，而有时候我们并不希望设置某一值，反而造成了麻烦，那么这时候你可以不缩写，而是分开写。</p>
-		<p>当然，在一切可以缩写的情况下，请务必缩写，它最大的好处就是节省了字节，便于维护，并使阅读更加一目了然。</p>
-		<p>缩写方法请查阅css手册。</p>
-	</dd>
-	<dt>选择器顺序</dt>
-	<dd>
-		<p>请综合考虑以下顺序依据：</p>
+			</li>
+		</ol>
+	</li>
+	<li>
+		<h3>原则上不允许使用Hack</h3>
+		很多不兼容问题可以通过改变方法和思路来解决，并非一定需要Hack，根据经验你完全可以绕过某些兼容问题。
+一种合理的结构和合理的样式，是极少会碰到兼容问题的。
+由于浏览器自身缺陷，我们无法避开的时候，可以允许使用适当的Hack。
+		<h5>统一Hack方法：</h5>
 		<ul>
-			<li>从大到小（以选择器的范围为准）</li>
-			<li>从低到高（以等级上的高低为准）</li>
-			<li>从先到后（以结构上的先后为准）</li>
-			<li>从父到子（以结构上的嵌套为准）</li>
+			<li>统一使用“*”和“_”分别对IE7和6进行Hack
+				<div class="html">
+					<pre>/* IE7会显示灰色#888，IE6会显示白色#fff，其他浏览器显示黑色#000 */
+.m-list{color:#000;*color:  #888;_color:#fff;} </pre>
+				</div>
+			</li>
 		</ul>
-		<p>以下仅为简单示范：</p>
-		<div>
-			<div id="highlighter_273302" class="syntaxhighlighter  css">
-				<div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-				<table border="0" cellpadding="0" cellspacing="0">
-					<tbody>
-						<tr>
-							<td class="gutter">
-								<div class="line number1 index0 alt2">1</div>
-								<div class="line number2 index1 alt1">2</div>
-								<div class="line number3 index2 alt2">3</div>
-								<div class="line number4 index3 alt1">4</div>
-								<div class="line number5 index4 alt2">5</div>
-								<div class="line number6 index5 alt1">6</div>
-								<div class="line number7 index6 alt2">7</div>
-								<div class="line number8 index7 alt1">8</div>
-								<div class="line number9 index8 alt2">9</div>
-								<div class="line number10 index9 alt1">10</div>
-								<div class="line number11 index10 alt2">11</div>
-								<div class="line number12 index11 alt1">12</div>
-								<div class="line number13 index12 alt2">13</div>
-							</td>
-							<td class="code">
-								<div class="container">
-									<div class="line number1 index0 alt2"><code class="css comments">/* 从大到小 */</code></div>
-									<div class="line number2 index1 alt1"><code class="css plain">.m-list p{</code><code class="css keyword">margin</code><code class="css plain">:</code><code class="css value">0;</code><code class="css keyword">padding</code><code class="css plain">:</code><code class="css value">0;</code>
-										<code
-											class="css plain">} </code>
-									</div>
-									<div class="line number3 index2 alt2"><code class="css plain">.m-list p.part{</code><code class="css keyword">margin</code><code class="css plain">:</code><code class="css value">1px</code><code class="css plain">;</code><code class="css keyword">padding</code><code class="css plain">:</code>
-										<code
-											class="css value">1px</code><code class="css plain">;} </code></div>
-									<div class="line number4 index3 alt1"><code class="css comments">/* 从低到高 */</code></div>
-									<div class="line number5 index4 alt2"><code class="css plain">.m-logo a{</code><code class="css keyword">color</code><code class="css plain">:</code><code class="css value">#f00</code><code class="css plain">;} </code></div>
-									<div class="line number6 index5 alt1"><code class="css plain">.m-logo a:hover{</code><code class="css keyword">color</code><code class="css plain">:</code><code class="css value">#fff</code><code class="css plain">;} </code></div>
-									<div class="line number7 index6 alt2"><code class="css comments">/* 从先到后 */</code></div>
-									<div class="line number8 index7 alt1"><code class="css plain">.g-hd{</code><code class="css keyword">height</code><code class="css plain">:</code><code class="css value">60px</code><code class="css plain">;} </code></div>
-									<div class="line number9 index8 alt2"><code class="css plain">.g-bd{</code><code class="css keyword">height</code><code class="css plain">:</code><code class="css value">60px</code><code class="css plain">;} </code></div>
-									<div class="line number10 index9 alt1"><code class="css plain">.g-ft{</code><code class="css keyword">height</code><code class="css plain">:</code><code class="css value">60px</code><code class="css plain">;} </code></div>
-									<div class="line number11 index10 alt2"><code class="css comments">/* 从父到子 */</code></div>
-									<div class="line number12 index11 alt1"><code class="css plain">.m-list{</code><code class="css keyword">width</code><code class="css plain">:</code><code class="css value">300px</code><code class="css plain">;} </code></div>
-									<div class="line number13 index12 alt2"><code class="css plain">.m-list .itm{</code><code class="css keyword">float</code><code class="css plain">:</code><code class="css value">left</code><code class="css plain">;} </code></div>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</dd>
-	<dt>选择器等级</dt>
-	<dd>
-		<p>a = 行内样式style。</p>
-		<p>b = ID选择器的数量。</p>
-		<p>c = 类、伪类和属性选择器的数量。</p>
-		<p>d = 类型选择器和伪元素选择器的数量。</p>
-		<table>
+	</li>
+	<li>
+		<h3>选择器优先级</h3>
+		<ul>
+			<li>a = 行内样式style。</li>
+			<li>b = ID选择器的数量。</li>
+			<li>c = 类、伪类和属性选择器的数量。</li>
+			<li>d = 类型选择器和伪元素选择器的数量。</li>
+		</ul>
+		<table class="table">
 			<tbody>
 				<tr>
 					<th>选择器</th>
@@ -510,5 +240,5 @@
 				</tr>
 			</tbody>
 		</table>
-	</dd>
-	</dl>
+	</li>
+</ol> 

@@ -9,44 +9,49 @@
 	<div class="row main-container clearfix">
 
 		<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
-			<section>
-				<div class="sidebar-menu">
-					<dl>
-						<dt><a href="javascript:;">图片类</a></dt>
-						<dd><a ui-sref="plugin" class="active">图片轮播</a></dd>
-						<dd><a ui-sref="plugin.waterfall">瀑布流布局</a></dd>
-					</dl>
-					<dl>
-						<dt><a href="javascript:;">弹框类</a></dt>
-						<dd><a ui-sref="plugin.alert">警告框</a></dd>
-						<dd><a ui-sref="plugin.dialog">对话框</a></dd>
-						<dd><a ui-sref="plugin.tooltips">气泡式弹出</a></dd>
-					</dl>
-					<dl>
-						<dt><a href="javascript:;">其他常用插件</a></dt>
-						<dd><a ui-sref="plugin.totop">回到顶部</a></dd>
-						<dd><a ui-sref="plugin.tagcloud">tag云标签</a></dd>						
-						<dd><a ui-sref="plugin.fullswitch">全屏切换</a></dd>
-						<dd>
-							<a href="javascript:;" data-toggleclass="active">滚动 <i class="f-icon icon-angle"></i></a>
-							<p>
-								<a ui-sref="plugin.autoscroll">- 新闻自动滚动</a>
-								<a ui-sref="plugin.scrollspy">- 导航条滚动监听</a>
-							</p>
-						</dd>
-						<dd><a ui-sref="plugin.select">下拉框插件</a></dd>
-						<dd><a ui-sref="plugin.radiocheckbox">单/多选框插件</a></dd>
-						<dd><a ui-sref="plugin.validate">表单验证插件</a></dd>
-						<dd><a ui-sref="plugin.datetime">日期时间插件</a></dd>
-						<dd><a ui-sref="plugin.iscroll">iScroll</a></dd>
-					</dl>
-				</div>
-			</section>
+			<div class="sidebar-menu sidebar-slide">
+				<section class="sidebar-slide-overlay">
+						<dl>
+							<dt><a href="javascript:;">切换类</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="plugin.picslider">内容切换</a></dd>
+							<!--<dd ui-sref-active="active"><a ui-sref="plugin.waterfall">瀑布流布局</a></dd>-->
+						</dl>
+						<dl>
+							<dt><a href="javascript:;">弹框类</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="plugin.popup">弹出框</a></dd>
+							<!--<dd ui-sref-active="active"><a ui-sref="plugin.alert">警告框</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="plugin.dialog">对话框</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="plugin.tooltips">气泡式弹出</a></dd>-->
+							<dd ui-sref-active="active"><a ui-sref="plugin.keyboard">数字键盘底部滑出</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="plugin.picker">选择列表</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="javascript:;">图表插件</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="plugin.highchart">highchart</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="javascript:;">其他常用插件</a></dt>
+							<!--<dd ui-sref-active="active"><a ui-sref="plugin.totop">回到顶部</a></dd>-->
+							<!--<dd ui-sref-active="active"><a ui-sref="plugin.tagcloud">tag云标签</a></dd>						
+							<dd ui-sref-active="active"><a ui-sref="plugin.fullswitch">全屏切换</a></dd>-->
+							<!--<dd ui-sref-active="active">
+								<a href="javascript:;" data-toggleclass="active">滚动 <i class="f-keyboard_arrow_down"></i></a>
+								<p class="subnav">
+									<a ui-sref="plugin.autoscroll">- 新闻自动滚动</a>
+									<a ui-sref="plugin.scrollspy">- 导航条滚动监听</a>
+								</p>
+							</dd>-->
+							<!--<dd ui-sref-active="active"><a ui-sref="plugin.select">下拉框插件</a></dd>-->
+							<!--<dd ui-sref-active="active"><a ui-sref="plugin.radiocheckbox">单/多选框插件</a></dd>-->
+							<!--<dd ui-sref-active="active"><a ui-sref="plugin.validate">表单验证插件</a></dd>-->
+							<dd ui-sref-active="active"><a ui-sref="plugin.datetime">日期时间插件</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="plugin.iscroll">iScroll</a></dd>
+						</dl>
+				</section>
+			</div>
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-9">
-			<div ui-view>
-				<ng-include src="'plugin/picslider.html'"></ng-include>
-			</div>
+			<div ui-view></div>
 		</div>
 
 	</div>

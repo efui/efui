@@ -1,0 +1,32 @@
+<ol>
+	<li>
+
+		<h3 class="mb10">querySelector和querySelectorAll的浏览器兼容性</h3>
+		<div class="example-demo">
+			<pre class="text">Chrome +         ✔
+Firefox 3.5+        ✔
+Safari 3.1+       ✔
+Opera 10+         ✔
+IE 8+           ✔
+</pre>
+		</div>
+		<div class="example-desc">
+			querySelector和querySelectorAll的参数是CSS选择器字符串。区别在于querySelector返回的是一个第一个匹配元素，querySelectorAll返回的一个所有匹配元素集合(NodeList)。
+		</div>
+	</li>
+	<li>
+
+		<h3 class="mb10">getElementsByClassName的浏览器兼容性</h3>
+		<div class="example-demo">
+			<pre class="text">Chrome +         ✔
+Firefox 3+        ✔
+Safari 3.1+       ✔
+Opera 9+         ✔
+IE 9+           ✔
+</pre>
+		</div>
+		<div class="example-desc">
+			getElementsBy返回的是一个动态的 Node List， 每一次调用都会重新对文档进行查询，导致无限循环的问题；而querySelector返回的是一个静态的 Node List，是一个 集合的快照，对文档的任何操作都不会对其产生影响。
+		</div>
+	</li>
+</ol>

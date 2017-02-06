@@ -1,0 +1,70 @@
+<ol>
+	<li>
+		<h3>原则上不允许使用Hack</h3>
+		<ul>
+			<li>很多不兼容问题可以通过改变方法和思路来解决，并非一定需要Hack，根据经验你完全可以绕过某些兼容问题。</li>
+			<li>一种合理的结构和合理的样式，是极少会碰到兼容问题的。</li>
+			<li>由于浏览器自身缺陷，我们无法避开的时候，可以允许使用适当的Hack。</li>
+		</ul>
+	</li>
+	<li>
+		<h3>统一Hack方法</h3>
+		<ul>
+			<li>统一使用“*”和“_”分别对IE7和6进行Hack。如下代码所示：
+				<div class="html">
+					<pre>/* IE7会显示灰色#888，IE6会显示白色#fff，其他浏览器显示黑色#000 */
+.m-list{color:#000;*color:#888;_color:#fff;}</pre>
+				</div>
+				<pre>  1. _          IE6
+  2. *          IE6/7
+  3. !important IE7/Firefox
+  4. *+         IE7
+  5. \9         IE6/7/8
+  6. \0         IE8
+  7. 条件hack
+      &lt;!--[if lt IE 7]&gt;&lt;html class="no-js lt-ie9 lt-ie8 lt-ie7"&gt;&lt;![endif]--&gt; IE7以下版本
+      &lt;!--[if IE 7]&gt;&lt;html class="no-js lt-ie9 lt-ie8"&gt;&lt;![endif]--&gt; IE7
+      &lt;!--[if IE 8]&gt; &lt;html class="no-js lt-ie9"&gt;&lt;![endif]--&gt; IE8
+      &lt;!--[if gt IE 8]&gt;&lt;!--&gt;&lt;html class="no-js"&gt;&lt;!--&lt;![endif]--&gt; IE8以上
+</pre>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<h3>使用@media实现IE hack的方法</h3>
+		<ul>
+			<li>仅IE6和IE7识别：
+				<div class="html"><pre>@media screen\9 {   .selector {  property: value; } }  </pre></div>
+			</li>
+			<li>仅IE6和IE7、IE8识别：
+				<div class="html"><pre>@media \0screen\,screen\9 {   .selector {  property: value; } } </pre></div>
+			</li>
+			<li>仅IE8识别：
+				<div class="html"><pre>@media \0screen {   .selector {  property: value; } } </pre></div>
+			</li>
+			<li>仅IE8-10识别：
+				<div class="html"><pre>@media screen\0 {   .selector {  property: value; } } </pre></div>
+			</li>
+			<li>仅IE9和IE10识别：
+				<div class="html"><pre>@media screen and (min-width:0\0) {   .selector {  property: value; } } </pre></div>
+			</li>
+			<li>仅IE10识别：
+				<div class="html"><pre>@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {    /* IE10-specific styles go here */ }</pre></div>
+			</li>
+		</ul>
+		<h5 class="mb10">上面几个@media配合“\”、“\0”和“\9”就能让不同版本的IE识别，那么具体项目中我们要怎么使用呢？</h5>
+		<div class="html">
+			<pre>如果你的body中设置了一个红色的背景，而想让不同版本IE变成别的颜色，那么我们就可以这么操作
+body {   background: red; }  
+
+/* IE6、IE7变成绿色 */ 
+@media all\9 {   body {     background: green;   } }  
+
+/* IE8变成蓝色 */ 
+@media \0screen {   body {     background: blue;   } } 
+
+/*IE9和IE10变成黄色*/ 
+@media screen and (min-width:0\0) {   body {      background: yellow;    } } </pre>
+		</div>
+	</li>
+</ol>

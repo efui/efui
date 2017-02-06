@@ -1,0 +1,61 @@
+<ol>
+	<li>
+		<h3>基本使用</h3>
+		<div class="example-visualize">
+			<button type="button" class="btn btn-default btn-popup">点击弹出</button>
+			<button type="button" class="btn btn-default btn-dialog">点击弹出对话框</button>
+			<button type="button" class="btn btn-default btn-toast">点击弹出消息提示</button>
+		</div>
+	</li>
+</ol>
+<div class="popup fade">
+	<div class="popup-dialog">
+		<div class="popup-content">
+			<div class="popup-inner">
+				<div class="f-cross closeIcon" data-dismiss="modal"></div>
+				<div class="popup-title p-t-txt2">
+					<span>盛通卡签购单<br>（车主/商户存根联）</span>
+				</div>
+				<div class="popup-text">
+					<div class="batch-pop-top">
+						<p>某某某油站</p>
+					</div>
+					<div class="small-ticket-list">
+						<p><span>商户名称：</span>云南新村油站有限公司</p>
+						<p><span>下单用户：</span>150****5563</p>
+						<p><span>消费时间：</span>2016-05-16 09:34:45</p>
+						<p><span>商品名称：</span>92#汽油</p>
+						<p><span>油枪号：</span>4号枪</p>
+						<p><span>当日单价：</span>6.28 元/升</p>
+						<p><span>消费金额：</span>300元</p>
+						<p><span>油量：</span>53.25升</p>
+						<p><span>交易编号：</span>2016051604556820</p>
+						<p><span>发票抬头：</span>某某某公司名称</p>
+					</div>
+					<div class="batch-pop-bottom">
+						<p>（本小票为重打印小票）</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$('.btn-popup').click(function(){
+		$('.popup').modal('show');
+	});
+	$('.btn-dialog').click(function() {
+		var _this = $(this);
+		_this.confirm({
+			content: '取消#45订单将视为此次交易无效，不会打印加油小票。确认取消？',
+			cancelButtonClass: 'popup-button-bold',
+			icon: 'f-notification',
+			opacity: 0.5,
+			closeIcon:true,
+			confirm: function() {}
+		});
+	});
+	$('.btn-toast').click(function(){
+		$(this).toast('订单交易达成');
+	});
+</script>

@@ -1,4 +1,4 @@
-/*! iScroll v5.1.2 ~ (c) 2008-2014 Matteo Spinelli ~ http://cubiq.org/license */
+/*! iScroll v5.1.3 ~ (c) 2008-2014 Matteo Spinelli ~ http://cubiq.org/license */
 (function (window, document, Math) {
 var rAF = window.requestAnimationFrame	||
 	window.webkitRequestAnimationFrame	||
@@ -229,6 +229,22 @@ var utils = (function () {
 	me.click = function (e) {
 		var target = e.target,
 			ev;
+			var _s_t = ($(target).index())*$(target).height();
+			var _index = $(target).closest('.wheel').index();
+			var _obj = $(target).closest('.number_select');
+			var _txto = parseInt($(target).closest('li').text());
+			//if(_txto<0)_txto=0;
+			//var _txt = _obj.find('.d_txt span').eq(_index).text();
+			$(target).addClass('cur').siblings().removeClass('cur');
+			$('.wheel').removeClass('cur_wheel');
+			$(target).closest('.wheel').addClass('cur_wheel');
+			//$('.show_txt').text(_txt);
+			if(isNaN(_txto)){ 
+				var _cur = parseInt($('.cur_wheel ul li .cur').text());
+				if(_cur>=0)_txto =_cur;
+				else _txto=0;
+			};
+			$('.s_bar_c .show_num').text(_txto);
 
 		if ( !(/(SELECT|INPUT|TEXTAREA)/i).test(target.tagName) ) {
 			ev = document.createEvent('MouseEvents');
@@ -275,9 +291,7 @@ function IScroll (el, options) {
 
 		HWCompositing: true,
 		useTransition: true,
-		useTransform: true,
-		onScrollEnd: null,
-		onRefresh: null
+		useTransform: true
 	};
 
 	for ( var i in options ) {
@@ -334,7 +348,7 @@ function IScroll (el, options) {
 }
 
 IScroll.prototype = {
-	version: '5.1.2',
+	version: '5.1.3',
 
 	_init: function () {
 		this._initEvents();
@@ -411,6 +425,7 @@ IScroll.prototype = {
 		if ( this.options.useTransition && this.isInTransition ) {
 			this.isInTransition = false;
 			pos = this.getComputedPosition();
+
 			this._translate(Math.round(pos.x), Math.round(pos.y));
 			this._execEvent('scrollEnd');
 		} else if ( !this.options.useTransition && this.isAnimating ) {
@@ -437,13 +452,13 @@ IScroll.prototype = {
 			e.preventDefault();
 		}
 
+
 		var point		= e.touches ? e.touches[0] : e,
 			deltaX		= point.pageX - this.pointX,
 			deltaY		= point.pageY - this.pointY,
 			timestamp	= utils.getTime(),
 			newX, newY,
 			absDistX, absDistY;
-
 		this.pointX		= point.pageX;
 		this.pointY		= point.pageY;
 
@@ -510,11 +525,39 @@ IScroll.prototype = {
 		}
 
 		this.moved = true;
-
+		
 		this._translate(newX, newY);
 
 /* REPLACE START: _move */
 
+		if($(e.target).closest('.s_bar_c').length>0){
+			var _num = $('.s_bar_c .show_num').text();
+			var s_txt = parseInt(_num);
+			if(isNaN(s_txt)){ 
+				var _curnum = $('.cur_wheel ul li .cur').text();
+				var _cur = parseInt(_curnum);
+				if(_cur>=0)s_txt =_cur;
+				else s_txt=0;
+			};
+			s_txt = s_txt - (deltaY);	
+			s_txt = parseInt((s_txt<0) ? 0 : s_txt);
+			s_txt = parseInt((s_txt>100) ? 100 : s_txt);
+			$('.s_bar_c .show_num').text(s_txt);
+				$('.cur_wheel .cur').text(s_txt);
+				$('.cur_wheel .cur').prev().text(s_txt-1);
+				$('.cur_wheel .cur').prev().prev().text(s_txt-2);
+				$('.cur_wheel .cur').next().text(s_txt+1);
+				$('.cur_wheel .cur').next().next().text(s_txt+2);
+		};
+
+		if($(e.target).closest('.s_circle_c').length>0){
+			var s_txt = parseInt($('.s_circle_c .show_num').text());
+			s_txt = s_txt - (deltaY);	
+			s_txt = parseInt((s_txt<0) ? 0 : s_txt);
+			s_txt = parseInt((s_txt>240) ? 240 : s_txt);
+
+			$('.s_circle_c .show_num').text(s_txt);
+		};
 		if ( timestamp - this.startTime > 300 ) {
 			this.startTime = timestamp;
 			this.startX = this.x;
@@ -522,6 +565,7 @@ IScroll.prototype = {
 		}
 
 /* REPLACE END: _move */
+
 
 	},
 
@@ -613,6 +657,7 @@ IScroll.prototype = {
 			this.scrollTo(newX, newY, time, easing);
 			return;
 		}
+
 		this._execEvent('scrollEnd');
 	},
 
@@ -649,11 +694,7 @@ IScroll.prototype = {
 		}
 
 		this.scrollTo(x, y, time, this.options.bounceEasing);
-		
-		if(this.moved){
-			this.moved = false;
-			if (this.options.onScrollEnd) this.options.onScrollEnd.call(this);
-		}
+
 		return true;
 	},
 
@@ -680,7 +721,6 @@ IScroll.prototype = {
 		this.maxScrollY		= this.wrapperHeight - this.scrollerHeight;
 
 /* REPLACE END: refresh */
-		if (this.options.onRefresh) this.options.onRefresh.call(this);
 
 		this.hasHorizontalScroll	= this.options.scrollX && this.maxScrollX < 0;
 		this.hasVerticalScroll		= this.options.scrollY && this.maxScrollY < 0;
@@ -750,22 +790,27 @@ IScroll.prototype = {
 		x = this.x + x;
 		y = this.y + y;
 		time = time || 0;
-
 		this.scrollTo(x, y, time, easing);
 	},
 
 	scrollTo: function (x, y, time, easing) {
 		easing = easing || utils.ease.circular;
-
 		this.isInTransition = this.options.useTransition && time > 0;
 
 		if ( !time || (this.options.useTransition && easing.style) ) {
 			this._transitionTimingFunction(easing.style);
 			this._transitionTime(time);
+
+			var _s_top = $(this.wrapper).find('li').height()*(-1);
+			var _n_l = Math.round(y/_s_top);
+			if(y%_s_top!=0){
+				y = _s_top * _n_l;
+			}
 			this._translate(x, y);
 		} else {
 			this._animate(x, y, time, easing.fn);
-		}
+		};
+
 	},
 
 	scrollToElement: function (el, time, offsetX, offsetY, easing) {
@@ -842,18 +887,45 @@ IScroll.prototype = {
 
 			this.scrollerStyle[utils.style.transform] = 'translate(' + x + 'px,' + y + 'px)' + this.translateZ;
 
+			
 /* REPLACE END: _translate */
 
 		} else {
 			x = Math.round(x);
 			y = Math.round(y);
+
 			this.scrollerStyle.left = x + 'px';
 			this.scrollerStyle.top = y + 'px';
+
+
+			if(x<0){
+				$('.toptitle').addClass('hasarrowl');
+				var _i_w  =  $('.toptitle .iscroll').width();
+				var _s_w = $('.toptitle .scroller').width() ;
+				var _w_dif = $('.topops-addbtn a').outerWidth(true);
+
+				if(_s_w-_w_dif-_i_w+x<=0)$('.toptitle').removeClass('hasarrowr');
+					else $('.toptitle').addClass('hasarrowr');
+			};
+			if(x>0){
+				$('.toptitle').removeClass('hasarrowl');
+				var _s_w = $('.toptitle .scroller').width() ;
+				var _i_w  =  $('.toptitle .iscroll').width();
+				if(_s_w>_i_w)$('.toptitle').addClass('hasarrowr');
+			};
+			$('.toptitle ul li').click(function(){
+				$(this).addClass('active').siblings().removeClass('active');
+			});
+
+
+			if($(this.wrapper).closest('.iscroll').hasClass('plan-scroll')){
+				var _top = $(this.wrapper).children()[0].style.top;
+				$(this.wrapper).closest('.iscroll').siblings('.iscroll').find('.scroller').css('top',_top);
+			}
 		}
 
 		this.x = x;
 		this.y = y;
-
 
 	if ( this.indicators ) {
 		for ( var i = this.indicators.length; i--; ) {
@@ -927,7 +999,6 @@ IScroll.prototype = {
 			indicator;
 
 		var that = this;
-
 		this.indicators = [];
 
 		if ( this.options.scrollbars ) {
@@ -988,7 +1059,7 @@ IScroll.prototype = {
 					this.fade();
 				});
 			});
-				
+
 			this.on('scrollCancel', function () {
 				_indicatorsMap(function () {
 					this.fade();
@@ -1028,7 +1099,6 @@ IScroll.prototype = {
 		utils.addEvent(this.wrapper, 'wheel', this);
 		utils.addEvent(this.wrapper, 'mousewheel', this);
 		utils.addEvent(this.wrapper, 'DOMMouseScroll', this);
-
 		this.on('destroy', function () {
 			utils.removeEvent(this.wrapper, 'wheel', this);
 			utils.removeEvent(this.wrapper, 'mousewheel', this);
@@ -1060,8 +1130,13 @@ IScroll.prototype = {
 		}, 400);
 
 		if ( 'deltaX' in e ) {
-			wheelDeltaX = -e.deltaX;
-			wheelDeltaY = -e.deltaY;
+			if (e.deltaMode === 1) {
+				wheelDeltaX = -e.deltaX * this.options.mouseWheelSpeed;
+				wheelDeltaY = -e.deltaY * this.options.mouseWheelSpeed;
+			} else {
+				wheelDeltaX = -e.deltaX;
+				wheelDeltaY = -e.deltaY;
+			}
 		} else if ( 'wheelDeltaX' in e ) {
 			wheelDeltaX = e.wheelDeltaX / 120 * this.options.mouseWheelSpeed;
 			wheelDeltaY = e.wheelDeltaY / 120 * this.options.mouseWheelSpeed;
@@ -1506,8 +1581,15 @@ IScroll.prototype = {
 
 			if ( now >= destTime ) {
 				that.isAnimating = false;
-				that._translate(destX, destY);
 
+			var _s_top = $(that.wrapper).find('li').height()*(-1);
+			var _n_l = Math.round(destY/_s_top);
+			if(destY%_s_top!=0){
+				destY = _s_top * _n_l;
+			}
+
+
+				that._translate(destX, destY);
 				if ( !that.resetPosition(that.options.bounceTime) ) {
 					that._execEvent('scrollEnd');
 				}
@@ -1519,6 +1601,7 @@ IScroll.prototype = {
 			easing = easingFn(now);
 			newX = ( destX - startX ) * easing + startX;
 			newY = ( destY - startY ) * easing + startY;
+
 			that._translate(newX, newY);
 
 			if ( that.isAnimating ) {
@@ -1527,6 +1610,7 @@ IScroll.prototype = {
 		}
 
 		this.isAnimating = true;
+		
 		step();
 	},
 	handleEvent: function (e) {
@@ -1716,7 +1800,6 @@ Indicator.prototype = {
 
 	_start: function (e) {
 		var point = e.touches ? e.touches[0] : e;
-
 		e.preventDefault();
 		e.stopPropagation();
 
@@ -1762,9 +1845,7 @@ Indicator.prototype = {
 
 		newX = this.x + deltaX;
 		newY = this.y + deltaY;
-
 		this._pos(newX, newY);
-
 // INSERT POINT: indicator._move
 
 		e.preventDefault();
@@ -1780,7 +1861,6 @@ Indicator.prototype = {
 
 		e.preventDefault();
 		e.stopPropagation();
-
 		utils.removeEvent(window, 'touchmove', this);
 		utils.removeEvent(window, utils.prefixPointerEvent('pointermove'), this);
 		utils.removeEvent(window, 'mousemove', this);

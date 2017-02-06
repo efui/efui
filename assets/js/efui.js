@@ -1,332 +1,55 @@
 /* ========================================================================
  * EFUI: efui.js v1.0
  * ======================================================================== */
-
-/*****   modal   ******/
 + function($) {
 	'use strict';
-	var Modal = function(element, options) {
-		this.options = options
-		this.$body = $(document.body)
-		this.$element = $(element)
-		this.$dialog = this.$element.find('.popup-dialog')
-		this.$backdrop = null
-		this.isShown = null
-		this.originalBodyPad = null
-		this.scrollbarWidth = 0
-		this.ignoreBackdropClick = false
 
-		if (this.options.remote) {
-			this.$element
-				.find('.popup-content')
-				.load(this.options.remote, $.proxy(function() {
-					this.$element.trigger('loaded.bs.modal')
-				}, this))
+	// CSS TRANSITION SUPPORT
+	// ============================================================
+
+	function transitionEnd() {
+		var el = document.createElement('efui')
+		var transEndEventNames = {
+			WebkitTransition: 'webkitTransitionEnd',
+			MozTransition: 'transitionend',
+			OTransition: 'oTransitionEnd otransitionend',
+			transition: 'transitionend'
 		}
-	}
-
-	Modal.VERSION = '3.3.5'
-
-	Modal.TRANSITION_DURATION = 300
-	Modal.BACKDROP_TRANSITION_DURATION = 150
-
-	Modal.DEFAULTS = {
-		backdrop: true,
-		keyboard: true,
-		show: true
-	}
-
-	Modal.prototype.toggle = function(_relatedTarget) {
-		return this.isShown ? this.hide() : this.show(_relatedTarget)
-	}
-
-	Modal.prototype.show = function(_relatedTarget) {
-		var that = this
-		var e = $.Event('show.bs.modal', {
-			relatedTarget: _relatedTarget
-		})
-		this.$element.trigger(e)
-
-		if (this.isShown || e.isDefaultPrevented()) return
-
-		this.isShown = true
-
-		this.checkScrollbar()
-		this.setScrollbar()
-		this.$body.addClass('popup-open')
-
-		this.escape()
-		this.resize()
-
-		this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
-
-		this.$dialog.on('mousedown.dismiss.bs.modal', function() {
-			that.$element.one('mouseup.dismiss.bs.modal', function(e) {
-				if ($(e.target).is(that.$element)) that.ignoreBackdropClick = true
-			})
-		})
-
-		this.backdrop(function() {
-			var transition = $.support.transition && that.$element.hasClass('fade')
-			if (!that.$element.parent().length) {
-				that.$element.appendTo(that.$body) // don't move modals dom position
-			}
-
-			that.$element
-				.show()
-				.scrollTop(0)
-
-			that.adjustDialog()
-
-			if (transition) {
-				that.$element[0].offsetWidth // force reflow
-			}
-
-			that.$element.addClass('in')
-
-			that.enforceFocus()
-
-			var e = $.Event('shown.bs.modal', {
-				relatedTarget: _relatedTarget
-			})
-
-			transition ?
-				that.$dialog // wait for modal to slide in
-				.one('bsTransitionEnd', function() {
-					that.$element.trigger('focus').trigger(e)
-				})
-				.emulateTransitionEnd(Modal.TRANSITION_DURATION) :
-				that.$element.trigger('focus').trigger(e)
-		})
-	}
-
-	Modal.prototype.hide = function(e) {
-		if (e) e.preventDefault()
-
-		e = $.Event('hide.bs.modal')
-
-		this.$element.trigger(e)
-
-		if (!this.isShown || e.isDefaultPrevented()) return
-
-		this.isShown = false
-
-		this.escape()
-		this.resize()
-
-		$(document).off('focusin.bs.modal')
-
-		this.$element
-			.removeClass('in')
-			.off('click.dismiss.bs.modal')
-			.off('mouseup.dismiss.bs.modal')
-
-		this.$dialog.off('mousedown.dismiss.bs.modal')
-
-		$.support.transition && this.$element.hasClass('fade') ?
-			this.$element
-			.one('bsTransitionEnd', $.proxy(this.hideModal, this))
-			.emulateTransitionEnd(Modal.TRANSITION_DURATION) :
-			this.hideModal()
-	}
-
-	Modal.prototype.enforceFocus = function() {
-		$(document)
-			.off('focusin.bs.modal') // guard against infinite focus loop
-			.on('focusin.bs.modal', $.proxy(function(e) {
-				if (this.$element[0] !== e.target && !this.$element.has(e.target).length) {
-					this.$element.trigger('focus')
+		for(var name in transEndEventNames) {
+			if(el.style[name] !== undefined) {
+				return {
+					end: transEndEventNames[name]
 				}
-			}, this))
-	}
-
-	Modal.prototype.escape = function() {
-		if (this.isShown && this.options.keyboard) {
-			this.$element.on('keydown.dismiss.bs.modal', $.proxy(function(e) {
-				e.which == 27 && this.hide()
-			}, this))
-		} else if (!this.isShown) {
-			this.$element.off('keydown.dismiss.bs.modal')
-		}
-	}
-
-	Modal.prototype.resize = function() {
-		if (this.isShown) {
-			$(window).on('resize.bs.modal', $.proxy(this.handleUpdate, this))
-		} else {
-			$(window).off('resize.bs.modal')
-		}
-	}
-
-	Modal.prototype.hideModal = function() {
-		var that = this
-		this.$element.hide()
-		this.backdrop(function() {
-			that.$body.removeClass('popup-open')
-			that.resetAdjustments()
-			that.resetScrollbar()
-			that.$element.trigger('hidden.bs.modal')
-		})
-	}
-
-	Modal.prototype.removeBackdrop = function() {
-		this.$backdrop && this.$backdrop.remove()
-		this.$backdrop = null
-	}
-
-	Modal.prototype.backdrop = function(callback) {
-		var that = this
-		var animate = this.$element.hasClass('fade') ? 'fade' : ''
-
-		if (this.isShown && this.options.backdrop) {
-			var doAnimate = $.support.transition && animate
-
-			this.$backdrop = $(document.createElement('div'))
-				.addClass('modal-backdrop ' + animate)
-				.appendTo(this.$body)
-
-			this.$element.on('click.dismiss.bs.modal', $.proxy(function(e) {
-				if (this.ignoreBackdropClick) {
-					this.ignoreBackdropClick = false
-					return
-				}
-				if (e.target !== e.currentTarget) return
-				this.options.backdrop == 'static' ? this.$element[0].focus() : this.hide()
-			}, this))
-
-			if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
-
-			this.$backdrop.addClass('in')
-
-			if (!callback) return
-
-			doAnimate ?
-				this.$backdrop
-				.one('bsTransitionEnd', callback)
-				.emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
-				callback()
-
-		} else if (!this.isShown && this.$backdrop) {
-			this.$backdrop.removeClass('in')
-
-			var callbackRemove = function() {
-				that.removeBackdrop()
-				callback && callback()
 			}
-			$.support.transition && this.$element.hasClass('fade') ?
-				this.$backdrop
-				.one('bsTransitionEnd', callbackRemove)
-				.emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
-				callbackRemove()
-
-		} else if (callback) {
-			callback()
 		}
+		return false
 	}
 
-	// these following methods are used to handle overflowing modals
-
-	Modal.prototype.handleUpdate = function() {
-		this.adjustDialog()
-	}
-
-	Modal.prototype.adjustDialog = function() {
-		var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
-		var _s_h = this.$element.outerHeight(true) * 0.8;
-		var _r_h = this.$element[0].firstElementChild.clientHeight;
-
-		var _t_h = _r_h - 70 - this.$element.find('.popup-buttons').outerHeight(true);
-		this.$element.find('.popup-text').height(_t_h + 'px');
-		this.$element.css({
-			paddingLeft: !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
-			paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
+	$.fn.emulateTransitionEnd = function(duration) {
+		var called = false
+		var $el = this
+		$(this).one('efTransitionEnd', function() {
+			called = true
 		})
-	}
-
-	Modal.prototype.resetAdjustments = function() {
-		this.$element.css({
-			paddingLeft: '',
-			paddingRight: ''
-		})
-	}
-
-	Modal.prototype.checkScrollbar = function() {
-		var fullWindowWidth = window.innerWidth
-		if (!fullWindowWidth) { // workaround for missing window.innerWidth in IE8
-			var documentElementRect = document.documentElement.getBoundingClientRect()
-			fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left)
+		var callback = function() {
+			if(!called) $($el).trigger($.support.transition.end)
 		}
-		this.bodyIsOverflowing = document.body.clientWidth < fullWindowWidth
-		this.scrollbarWidth = this.measureScrollbar()
-	}
-
-	Modal.prototype.setScrollbar = function() {
-		var bodyPad = parseInt((this.$body.css('padding-right') || 0), 10)
-		this.originalBodyPad = document.body.style.paddingRight || ''
-		if (this.bodyIsOverflowing) this.$body.css('padding-right', bodyPad + this.scrollbarWidth)
-	}
-
-	Modal.prototype.resetScrollbar = function() {
-		this.$body.css('padding-right', this.originalBodyPad)
-	}
-
-	Modal.prototype.measureScrollbar = function() { // thx walsh
-		var scrollDiv = document.createElement('div')
-		scrollDiv.className = 'modal-scrollbar-measure'
-		this.$body.append(scrollDiv)
-		var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
-		this.$body[0].removeChild(scrollDiv)
-		return scrollbarWidth
-	}
-
-	// MODAL PLUGIN DEFINITION
-	// =======================
-
-	function Plugin(option, _relatedTarget) {
-		return this.each(function() {
-			var $this = $(this)
-			var data = $this.data('bs.modal')
-			var options = $.extend({}, Modal.DEFAULTS, $this.data(), typeof option == 'object' && option)
-
-			if (!data) $this.data('bs.modal', (data = new Modal(this, options)))
-			if (typeof option == 'string') data[option](_relatedTarget)
-			else if (options.show) data.show(_relatedTarget)
-		})
-	}
-
-	var old = $.fn.modal
-
-	$.fn.modal = Plugin
-	$.fn.modal.Constructor = Modal
-
-	// MODAL NO CONFLICT
-	// =================
-
-	$.fn.modal.noConflict = function() {
-		$.fn.modal = old
+		setTimeout(callback, duration)
 		return this
 	}
 
-	// MODAL DATA-API
-	// ==============
+	$(function() {
+		$.support.transition = transitionEnd()
 
-	$(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function(e) {
-		var $this = $(this)
-		var href = $this.attr('href')
-		var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) // strip for ie7
-		var option = $target.data('bs.modal') ? 'toggle' : $.extend({
-			remote: !/#/.test(href) && href
-		}, $target.data(), $this.data())
+		if(!$.support.transition) return
 
-		if ($this.is('a')) e.preventDefault()
-
-		$target.one('show.bs.modal', function(showEvent) {
-			if (showEvent.isDefaultPrevented()) return // only register focus restorer if modal will actually get shown
-			$target.one('hidden.bs.modal', function() {
-				$this.is(':visible') && $this.trigger('focus')
-			})
-		})
-		Plugin.call($target, option, this)
+		$.event.special.efTransitionEnd = {
+			bindType: $.support.transition.end,
+			delegateType: $.support.transition.end,
+			handle: function(e) {
+				if($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
+			}
+		}
 	})
 
 }(jQuery);
@@ -340,7 +63,7 @@
 			var data = $this.data('bs.confirm')
 			var options = $.extend({}, Jconfirm.DEFAULTS, $this.data(), typeof option == 'object' && option)
 
-			if (!data) $this.data('bs.confirm', (data = new Jconfirm(this, options)))
+			if(!data) $this.data('bs.confirm', (data = new Jconfirm(this, options)))
 			else return new Jconfirm(this, options)
 		})
 	};
@@ -354,12 +77,12 @@
 	};
 
 	Jconfirm.DEFAULTS = {
-		layer: '<div class="modal-backdrop fade"></div>',
+		layer: '<div class="popup-backdrop fade"></div>',
 		template: '<div class="popup fade">' +
 			'<div class="popup-dialog">' +
 			'<div class="popup-content">' +
 			'<div class="popup-inner">' +
-			'<div class="closeIcon">&times;</div>' +
+			'<div class="f-cross closeIcon"></div>' +
 			'<div class="title-c popup-title">' +
 			'<span class="icon-c"></span><span class="title"></span>' +
 			'</div>' +
@@ -388,6 +111,7 @@
 		this._buildHTML();
 		this._bindEvents();
 		this.open();
+		this.$el.on('click.dismiss', '[data-dismiss="confirm"]', $.proxy(this.close, this));
 	}
 	Jconfirm.prototype._buildHTML = function() {
 		this._lastFocused = $('body').find(':focus');
@@ -399,7 +123,7 @@
 		this.$content = this.$el.find('.pop-m-content');
 		this.$icon = this.$el.find('.icon-c');
 		this.$closeIcon = this.$el.find('.closeIcon');
-		if (!this.closeIcon) this.$closeIcon.remove();
+		if(!this.closeIcon) this.$closeIcon.remove();
 		this.setTitle();
 		this.setIcon();
 		this.setContent();
@@ -407,30 +131,37 @@
 	}
 	Jconfirm.prototype._bindEvents = function() {
 		var _this = this;
-		if (this.$confirmButton) {
+		if(this.$confirmButton) {
 			this.$confirmButton.click(function(e) {
 				e.preventDefault();
 				var r = _this.confirm(_this.$el);
-				if (typeof r === 'undefined' || r) _this.close();
+				if(typeof r === 'undefined' || r) _this.close();
 			});
 		}
-		if (this.$cancelButton) {
+		if(this.$cancelButton) {
 			this.$cancelButton.click(function(e) {
 				e.preventDefault();
 				var r = _this.cancel(_this.$el);
-				if (typeof r === 'undefined' || r) _this.close();
+				if(typeof r === 'undefined' || r) _this.close();
+			});
+		}
+		if(this.$closeIcon) {
+			this.$closeIcon.click(function(e) {
+				e.preventDefault();
+				var r = _this.cancel(_this.$el);
+				if(typeof r === 'undefined' || r) _this.close();
 			});
 		}
 	}
 	Jconfirm.prototype._setButtons = function() {
 		this.$btnc = this.$el.find('.popup-buttons');
-		if (this.cancelButton && $.trim(this.cancelButton) !== '') {
+		if(this.cancelButton && $.trim(this.cancelButton) !== '') {
 			this.$cancelButton = $('<button type="button" class="popup-button">' + this.cancelButton + '</button>').appendTo(this.$btnc).addClass(this.cancelButtonClass);
 		}
-		if (this.confirmButton && $.trim(this.confirmButton) !== '') {
+		if(this.confirmButton && $.trim(this.confirmButton) !== '') {
 			this.$confirmButton = $('<button type="button" class="popup-button">' + this.confirmButton + '</button>').appendTo(this.$btnc).addClass(this.confirmButtonClass);
 		}
-		if (!this.confirmButton && !this.cancelButton) {
+		if(!this.confirmButton && !this.cancelButton) {
 			this.$btnc.hide();
 		}
 	}
@@ -445,16 +176,20 @@
 	Jconfirm.prototype.setContent = function(string) {
 		this.content = (typeof string == 'undefined') ? this.content : string;
 		this.$content.html(this.content);
-	}
+	}	
 	Jconfirm.prototype.close = function() {
-		if (this.isClosed()) return false;
+		if(this.isClosed()) return false;
 		this._lastFocused.focus();
 		this.$elayer.removeClass('in').remove();
 		this.$el.removeClass('in').remove();
 		return true;
 	}
 	Jconfirm.prototype.open = function() {
-		if (this.isClosed()) return false;
+		if(this.isClosed()) return false;
+		this.$el.on('click.dismiss', $.proxy(function (e) {
+			if (e.target !== e.currentTarget) return
+		 	this.$elayer !== 'static' && this.close()
+	  	}, this));
 		this.$elayer.addClass('in');
 		this.$el.addClass('in').find('input[autofocus]:visible:first').focus();
 		return true;
@@ -479,218 +214,198 @@
 	}
 }(jQuery);
 
-/*****   collapse   ******/
++ function($) {
+	'use strict';
+	var Modal = function(element, options) {
+		this.options = options;
+		this.$element = $(element);
+		this.$dialog = this.$element.find('.popup-dialog');
+		this.$backdrop = null;
+		this.isShown = null;
+		this.show();
+	}
 
-+function ($) {
-  'use strict';
+	Modal.TRANSITION_DURATION = 300
 
-  // COLLAPSE PUBLIC CLASS DEFINITION
-  // ================================
+	Modal.DEFAULTS = {
+		backdrop: true
+	}
+	Modal.prototype.backdrop = function(callback) {
+		var that = this;
+		var animate = this.$element.hasClass('fade') ? 'fade' : '';
+		
+		if(this.isShown && this.options.backdrop) {
+			var doAnimate = $.support.transition && animate;
+			this.$backdrop = $(document.createElement('div'))
+				.addClass('popup-backdrop ' + animate)
+				.appendTo($(document.body));
+				
+			this.$element.on('click.dismiss.modal', $.proxy(function (e) {
+		        if (e.target !== e.currentTarget) return
+		        this.options.backdrop !== 'static' && this.hide()
+	      	}, this));
+	      
+			this.$backdrop.addClass('in');
+			if(!callback) return;
+			callback();
 
-  var Collapse = function (element, options) {
-    this.$element      = $(element)
-    this.options       = $.extend({}, Collapse.DEFAULTS, options)
-    this.$trigger      = $('[data-toggle="collapse"][href="#' + element.id + '"],' +
-                           '[data-toggle="collapse"][data-target="#' + element.id + '"]')
-    this.transitioning = null
+		} else if(!this.isShown && this.$backdrop) {
+			this.$backdrop.removeClass('in');
+			var callbackRemove = function() {
+				that.removeBackdrop();
+				callback && callback();
+			}();
 
-    if (this.options.parent) {
-      this.$parent = this.getParent()
-    } else {
-      this.addAriaAndCollapsedClass(this.$element, this.$trigger)
-    }
+		} else if(callback) {
+			callback()
+		}
+	}
+	Modal.prototype.show = function() {
+		var that = this;
+		if(this.isShown) return;
+		this.isShown = true;
+		
+		this.$element.on('click.dismiss.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this));
+		this.backdrop(function() {
+			!that.$element.parent().length && that.$element.appendTo($(document.body));
+			that.$element.show().scrollTop(0);
+			that.$element.addClass('in');
+		});
+	}
+	Modal.prototype.hide = function (e) {
+    	if (e) e.preventDefault();
+		var that = this;
+		if(!this.isShown) return;
+		this.isShown = false;
+		
+		this.$element.removeClass('in').off('click.dismiss.modal');
+      	this.hideModal();
+  	}
+  	Modal.prototype.hideModal = function () {
+	    var that = this;
+	    this.$element.hide();
+	    this.backdrop();
+  	}
+  	Modal.prototype.removeBackdrop = function () {
+    	this.$backdrop && this.$backdrop.remove();
+    	this.$backdrop = null
+  	}
 
-    if (this.options.toggle) this.toggle()
-  }
+	function Plugin(option) {
+		return this.each(function() {
+			var $this = $(this);
+			var data = $this.data('data.modal');
+			var options = $.extend({}, Modal.DEFAULTS, $this.data(), typeof option == 'object' && option);
+			
+			if(!data) $this.data('data.modal', (data = new Modal(this, options)))
+			else return new Modal(this, options)
+		})
+	}
 
-  Collapse.VERSION  = '3.3.5'
-
-  Collapse.TRANSITION_DURATION = 350
-
-  Collapse.DEFAULTS = {
-    toggle: true
-  }
-
-  Collapse.prototype.dimension = function () {
-    var hasWidth = this.$element.hasClass('width')
-    return hasWidth ? 'width' : 'height'
-  }
-
-  Collapse.prototype.show = function () {
-    if (this.transitioning || this.$element.hasClass('in')) return
-
-    var activesData
-    var actives = this.$parent && this.$parent.children('.panel').children('.in, .collapsing')
-
-    if (actives && actives.length) {
-      activesData = actives.data('bs.collapse')
-      if (activesData && activesData.transitioning) return
-    }
-
-    var startEvent = $.Event('show.bs.collapse')
-    this.$element.trigger(startEvent)
-    if (startEvent.isDefaultPrevented()) return
-
-    if (actives && actives.length) {
-      Plugin.call(actives, 'hide')
-      activesData || actives.data('bs.collapse', null)
-    }
-
-    var dimension = this.dimension()
-
-    this.$element
-      .removeClass('collapse')
-      .addClass('collapsing')[dimension](0)
-      .attr('aria-expanded', true)
-
-    this.$trigger
-      .removeClass('collapsed')
-      .attr('aria-expanded', true)
-
-    this.transitioning = 1
-
-    var complete = function () {
-      this.$element
-        .removeClass('collapsing')
-        .addClass('in')[dimension]('')
-      this.transitioning = 0
-      this.$element
-        .trigger('shown.bs.collapse')
-    }
-
-    if (!$.support.transition) return complete.call(this)
-
-    var scrollSize = $.camelCase(['scroll', dimension].join('-'))
-
-    this.$element
-      .one('bsTransitionEnd', $.proxy(complete, this))
-      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])
-  }
-
-  Collapse.prototype.hide = function () {
-    if (this.transitioning || !this.$element.hasClass('in')) return
-
-    var startEvent = $.Event('hide.bs.collapse')
-    this.$element.trigger(startEvent)
-    if (startEvent.isDefaultPrevented()) return
-
-    var dimension = this.dimension()
-
-    this.$element[dimension](this.$element[dimension]())[0].offsetHeight
-
-    this.$element
-      .addClass('collapsing')
-      .removeClass('in')
-      .attr('aria-expanded', false)
-
-    this.$trigger
-      .addClass('collapsed')
-      .attr('aria-expanded', false)
-
-    this.transitioning = 1
-
-    var complete = function () {
-      this.transitioning = 0
-      this.$element
-        .removeClass('collapsing')
-        .addClass('collapse')
-        .trigger('hidden.bs.collapse')
-    }
-
-    if (!$.support.transition) return complete.call(this)
-
-    this.$element
-      [dimension](0)
-      .one('bsTransitionEnd', $.proxy(complete, this))
-      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)
-  }
-
-  Collapse.prototype.toggle = function () {
-    this[this.$element.hasClass('in') ? 'hide' : 'show']()
-  }
-
-  Collapse.prototype.getParent = function () {
-    return $(this.options.parent)
-      .find('[data-toggle="collapse"][data-parent="' + this.options.parent + '"]')
-      .each($.proxy(function (i, element) {
-        var $element = $(element)
-        this.addAriaAndCollapsedClass(getTargetFromTrigger($element), $element)
-      }, this))
-      .end()
-  }
-
-  Collapse.prototype.addAriaAndCollapsedClass = function ($element, $trigger) {
-    var isOpen = $element.hasClass('in')
-
-    $element.attr('aria-expanded', isOpen)
-    $trigger
-      .toggleClass('collapsed', !isOpen)
-      .attr('aria-expanded', isOpen)
-  }
-
-  function getTargetFromTrigger($trigger) {
-    var href
-    var target = $trigger.attr('data-target')
-      || (href = $trigger.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') // strip for ie7
-
-    return $(target)
-  }
-
-
-  // COLLAPSE PLUGIN DEFINITION
-  // ==========================
-
-  function Plugin(option) {
-    return this.each(function () {
-      var $this   = $(this)
-      var data    = $this.data('bs.collapse')
-      var options = $.extend({}, Collapse.DEFAULTS, $this.data(), typeof option == 'object' && option)
-
-      if (!data && options.toggle && /show|hide/.test(option)) options.toggle = false
-      if (!data) $this.data('bs.collapse', (data = new Collapse(this, options)))
-      if (typeof option == 'string') data[option]()
-    })
-  }
-
-  var old = $.fn.collapse
-
-  $.fn.collapse             = Plugin
-  $.fn.collapse.Constructor = Collapse
-
-
-  // COLLAPSE NO CONFLICT
-  // ====================
-
-  $.fn.collapse.noConflict = function () {
-    $.fn.collapse = old
-    return this
-  }
-
-
-  // COLLAPSE DATA-API
-  // =================
-
-  $(document).on('click.bs.collapse.data-api', '[data-toggle="collapse"]', function (e) {
-    var $this   = $(this)
-
-    if (!$this.attr('data-target')) e.preventDefault()
-
-    var $target = getTargetFromTrigger($this)
-    var data    = $target.data('bs.collapse')
-    var option  = data ? 'toggle' : $this.data()
-    
-    Plugin.call($target, option)
-  })
-
+	var old = $.fn.modal;
+	$.fn.modal = Plugin;
+	$.fn.modal.Constructor = Modal;
+	$.fn.modal.noConflict = function() {
+		$.fn.modal = old;
+		return this;
+	}
 }(jQuery);
 
+/*****   class toggle   ******/
++ function($) {
+	'use strict';
+	$(document)
+		.on('click.data.togglec', '[data-toggleclass]', function(e) {
+			var $this = $(this);
+			var option = $this.data();
+			var toggleClass = option.toggleclass ? option.toggleclass : '';
+			$this.toggleClass(toggleClass);
+		})
+		.on('click.data.togglep', '[data-toggleparent]', function(e) {
+			var $this = $(this);
+			var option = $this.data();
+			var toggleClass = option.toggleparent ? option.toggleparent : '';
+			$this.parent().toggleClass(toggleClass);
+		})
+}(jQuery);
 
-+function ($) {
-  	'use strict';
-	$(document).on('click.data', '[data-toggleClass]', function (e) {
-	    var $this   = $(this);
-	    var option  = $this.data();
-	    var toggleClass = option.toggleclass? option.toggleclass:'';
-	    $this.toggleClass(toggleClass);
+/*回到顶部*/
++ function($) {
+	'use strict';
+
+	function debounce(fn, delay, immediate) {
+		var timer;
+		return function() {
+			var context = this,
+				args = arguments,
+				a = function() {
+					timer = null,
+						immediate || fn.apply(context, args)
+				},
+				r = immediate && !timer;
+			clearTimeout(timer),
+				timer = setTimeout(a, delay),
+				r && fn.apply(context, args)
+		}
+	}
+
+	function e() {
+		n.scrollTop() > 10 ? r.addClass("active") : r.removeClass("active")
+	}
+	var n = $(window),
+		r = $("#go-top");
+	r.length && (r.on("click", function(e) {
+		return e.preventDefault(), ($("html, body").animate({
+			scrollTop: 0
+		}, 500), !1)
+	}), e(), n.on("scroll", debounce(e, 100)));
+}(jQuery);
+
++ function($) {
+	/*目录切换*/
+	$(document).on("click.mlist", ".mlist li a", function(e) {
+		var _exm = $('.mswitch');
+		var ev = e || window.event; // 事务
+		var target = ev.target || ev.srcElement; // 获得事务源
+		var _index = $(target).parent().index();
+		_exm.eq(_index).show().siblings('.mswitch').hide();
+	});
+
+	/*窗口滚动事件*/
+	$(document).on("scroll", function(e) {
+		var m = $('.sidebar-menu');
+		var _t = $('.navbar-fixed-top').height() + $('.docs-header').height();
+		var _option = 'fixed';
+		m.length && $(this).scrollTop() > _t ? (m.addClass(_option)) : (m.removeClass(_option));
+	})
+}(jQuery);
+
++ function($) {
+	/*倒计时 时：分：秒*/
+	var DownTime = function(d, o) {
+		return function() {
+			var EndTime = new Date(d);
+			var NowTime = new Date();
+			var t = EndTime.getTime() - NowTime.getTime();
+			var h = 0;
+			var m = 0;
+			var s = 0;
+			t >= 0 && (
+				h = Math.floor(t / 1000 / 60 / 60 % 24) < 10 ? '0' + Math.floor(t / 1000 / 60 / 60 % 24) : Math.floor(t / 1000 / 60 / 60 % 24),
+				m = Math.floor(t / 1000 / 60 % 60) < 10 ? '0' + Math.floor(t / 1000 / 60 % 60) : Math.floor(t / 1000 / 60 % 60),
+				s = Math.floor(t / 1000 % 60) < 10 ? '0' + Math.floor(t / 1000 % 60) : Math.floor(t / 1000 % 60)
+			);
+			o.find("[class$='_h']").length && o.find("[class$='_h']").html("<i>" + String(h)[0] + "</i><i>" + String(h)[1] + "</i>时");
+			o.find("[class$='_m']").length && o.find("[class$='_m']").html("<i>" + String(m)[0] + "</i><i>" + String(m)[1] + "</i>分");
+			o.find("[class$='_s']").length && o.find("[class$='_s']").html("<i>" + String(s)[0] + "</i><i>" + String(s)[1] + "</i>秒");
+		}
+	}
+	$(window).on('load', function() {
+		$('[data-downtime]').each(function() {
+			var $this = $(this);
+			var option = $this.data();
+			var $time = option.downtime ? option.downtime : "";
+			setInterval(DownTime($time, $this), 0);
+		});
 	})
 }(jQuery);

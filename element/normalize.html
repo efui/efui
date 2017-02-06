@@ -1,6 +1,7 @@
 
-				为了增强跨浏览器表现的一致性
-			<pre class="prettyprint linenums">*{word-wrap:break-word}
+<h3 class="mb10">重定义浏览器默认样式</h3>
+<div class="example-demo">				
+			<pre>*{word-wrap:break-word}
 html,body,h1,h2,h3,h4,h5,h6,hr,p,iframe,dl,dt,dd,ul,ol,li,pre,form,button,input,textarea,th,td,fieldset{margin:0;padding:0}
 ul,ol,dl{list-style-type:none}
 html,body{*position:static}
@@ -44,4 +45,7 @@ Example:		class="clearfix|cl"
 Explain:		Clearfix（简写cl）避免因子元素浮动而导致的父元素高度缺失能问题
 */
 .cl:after,.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}.cl,.clearfix{zoom:1}</pre>
-			
+</div>
+<div class="example-desc">
+<p>为了增强跨浏览器表现的一致性，使用reset重定义浏览器默认样式。</p>
+</div>

@@ -1,9 +1,87 @@
-<input type="radio">
+<ol>
+	<li>
+		<h3>单选框(radio):</h3>
+		<div class="example-demo">
+			<div class="example-visualize">
+				<input type="radio" name="radioname" checked>
+				<input type="radio" name="radioname">
+			</div>
+		</div>
+		<div class="html">
+			<pre><input type="radio" name="radioname">
+<input type="radio" name="radioname"></pre>
+		</div>
+	</li>
+	<li>
+		<h3>复选框(checkbox):</h3>
+		<div class="example-demo">
+			<div class="example-visualize">
+				<input type="checkbox">
+				<input type="checkbox">
+				<input type="checkbox">
+			</div>
+			<div class="html">
+				<pre><input type="checkbox">
 <input type="checkbox">
-开关选择：
-<div class="switch-on switch-animate">
-	<input type="checkbox" checked="">
-	<span class="switch-left switch-primary">ON</span>
-	<label>&nbsp;</label>
-	<span class="switch-right switch-info">OFF</span>
+<input type="checkbox"></pre>
+			</div>
+			<div class="example-visualize">
+				<input type="checkbox" class="checkboxall"> 全选
+				<input type="checkbox" class="checkboxnone"> 反选
+			</div>
+			<div class="html">
+				<pre><input type="checkbox" class="checkboxall"> 全选
+<input type="checkbox" class="checkboxnone"> 反选</pre>
+			</div>
+		</div>
+	</li>
+	<li>
+		<h3>延伸(switch开关):</h3>
+		<div class="example-demo">
+			<div class="example-visualize">
+				<div class="switch">
+					<input type="checkbox" checked>
+				</div>
+				<div class="switch">
+					<input type="checkbox">
+				</div>
+			</div>
+			<div class="html">
+				<pre><div class="switch">
+	<input type="checkbox" checked>
 </div>
+<div class="switch">
+	<input type="checkbox">
+</div></pre>
+			</div>
+		</div>
+	</li>
+</ol>
+
+<script type="text/javascript">
+	var _id_val = 'checkbox',
+		_id_key = 0;
+	$('.example-visualize').each(function() {
+		!$(this).find('input[type="checkbox"]').closest('.checkbox').length && $(this).find('input[type="checkbox"]').each(function() {
+			$(this).attr('id', _id_val + _id_key++);
+			!$(this).closest('.switch').length && $(this).wrap($("<div></div>", {
+				class: "checkbox"
+			}));
+			$(this).after('<label for="' + $(this).attr('id') + '"></label>');
+		});
+		!$(this).find('input[type="checkbox"]').closest('.radio').length && $(this).find('input[type="radio"]').each(function() {
+			$(this).attr('id', _id_val + _id_key++);
+			$(this).wrap($("<div></div>", {
+				class: "radio"
+			}));
+			$(this).after('<label for="' + $(this).attr('id') + '"></label>');
+		});
+	});
+	/*全选、反选*/
+	$('.checkboxall').click(function() {
+		$(this).closest('.example-demo').find('input[type="checkbox"][class!="checkboxnone"]').prop('checked', true);
+	})
+	$('.checkboxnone').click(function() {
+		$(this).closest('.example-demo').find('input[type="checkbox"]').prop('checked', false);
+	})
+</script>

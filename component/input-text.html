@@ -1,6 +1,29 @@
-<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"迷你尺寸"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"input-text radius size-MINI"</span><span class="tag">&gt;</span></li><li class="L1"><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"小尺寸"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"input-text radius size-S"</span><span class="tag">&gt;</span></li><li class="L2"><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"默认尺寸"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"input-text radius size-M"</span><span class="tag">&gt;</span></li><li class="L3"><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"大尺寸"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"input-text radius size-L"</span><span class="tag">&gt;</span></li><li class="L4"><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"特大尺寸"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"input-text radius size-XL"</span><span class="tag">&gt;</span></li></ol></pre>
-<input type="text" placeholder="迷你尺寸" class="input-text radius size-MINI">
-<input type="text" placeholder="小尺寸" class="input-text radius size-S">
-<input type="text" placeholder="默认尺寸" class="input-text radius size-M">
-<input type="text" placeholder="大尺寸" class="input-text radius size-L">
-<input type="text" placeholder="特大尺寸" class="input-text radius size-XL">
+<ol>
+	<li>
+		<h3>number box（数字输入框）</h3>
+		<div class="example-desc">
+			<div class="example-visualize">
+				<div class="numbox">
+					<span class="btn-numbox-minus">-</span>
+					<input class="input-numbox" type="text" value="1">
+					<span class="btn-numbox-plus">+</span>
+				</div>
+			</div>
+		</div>
+	</li>
+</ol>
+<script type="text/javascript">
+	$('.numbox').each(function(){
+		var _minus = $(this).find('[class$="-minus"]');
+		var _plus = $(this).find('[class$="-plus"]');
+		var _obj = $(this).find('.input-numbox');
+		var _val = Number(_obj.val());
+		_minus.click(function(){
+			_val>0 && (_val = _val-1,_obj.val(_val))
+		});
+		_plus.click(function(){
+			_val = _val+1;
+			_obj.val(_val)
+		});
+	});
+</script>

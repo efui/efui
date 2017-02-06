@@ -9,33 +9,36 @@
 	<div class="row main-container clearfix">
 
 		<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
-			<section>
-				<div class="sidebar-menu">
-					<dl>
-						<dt><a href="javascript:;">CSS规范</a></dt>
-						<dd><a ui-sref="standard" class="active">代码格式</a></dd>
-						<dd><a ui-sref="standard.cssname">命名规范</a></dd>
-						<dd><a ui-sref="standard.csssort">分类方法</a></dd>
-						<dd><a ui-sref="standard.cssoptimize">优化方案</a></dd>
-						<dd><a ui-sref="standard.csshack">CSS Hack</a></dd>
-					</dl>
-					<dl>
-						<dt><a href="javascript:;">HTML规范</a></dt>
-						<dd><a ui-sref="standard.html">代码格式</a></dd>
-						<dd><a ui-sref="standard.htmlname">命名规范</a></dd>
-					</dl>
-					<dl>
-						<dt><a href="javascript:;">javascript规范</a></dt>
-						<dd><a ui-sref="standard.js">代码格式</a></dd>
-						<dd><a ui-sref="standard.jsname">命名规范</a></dd>
-					</dl>
-				</div>
-			</section>
+			<div class="sidebar-menu sidebar-slide">
+				<section class="sidebar-slide-overlay">
+						<dl>
+							<dt><a href="javascript:;">CSS规范</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="standard.format">代码格式</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.cssname">命名规范</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.csssort">分类方法</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.cssoptimize">优化方案</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="javascript:;">HTML规范</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="standard.html">代码格式</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.htmlname">命名规范</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="javascript:;">javascript规范</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="standard.js">代码格式</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.jsname">命名规范</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="javascript:;">浏览器兼容性</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="standard.compatible">兼容性</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.compatiblecss">css</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.compatiblejs">js</a></dd>
+						</dl>
+				</section>
+			</div>
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-9">
-			<div ui-view>
-			<ng-include src="'standard/css-format.html'"></ng-include>
-			</div>
+			<div ui-view></div>
 		</div>
 
 	</div>
