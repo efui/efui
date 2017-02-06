@@ -1,0 +1,26 @@
+
+<ol>
+	<li>
+		<h3>"rel=nofollow"属性</h3>
+		<div class="example-desc">
+			nofollow是HTML元标签(meta)的content属性和链接标签(a)的rel属性的一个值，告诉机器(爬虫)无需追踪目标页，为了对抗blogspam(博客垃圾留言信息)，Google推荐使用nofollow，告诉搜索引擎爬虫无需抓取目标页，同时告诉搜索引擎无需将的当前页的Pagerank传递到目标页。但是如果你是通过sitemap直接提交该页面，爬虫还是会爬取，这里的nofollow只是当前页对目标页的一种态度，并不代表其他页对目标页的态度。
+			<ul>
+				<li>
+					<h5>nofollow有两种用法</h5>
+					<ol>
+						<li>用于meta元标签：<meta name="robots" content="nofollow" />，告诉爬虫该页面上所有链接都无需追踪</li>
+						<li>用于a标签：&lt;a href="login.aspx" rel="nofollow">登录&lt;/a>,告诉爬虫该页面无需追踪</li>
+					</ol>
+				</li>
+				<li>
+					<h5>nofollow的作用：</h5>
+					<ol>
+						<li>防止不可信的内容，最常见的是博客上的垃圾留言与评论中为了获取外链的垃圾链接，为了防止页面指向一些拉圾页面和站点。</li>
+						<li>付费链接：为了防止付费链接影响Google的搜索结果排名，Google建议使用nofollow属性</li>
+						<li>引导爬虫抓取有效的页面：避免爬虫抓取一些无意义的页面，影响爬虫抓取的效率</li>
+					</ol>
+				</li>
+			</ul>
+		</div>
+	</li>
+</ol>

@@ -1,0 +1,147 @@
+<div class="mlist">
+	<div class="mtit"><span>目录</span></div>
+	<div class="mcon">
+		<ol>
+			<li>
+				<a href="">WebSocket</a>
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h1 class="mb10">WebSocket（协议）</h1>
+	<blockquote>WebSocket不是HTTP协议，HTTP只负责建立WebSocket连接。Web领域的实时推送技术要达到的目的是让用户不需要刷新浏览器就可以获得实时更新。</blockquote>
+	<ul>
+		<li>WebSocket协议本质上是一个基于TCP的 独立的协议，能够在浏览器和服务器之间建立双向连接，以基于事件的方式，赋予浏览器实时通信能力。就是服务器端和客户端可以同时发送并响应请求，而不再像HTTP的请求和响应。</li>
+		<li>协议名为"ws"，这意味着一个websocket连接地址会是这样的写法：ws://**。</li>
+		<li>是服务器实现的。
+		<p>客户端通过html5与服务器交互。http是不持续连接的，而websocket是。必须服务器支持websocket协议，才有效。对于不支持websocket服务的服务器，你客户端怎么写代码都没用。</p></li>
+	</ul>
+	<div class="example-desc">
+		<ol>
+			<li>
+				<h5>websocket和HTTP协议的 联系 和 区别</h5>
+				<pre>WebSocket 是一种协议，基于 TCP 协议；
+HTTP 也是一种协议，基于 TCP 协议
+
+WebSocket 和 HTTP 都是基于 TCP 的
+TCP是传输层协议， WebSocket 和 HTTP是应用层协议</pre>
+				<h5>联系：</h5>
+				<div class="html">
+					<pre>它们扯上关系是只是因为：
+客户端开始建立 WebSocket 连接时要发送一个 header 标记了 Upgrade 的 HTTP 请求，表示请求协议升级。
+(或者说借用了HTTP的协议来完成一部分握手)
+
+服务器端做出响应的简便方法是:
+直接在现有的 HTTP 服务器软件和现有的端口上实现 WebSocket 协议，重用现有代码（比如解析和认证这个 HTTP 请求。如果在 TCP 协议上实现，这两个功能就要重新实现），然后再回一个状态码为 101 的 HTTP 响应完成握手，再往后发送数据时就没 HTTP 的事了。
+</pre>
+				</div>
+				<h5>区别:</h5>
+				<div class="html">
+					<pre>持久性：
+HTTP协议：
+HTTP是非持久的协议（长连接，循环连接的不算）
+
+websocket协议：
+Websocket是一个持久化的协议
+
+生命周期：
+HTTP的生命周期通过Request来界定，也就是一个Request 一个Response
+在HTTP1.0中，这次HTTP请求就结束了。
+在HTTP1.1中进行了改进，使得有一个keep-alive，也就是说，在一个HTTP连接中，可以发送多个Request，接收多个Response。但是请记住 Request = Response
+
+在HTTP中永远是这样，也就是说一个request只能有一个response。而且这个response也是被动的，不能主动发起。</pre>
+				</div>
+			</li>
+			<li>
+				<h5>Websocket的优点 </h5>
+				他解决了web实时化的问题，相比传统http有如下好处：
+				<div class="html">
+					<pre>实时交互
+只需要建立一次连接（一个WEB客户端只建立一个TCP连接）
+服务器能够主动推送内容（Websocket服务端可以推送(push)数据到web客户端.）
+有更加轻量级的头，减少数据传送量
+快速（延迟小，每条消息可以小到两个字节）
+开发者友好（接口简单，并是熟悉的事件模型）
+</pre>
+				</div>
+			</li>
+			<li>
+				<h5>websocket应用</h5>
+				<div class="html">				
+				<pre>创建一个新的 WebSocket 对象：
+var Socket = new WebSocket(url, [protocal] );</pre>
+第一个参数 url 用于指定要连接的 URL。第二个属性 - 端口是可选的，如果提供，就会指定一个服务器必须支持连接成功的子协议。
+<table class="table mt20 table-bordered">
+	<tr><th>属性</th><th>描述</th></tr>
+	<tr><td rowspan="5">Socket.readyState</td><td>只读属性readyState表示连接的状态。有以下取值：</td></tr>
+	<tr><td>0 表示连接尚未建立。</td></tr>
+	<tr><td>1 表示连接已建立，可以进行通信。</td></tr>
+	<tr><td>2 表示连接正在进行关闭握手。</td></tr>
+	<tr><td>3 表示连接已经关闭或者连接不能打开。</td></tr>
+</table>
+				</div>
+			</li>
+			<li>
+				<h5>WebSocket 事件</h5>
+				假定我们已经创建了上述的 Socket 对象,客户端通过websocket API提供的如下4个事件进行编程：
+<table class="table mt20 table-bordered">
+	<tr><th>事件</th><th>事件处理程序</th><th>描述</th></tr>
+	<tr><td>open</td><td>Socket.onopen</td><td>建立 socket 连接时触发这个事件。</td></tr>
+	<tr><td>message</td><td>Socket.onmessage</td><td>客户端从服务器接收数据时触发。</td></tr>
+	<tr><td>error</td><td>Socket.onerror</td><td>连接发生错误时触发。</td></tr>
+	<tr><td>close</td><td>Socket.onclose</td><td>连接被关闭时触发。</td></tr>
+</table>
+			</li>
+			<li>
+				<h5>WebSocket 方法</h5>
+				下面是 WebSocket 对象相关的方法。假定我们已经创建了上述的 Socket 对象：
+<table class="table mt20 table-bordered">
+	<tr><th>方法</th><th>描述</th></tr>
+	<tr><td>Socket.send()</td><td>send(data) 方法使用连接传输数据。</td></tr>
+	<tr><td>Socket.close()</td><td>close() 方法用于终止任何现有连接。</td></tr>
+</table>
+			</li>
+			<li>
+				<h5>WebSocket案例</h5>
+				<div class="html">
+					<pre>if('WebSocket' in window){ 
+// 创建websocket实例 
+var socket = new WebSocket('ws://localhost:8080');
+
+ //打开 
+socket.onopen = function(event) 
+{ 
+// 发送
+ socket.send('I am the client and I\'m listening!'); }
+
+// 监听 
+socket.onmessage = function(event) {
+ console.log('Client received a message',event); 
+};
+
+ // 关闭监听 
+socket.onclose = function(event) {
+ console.log('Client notified socket has closed',event); 
+};
+
+ // 关闭 
+//socket.close() };
+}else{
+ alert('本浏览器不支持WebSocket哦~');
+}</pre>
+				</div>
+				<p class="red">现在chrome、firefox等浏览器都已经支持了websocket，而IE却没有。</p>
+			</li>
+			<li>
+				<h5>HTML5 NodeJs实现WebSocket即时通讯</h5>
+			</li>
+		</ol>
+	</div>
+</div>
+
+<div class="mswitch">
+	<h3 class="mb10"></h3>
+	<div class="example-demo"></div>
+	<div class="example-desc"></div>
+</div>

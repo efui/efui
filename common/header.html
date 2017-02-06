@@ -1,22 +1,21 @@
 <header>
 	<div class="container">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only"></span>
+			<button type="button" class="navbar-toggle show-sm-only" data-collapse="{target: '.nav-collapse'}">
 			  	<span class="icon-bar"></span>
 			  	<span class="icon-bar"></span>
 			  	<span class="icon-bar"></span>
 		  	</button>
 			<a class="navbar-brand" ui-sref="index"><img src="logo.png"></a>
 		</div>
-		<nav id="navbar" class="collapse navbar-collapse">
-			<ul class="nav navbar-nav navbar-right">
-				<li><a ui-sref="index" class="active">首页</a></li>
-				<li><a ui-sref="standard">规范</a></li>
-				<li><a ui-sref="element">元素</a></li>
-				<li><a ui-sref="component">组件</a></li> 
-				<li><a ui-sref="plugin">JS插件</a></li>
-				<li><a ui-sref="tools">进阶</a></li>   	  	
+		<nav class="collapse nav-collapse">
+			<ul class="nav nav-right">
+				<li ng-class="{active: path == '/'}"><a ui-sref="index" class="active">首页</a></li>
+				<li ng-class="{active: path == '/standard'}"><a ui-sref="standard.format">规范</a></li>
+				<li ng-class="{active: path == '/element'}"><a ui-sref="element.normalize">元素</a></li>
+				<li ng-class="{active: path == '/component'}"><a ui-sref="component.buttons">组件</a></li> 
+				<li ng-class="{active: path == '/plugin'}"><a ui-sref="plugin.popup">JS插件</a></li>
+				<li ng-class="{active: path == '/skills'}"><a ui-sref="skills.js">进阶</a></li>   	  	
 			</ul>
 		</nav>
 	</div>
