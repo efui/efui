@@ -245,6 +245,10 @@
 				url: "/webfooter",
 				templateUrl: "component/web-footer.html"
 			})
+			.state('component.applogin', {
+				url: "/applogin",
+				templateUrl: "component/app-login.html"
+			})
 			.state('plugin', {
 				url: "/plugin",
 				templateUrl: "plugin/index.html",

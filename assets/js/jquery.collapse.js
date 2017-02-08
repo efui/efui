@@ -22,6 +22,7 @@
 		this[this.$element.hasClass("in") ? "close" : "open"]()
 	}
 	Collapse.prototype.open = function() {
+		var _that = this;
 		if (!this.transitioning && !this.$element.hasClass("in")) {
 			var startEvent = $.Event("open.collapse.efui");
 			if (this.$element.trigger(startEvent), !startEvent.isDefaultPrevented()) {
@@ -36,6 +37,10 @@
 				})
 			}
 		}
+		this.$element.find('a').click(function(){
+			_that["close"]();
+		});
+		
 	}
 	Collapse.prototype.close = function() {
 		if (!this.transitioning && this.$element.hasClass("in")) {
