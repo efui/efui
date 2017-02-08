@@ -1,0 +1,24 @@
+
+.background-slice(@slicename) {
+    background-image: ~"url(../img/slice/@{slicename})";
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% auto;
+}
+
+.del-btn {
+    .size(16px,16px);
+    .background-slice( 'del-btn.png');
+}
+.i-psw-show {
+    .size(19px,16px);
+    .background-slice( 'i-psw-show.png');
+}
+.i-psw-hide {
+    .size(19px,16px);
+    .background-slice( 'i-psw-hide.png');
+}
+.i-warn {
+    .size(18px,18px);
+    .background-slice( 'i-warn.png');
+}

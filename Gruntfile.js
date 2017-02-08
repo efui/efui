@@ -17,18 +17,8 @@ module.exports = function(grunt) {
 
 		// Metadata.
 		meta: {
-//			currentPath: 'FX/channel/lp62',//****************1、FX项目所在文件夹
-//			currentPath: 'FX/main',//****************1、FX项目所在文件夹
-//			currentPath: 'FX/special/referral201701',//****************1、FX项目所在文件夹
-//			currentPath: 'FX/special/Trump',//****************1、FX项目所在文件夹
-//			currentPath: 'PM/promote/lp164',//****************1、PM项目所在文件夹
-//			currentPath: 'PM/special/2016report',//****************1、PM项目所在文件夹
-//			currentPath: 'PM/activity/silver201701',//****************1、PM项目所在文件夹
-//			currentPath: 'PM-M/yy_live/V2',//****************1、PM-M项目所在文件夹
-			jsPath: 'js',
-			cssPath: 'css',
-			lessPath:'less',
-			examplePath: 'html'
+			currentPath: 'assets',//****************1、资源目录所在文件夹
+			lessPath:'less'
 		},
 		jshint: {
 			options: {
@@ -41,7 +31,7 @@ module.exports = function(grunt) {
 				},
 			},
 			docs: {
-				src: ['Gruntfile.js','<%= meta.examplePath %>/<%= meta.currentPath %>/*.js']
+				src: ['Gruntfile.js','<%= meta.currentPath %>/*.js']
 			}
 		},
 		uglify: {
@@ -55,9 +45,9 @@ module.exports = function(grunt) {
 			core: {
 				files: [{
 					expand: true, // 设置为true，表示要支持cwd等更多配置
-					cwd: '<%= meta.examplePath %>/<%= meta.currentPath %>/js',
+					cwd: '<%= meta.currentPath %>/js',
 					src: ['*.js', '!j*.js', '!*.min.js'], //所有js文件除j开头和压缩版min
-					dest: '<%= meta.examplePath %>/<%= meta.currentPath %>/js', //输出到此目录下
+					dest: '<%= meta.currentPath %>/js', //输出到此目录下
 					ext: '.min.js'
 				}],
 			},
@@ -68,7 +58,7 @@ module.exports = function(grunt) {
 					ids: false,
 					'overqualified-elements': false
 				},
-				src: '<%= meta.cssPath %>/<%= meta.currentPath %>/**/*.css'
+				src: '<%= meta.currentPath %>/**/*.css'
 			}
 		},
 		cssmin: {
@@ -80,9 +70,9 @@ module.exports = function(grunt) {
 			core: {
 				files: [{
 					expand: true, 
-					cwd: '<%= meta.examplePath %>/<%= meta.currentPath %>/css',
-      				src: ['*.css', '!*.min.css'],
-					dest: '<%= meta.examplePath %>/<%= meta.currentPath %>/css',
+					cwd: '<%= meta.currentPath %>/css',
+      				src: ['*.css', '!*.min.css','!common.css'],
+					dest: '<%= meta.currentPath %>/css',
       				ext: '.min.css'
 				}],
 			}
@@ -95,36 +85,21 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true, // 设置为true，表示要支持cwd等更多配置
-                    cwd: '<%= meta.lessPath %>/<%= meta.currentPath %>/css', //less目录下   //****************2、设置项目对应的less文件
+                    cwd: '<%= meta.lessPath %>/css', //less目录下   //****************2、设置项目对应的less文件
                     src: '*.less', //less文件           //****************3、所有less文件或者指定的less文件
-                    dest: '<%= meta.examplePath %>/<%= meta.currentPath %>/css',    
+                    dest: '<%= meta.currentPath %>/css',    
                     ext: '.css'//4、输出到此目录下指定文件        
                 }]
-////			    files: {
-////			      '<%= meta.examplePath %>/<%= meta.currentPath %>/css/nzaccount.css': '<%= meta.lessPath %>/<%= meta.currentPath %>/index.less'
-////			    }
-//			    files: {
-//			      '<%= meta.examplePath %>/<%= meta.currentPath %>/css/ukaccount.css': '<%= meta.lessPath %>/<%= meta.currentPath %>/ukaccount.less'
-//			    }
-            },
-//          oneless: { //指定一个文件压缩
-//              options: {
-//                  strictMath: true, //如果设置为true，表达式需要用括号括起来
-//                  compress: false //压缩编译之后的css文件，即删除css文件中的空行和空格
-//              },
-//			    files: {
-//			      '<%= meta.examplePath %>/<%= meta.currentPath %>/css/heatmap.css': '<%= meta.lessPath %>/<%= meta.currentPath %>/css.less'
-//			    }
-//          }
+            }
         },
 		sprite: {
 			options: {
 				// sprite背景图源文件夹，只有匹配此路径才会处理，默认 images/slice/
-				imagepath: '<%= meta.examplePath %>/<%= meta.currentPath %>/images/slice/',
+				imagepath: '<%= meta.currentPath %>/images/slice/',
 				// 映射CSS中背景路径，支持函数和数组，默认为 null
 				imagepath_map: null,
 				// 雪碧图输出目录，注意，会覆盖之前文件！默认 images/
-				spritedest: '<%= meta.examplePath %>/<%= meta.currentPath %>/images/',
+				spritedest: '<%= meta.currentPath %>/images/',
 				// 替换后的背景路径，默认为 file.dest 和 spritedest 的相对路径
 				spritepath: null,
 				// 各图片间间距，如果设置为奇数，会强制+1以保证生成的2x图片为偶数宽高，默认 0
@@ -147,11 +122,11 @@ module.exports = function(grunt) {
 					// 启用动态扩展
 					expand: true,
 					// css文件源的文件夹
-					cwd: '<%= meta.examplePath %>/<%= meta.currentPath %>/css/',
+					cwd: '<%= meta.currentPath %>/css/',
 					// 匹配规则
 					src: '*.css',
 					// 导出css和sprite的路径地址
-					dest: '<%= meta.examplePath %>/<%= meta.currentPath %>/css/',
+					dest: '<%= meta.currentPath %>/css/',
 					// 导出的css名
 					ext: '.sprite.css'
 				}]
@@ -163,14 +138,13 @@ module.exports = function(grunt) {
 					grunt.log.writeln('The watch finished in ' + time + 'ms at' + (new Date()).toString());
 					grunt.log.writeln('Waiting for more changes...');
 				},
-				livereload: true
+				livereload: 35888
 			},
 			docs: {
 				files: [
-					'<%= meta.imgPath %>/<%= meta.currentPath %>/*.{png,jpg,gif}',
 					'<%= meta.lessPath %>/**/*.less',
-					'<%= meta.examplePath %>/<%= meta.currentPath %>/*.css',
-					'<%= meta.jsPath %>/<%= meta.currentPath %>/*.js'
+					'<%= meta.currentPath %>/*.css',
+					'<%= meta.currentPath %>/*.js'
 				],
 				tasks: ['lesscss','min-css']
 			}
@@ -184,7 +158,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('lint-docs-css', ['csslint:docs']);
 	grunt.registerTask('min-css', ['cssmin:core']);
 	grunt.registerTask('lesscss', ['less']);
-	grunt.registerTask('docs', ['lint-docs-css',/*'ug-js','hint-docs-js','clean:dist', 'copy:docs','imagemin:docs',,'sprite'*/'lesscss','min-css']);
+	grunt.registerTask('docs', [/*'lint-docs-css','ug-js','hint-docs-js','clean:dist', 'copy:docs','imagemin:docs',,'sprite'*/'lesscss','min-css']);
 
 
 	grunt.registerTask('server', ['docs','watch']);

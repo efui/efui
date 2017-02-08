@@ -1,5 +1,5 @@
 
-		<link href="assets/css/app-login.css" rel="stylesheet">
+		<link href="assets/css/app-login.min.css" rel="stylesheet">
 		<header id="header">
 		</header>
 		<article class="content_w login-fix">
@@ -19,12 +19,12 @@
 								<span class="sub-nav active">客户密码</span>
 								<span class="sub-nav">动态密码</span>
 							</div>
-							<div class="input-group fl mt password-panel">
+							<div class="input-group fl-l mt password-panel">
 								<div class="del_touch"><span class="i-psw i-psw-show i-input-op"></span></div>
 								<input style="display:none;" type="password" id="passwordRaw" placeholder="请输入密码" class="f-i-text i-text-block" onkeyup="onchangePasswordRaw(this,'passwordRaw2')" />
 								<input style="display:block;" type="text" id="passwordRaw2" placeholder="请输入密码" class="f-i-text i-text-block" onkeyup="onchangePasswordRaw(this,'passwordRaw')" />				
 							</div>
-							<div class="input-group fl mt password-panel" style="display: none;">
+							<div class="input-group fl-l mt password-panel" style="display: none;">
 								<div class="del_touch get-dt-code">
 									<input type="button" class="get-code-txt" onclick="settime(this)" value="获取动态密码" />
 									<span class="i-input-op">&nbsp;</span>
@@ -54,16 +54,16 @@
 						</div>
 					</div>
 					<div class="feedback_bar clearfix">
-	                    <span class="fl checkbox-cm">
+	                    <span class="fl-l checkbox-cm">
 	                        <input type="checkbox" id="autoLogin" checked="checked" class="auto-login"><label for="autoLogin">下次自动登录</label>
 	                    </span>
-	                    <span class="fr forget_psw">
+	                    <span class="fl-r forget_psw">
 	                        <a href="">忘记密码？</a>
 	                        <a href="" style="display: none;">未收到动态密码？</a>
 	                    </span>
 	                </div>
 	                <div class="error-bar dn">
-	                	<i class="i-warn"></i><span class="tips-txt">呀~ 手机号或密码不对哦，请重新输入</span>
+	                	<i class="i-warn f-notification"></i><span class="tips-txt">呀~ 手机号或密码不对哦，请重新输入</span>
 	                </div>
 	                <div class="login-bt-fix">
 						<div class="plrall">

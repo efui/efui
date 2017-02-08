@@ -1,0 +1,730 @@
+//*****----------------Variables
+//*****--------------------------------------------------
+// global flags
+@support-html5: true;
+@support-ie-version: 7;
+@support-old-ie:~`@{support-ie-version} < 8`; // [deprecated] use `@support-ie-version` instead
+@use-autoprefixer: false;
+// default typographic settings
+@default-font-size: 16;
+@default-text-color: #666;
+@default-input-placeholder-color: #999;
+@default-base-font-family: "Microsoft YaHei", Arial, sans-serif;
+@default-heading-font-family: cursive, Arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+@default-code-font-family: Monaco, Consolas, monospace;
+// * IE6/7下如果已经找到字体，不会再按字符进行fallback，故必须将雅黑置首位，写上Arial是为了在没有雅黑的情况下显示更好的英文字体
+@default-old-ie-base-font-family: @default-base-font-family;
+@default-old-ie-heading-font-family: "Microsoft YaHei", Arial, sans-serif;
+@default-old-ie-code-font-family: @default-code-font-family;
+// default visual settings
+@default-border-radius: 5px;
+@default-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+//*****---------------Compatibility
+//*****--------------------------------------------------
+.inline-block() {
+    display: inline-block;
+}
+.ie-inline-block() {
+    *display: inline;
+    *zoom: 1;
+}
+.inline-block() when (@support-ie-version < 8) {
+    .ie-inline-block();
+}
+.opacity(@opacity: 100%) {
+    opacity: (unit(@opacity) / 100);
+}
+.opacity(@opacity: 100%) when (@support-ie-version < 9) {
+    @op: unit(@opacity);
+    filter:~"alpha(opacity=@{op})";
+}
+.rgba-background(@rgba) when (@support-ie-version < 9) {
+    // prevent click through in IE 8 using a transparent background image
+    background: ~"url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) repeat\0";
+    @argb: argb(@rgba);
+    filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr=@{argb},endColorstr=@{argb})\0";
+    zoom: ~"1\0";
+    background: @rgba;
+    // hack for IE9 to prevent applying rgba and filter at the same time
+     :root & {
+        filter:none\9;
+    }
+}
+.rgba-background(@rgba) when not (@support-ie-version < 9) {
+    background: @rgba;
+}
+.rgba-background(@color, @opacity) {
+    @op: (unit(@opacity)/100);
+    @rgba: fadeout(@color, percentage(@op));
+    .rgba-background(@rgba);
+}
+// Gradients
+.linear-gradient(@direction, @color-stop...) {
+    @dir: ~`"@{direction}".replace(/[\[\],]/g, "")`;
+    @is-old-side-or-corner:~`/^(?:top|right|bottom|left)(?:\s+(?:top|right|bottom|left))?$/.test("@{dir}") ? "true": "false"`;
+    @is-standard-side-or-corner:~`/^to\s+(?:top|right|bottom|left)(?:\s+(?:top|right|bottom|left))?$/.test("@{dir}") ? "true": "false"`;
+    @color-stops: ~`"@{color-stop}".replace(/[\[\]]/g, "")`;
+    .output() when (@is-old-side-or-corner) {
+        @standard-direction: ~`"to @{dir}".replace("top", "b#ottom").replace("right", "l#eft").replace("bottom", "t#op").replace("left", "r#ight").replace(/#/g, "")`;
+        .output(false) {
+            background-image: -webkit-linear-gradient(@dir, @color-stops); // Chrome 10+
+            background-image: -moz-linear-gradient(@dir, @color-stops); // Firefox 3.6+
+            background-image: -moz-linear-gradient(@standard-direction, @color-stops); // Firefox 10+
+            background-image: -o-linear-gradient(@standard-direction, @color-stops); // Opera 11.10+
+        }
+        .output(...) {
+            background-image: linear-gradient(@standard-direction, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.10+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output() when (@is-standard-side-or-corner) {
+        @old-direction: ~`"@{dir}".replace(/^to\s+/, "").replace("top", "b#ottom").replace("right", "l#eft").replace("bottom", "t#op").replace("left", "r#ight").replace(/#/g, "")`;
+        .output(false) {
+            background-image: -webkit-linear-gradient(@old-direction, @color-stops); // Chrome 10+
+            background-image: -moz-linear-gradient(@old-direction, @color-stops); // Firefox 3.6+
+            background-image: -moz-linear-gradient(@dir, @color-stops); // Firefox 10+
+            background-image: -o-linear-gradient(@dir, @color-stops); // Opera 11.10+
+        }
+        .output(...) {
+            background-image: linear-gradient(@dir, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.10+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output() when not (@is-old-side-or-corner) and not (@is-standard-side-or-corner) {
+        .output(false) {
+            background-image: -webkit-linear-gradient(mod(abs(convert(@direction, deg) - 450), 360), @color-stops); // Chrome 10+
+            background-image: -moz-linear-gradient(mod(abs(convert(@direction, deg) - 450), 360), @color-stops); // Firefox 3.6+
+            background-image: -o-linear-gradient(mod(abs(convert(@direction, deg) - 450), 360), @color-stops); // Opera 11.10+
+        }
+        .output(...) {
+            background-image: linear-gradient(@direction, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.10+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output();
+    background-repeat: repeat;
+}
+.horizontal-gradient(@start-color, @end-color) {
+    .output(false) {
+        background-image: -webkit-gradient(linear, left top, right top, from(@start-color), to(@end-color)); // Safari 4+, Chrome 2+
+        background-image: -webkit-linear-gradient(left, @start-color, @end-color); // Safari 5.1+, Chrome 10+
+        background-image: -moz-linear-gradient(left, @start-color, @end-color); // FF 3.6+
+        background-image: -o-linear-gradient(left, @start-color, @end-color); // Opera 11.10+
+    }
+    .output(...) {
+        background-image: linear-gradient(to right, @start-color, @end-color); // Standard, IE10
+        background-repeat: repeat-x;
+    }
+    .output(...) when (@support-ie-version < 10) {
+        filter:e(%("progid:DXImageTransform.Microsoft.Gradient(startColorstr='%d', endColorstr='%d', GradientType=1)", argb(@start-color), argb(@end-color))); // IE9 and down
+    }
+    .output(@use-autoprefixer);
+}
+.vertical-gradient(@start-color, @end-color) {
+    .output(false) {
+        background-image: -webkit-gradient(linear, left top, left bottom, from(@start-color), to(@end-color)); // Safari 4+, Chrome 2+
+        background-image: -webkit-linear-gradient(top, @start-color, @end-color); // Safari 5.1+, Chrome 10+
+        background-image: -moz-linear-gradient(top, @start-color, @end-color); // FF 3.6+
+        background-image: -o-linear-gradient(top, @start-color, @end-color); // Opera 11.10+
+    }
+    .output(...) {
+        background-image: linear-gradient(to bottom, @start-color, @end-color); // Standard, IE10
+        background-repeat: repeat-x;
+    }
+    .output(...) when (@support-ie-version < 10) {
+        filter:e(%("progid:DXImageTransform.Microsoft.Gradient(startColorstr='%d', endColorstr='%d', GradientType=0)", argb(@start-color), argb(@end-color))); // IE9 and down
+    }
+    .output(@use-autoprefixer);
+}
+.clear-gradient(){
+    .output(false) {
+        background-image: none;
+    }
+    .output(...) {
+        background-image: none; // Standard, IE10
+        background-repeat: inherit;
+    }
+    .output(...) when (@support-ie-version < 10) {
+        filter:none; // IE9 and down
+    }
+    .output(@use-autoprefixer);
+}
+.repeating-linear-gradient(@direction, @color-stop...) {
+    @dir: ~`"@{direction}".replace(/[\[\],]/g, "")`;
+    @is-old-side-or-corner:~`/^(?:top|right|bottom|left)(?:\s+(?:top|right|bottom|left))?$/.test("@{dir}") ? "true": "false"`;
+    @is-standard-side-or-corner:~`/^to\s+(?:top|right|bottom|left)(?:\s+(?:top|right|bottom|left))?$/.test("@{dir}") ? "true": "false"`;
+    @color-stops: ~`"@{color-stop}".replace(/[\[\]]/g, "")`;
+    .output() when (@is-old-side-or-corner) {
+        @standard-direction: ~`"to @{dir}".replace("top", "b#ottom").replace("right", "l#eft").replace("bottom", "t#op").replace("left", "r#ight").replace(/#/g, "")`;
+        .output(false) {
+            background-image: -webkit-repeating-linear-gradient(@dir, @color-stops); // Chrome 10+
+            background-image: -moz-repeating-linear-gradient(@dir, @color-stops); // Firefox 3.6+
+            background-image: -moz-repeating-linear-gradient(@standard-direction, @color-stops); // Firefox 10+
+            background-image: -o-repeating-linear-gradient(@standard-direction, @color-stops); // Opera 11.10+
+        }
+        .output(...) {
+            background-image: repeating-linear-gradient(@standard-direction, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.10+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output() when (@is-standard-side-or-corner) {
+        @old-direction: ~`"@{dir}".replace(/^to\s+/, "").replace("top", "b#ottom").replace("right", "l#eft").replace("bottom", "t#op").replace("left", "r#ight").replace(/#/g, "")`;
+        .output(false) {
+            background-image: -webkit-repeating-linear-gradient(@old-direction, @color-stops); // Chrome 10+
+            background-image: -moz-repeating-linear-gradient(@old-direction, @color-stops); // Firefox 3.6+
+            background-image: -moz-repeating-linear-gradient(@dir, @color-stops); // Firefox 10+
+            background-image: -o-repeating-linear-gradient(@dir, @color-stops); // Opera 11.10+
+        }
+        .output(...) {
+            background-image: repeating-linear-gradient(@dir, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.10+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output() when not (@is-old-side-or-corner) and not (@is-standard-side-or-corner) {
+        .output(false) {
+            background-image: -webkit-repeating-linear-gradient(mod(abs(convert(@direction, deg) - 450), 360), @color-stops); // Chrome 10+
+            background-image: -moz-repeating-linear-gradient(mod(abs(convert(@direction, deg) - 450), 360), @color-stops); // Firefox 3.6+
+            background-image: -o-repeating-linear-gradient(mod(abs(convert(@direction, deg) - 450), 360), @color-stops); // Opera 11.10+
+        }
+        .output(...) {
+            background-image: repeating-linear-gradient(@direction, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.10+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output();
+}
+.radial-gradient(@shape, @color-stop...) {
+    @shape-string: ~"@{shape}";
+    @position: ~`(function() { var pos = /(?:^|\s)at\s+(\S+)(?:\s+(\S+)\s*$)?/g.exec("@{shape-string}"); return pos? (pos[2]? pos[1] + ' ' + pos[2] : pos[1]) : 'false'; })()`;
+    @contour-and-size: ~`(function() { var cs = /^(circle|ellipse|(?:(?:circle|ellipse)\s+)?(?:closest|farthest)-(?:corner|side))(?=$|\s+at)/.exec("@{shape-string}"); return cs? cs[1] : 'false'; })()`;
+    @color-stops: ~`"@{color-stop}".replace(/[\[\]]/g, "")`;
+    .output() when not (@position = false) and (@contour-and-size = false) {
+        .output(false) {
+            background-image: -webkit-radial-gradient(@position, @color-stops); // Chrome 10+
+            background-image: -moz-radial-gradient(@position, @color-stops); // Firefox 3.6+
+            background-image: -o-radial-gradient(@position, @color-stops); // Opera 11.60+
+        }
+        .output(...) {
+            background-image: radial-gradient(@shape, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.10+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output() when not (@contour-and-size = false) and (@position = false) {
+        .output(false) {
+            background-image: -webkit-radial-gradient(@contour-and-size, @color-stops); // Chrome 10+
+            background-image: -moz-radial-gradient(@contour-and-size, @color-stops); // Firefox 3.6+
+            background-image: -o-radial-gradient(@contour-and-size, @color-stops); // Opera 11.60+
+        }
+        .output(...) {
+            background-image: radial-gradient(@shape, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.10+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output() when not (@position = false) and not (@contour-and-size = false) {
+        .output(false) {
+            background-image: -webkit-radial-gradient(@position, @contour-and-size, @color-stops); // Chrome 10+
+            background-image: -moz-radial-gradient(@position, @contour-and-size, @color-stops);
+            background-image: -o-radial-gradient(@position, @contour-and-size, @color-stops); // Opera 11.60+
+        }
+        .output(...) {
+            background-image: radial-gradient(@shape, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.10+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    // Standard, IE10+
+    .output() when (@position = false) and (@contour-and-size = false) {
+        .output(false) {
+            background-image: -webkit-radial-gradient(@shape, @color-stops); // Chrome 10+
+            background-image: -moz-radial-gradient(@shape, @color-stops); // Firefox 3.6+
+            background-image: -o-radial-gradient(@shape, @color-stops); // Opera 11.60+
+        }
+        .output(...) {
+            background-image: radial-gradient(circle, @shape, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.10+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output();
+}
+.repeating-radial-gradient(@shape, @color-stop...) {
+    @shape-string: ~"@{shape}";
+    @position: ~`(function() { var pos = /(?:^|\s)at\s+(\S+)(?:\s+(\S+)\s*$)?/g.exec("@{shape-string}"); return pos? (pos[2]? pos[1] + ' ' + pos[2] : pos[1]) : 'false'; })()`;
+    @contour-and-size: ~`(function() { var cs = /^(circle|ellipse|(?:(?:circle|ellipse)\s+)?(?:closest|farthest)-(?:corner|side))(?=$|\s+at)/.exec("@{shape-string}"); return cs? cs[1] : 'false'; })()`;
+    @color-stops: ~`"@{color-stop}".replace(/[\[\]]/g, "")`;
+    .output() when not (@position = false) and (@contour-and-size = false) {
+        .output(false) {
+            background-image: -webkit-repeating-radial-gradient(@position, @color-stops); // Chrome 10+
+            background-image: -moz-repeating-radial-gradient(@position, @color-stops); // Firefox 3.6+
+            background-image: -o-repeating-radial-gradient(@position, @color-stops); // Opera 12+
+        }
+        .output(...) {
+            background-image: repeating-radial-gradient(@shape, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.50+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output() when not (@contour-and-size = false) and (@position = false) {
+        .output(false) {
+            background-image: -webkit-repeating-radial-gradient(@contour-and-size, @color-stops); // Chrome 10+
+            background-image: -moz-repeating-radial-gradient(@contour-and-size, @color-stops); // Firefox 3.6+
+            background-image: -o-repeating-radial-gradient(@contour-and-size, @color-stops); // Opera 12+
+        }
+        .output(...) {
+            background-image: repeating-radial-gradient(@shape, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.50+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output() when not (@position = false) and not (@contour-and-size = false) {
+        .output(false) {
+            background-image: -webkit-repeating-radial-gradient(@position, @contour-and-size, @color-stops); // Chrome 10+
+            background-image: -moz-repeating-radial-gradient(@position, @contour-and-size, @color-stops); // Firefox 3.6+
+            background-image: -o-repeating-radial-gradient(@position, @contour-and-size, @color-stops); // Opera 12+
+        }
+        .output(...) {
+            background-image: repeating-radial-gradient(@shape, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.50+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output() when (@position = false) and (@contour-and-size = false) {
+        .output(false) {
+            background-image: -webkit-repeating-radial-gradient(@shape, @color-stops); // Chrome 10+
+            background-image: -moz-repeating-radial-gradient(@shape, @color-stops); // Firefox 3.6+
+            background-image: -o-repeating-radial-gradient(@shape, @color-stops); // Opera 12+
+        }
+        .output(...) {
+            background-image: repeating-radial-gradient(circle, @shape, @color-stops); // Chrome 26+, Firefox 16+, Opera 12.50+, IE 10+
+        }
+        .output(@use-autoprefixer);
+    }
+    .output();
+}
+//*****---------------Util
+//*****--------------------------------------------------
+// ### Usage:Common utilities.
+// clearfix
+.clearfix() {
+    &:before,
+    &:after {
+        display: table;
+        content: "";
+    }
+    &:after {
+        clear: both;
+    }
+}
+.clearfix() when (@support-ie-version < 8) {
+    *zoom: 1;
+}
+// .size
+.size(@size) {
+    width: @size;
+    height: @size;
+}
+.size(@wdith, @height) {
+    width: @wdith;
+    height: @height;
+}
+// .no-bullet
+// .no-bullets
+//
+// "Unstyle" lists, `.no-bullet()` for `<li>`s and `.no-bullets()` for `<ul>` & `<ol>`
+.no-bullet() {
+    list-style-image: none;
+    list-style-type: none;
+    margin-left: 0;
+}
+.no-bullets() {
+    list-style: none;
+    li {
+        .no-bullet();
+    }
+}
+//*****---------------Typography
+//*****--------------------------------------------------
+// ### Usage:提供文本相关的mixin样式。
+// .font-family
+.font-family(base) {
+    font-family: @default-base-font-family;
+}
+.font-family(base) when (@support-ie-version < 8) and not (@default-base-font-family = @default-old-ie-base-font-family) {
+    *font-family: @default-old-ie-base-font-family;
+}
+.font-family(code) {
+    font-family: @default-code-font-family;
+}
+.font-family(code) when (@support-ie-version < 8) and not (@default-code-font-family = @default-old-ie-code-font-family) {
+    *font-family: @default-old-ie-code-font-family;
+}
+// .ellipsis
+// 指定参数（行数）的功能只支持WebKit。
+.ellipsis(...) {
+    overflow: hidden;
+}
+.ellipsis() {
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.ellipsis(@line-number) {
+    display: -webkit-box;
+    -webkit-line-clamp: @line-number;
+    -webkit-box-orient: vertical;
+}
+// .force-wrap
+// 阻止长字符串（例如url或无意义连续英文字符）打破布局
+.force-wrap() {
+    white-space: pre;
+    // CSS 2.0
+    white-space: pre-wrap;
+    // CSS 2.1
+    white-space: pre-line;
+    // CSS 3.0
+    white-space: -pre-wrap;
+    // Opera 4-6
+    white-space: -o-pre-wrap;
+    // Opera 7
+    white-space: -moz-pre-wrap; // Mozilla
+    white-space: -hp-pre-wrap;
+    // HP Printers
+    word-wrap: break-word;
+    // IE 5+
+}
+// .hide-text
+// 隐藏文字
+.hide-text() when not (@support-ie-version < 8) {
+    white-space: nowrap;
+    text-indent: 100%;
+    overflow: hidden;
+}
+.hide-text() when (@support-ie-version < 8) {
+    .ie-hide-text();
+}
+// ie6, ie7
+.ie-hide-text() {
+    text-indent: -9999px;
+    overflow: hidden;
+    text-align: left;
+}
+// .invisible
+// 用于隐藏那些增加可访问性的文字，注意与hide-text的区别是，他隐藏整个元素
+.invisible() {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+.invisible() when (@support-ie-version < 8) {
+    *clip: rect(1px 1px 1px 1px);
+}
+// .hover-link
+// 实现链接默认无下划线，hover后有下划线的样式
+.hover-link() {
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+// .unstyled-link
+// 将链接变成默认的文字样式
+.unstyled-link() {
+    color: inherit;
+    text-decoration: inherit;//IE8+
+    *text-decoration: none;//IE7
+//  cursor: inherit;
+    &:hover {
+        text-decoration: none;
+    }
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+//*****---------------Effects
+//*****--------------------------------------------------
+// ### Usage:提供各种视觉效果的封装。
+// 文字浮凸效果
+.embossed-text(@bg-color) {
+    color: lighten(@bg-color, 3%);
+}
+.embossed-text(@bg-color, @fg-color) {
+    color: @fg-color;
+}
+.embossed-text(...) {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5), 0 -1px 0 rgba(255, 255, 255, 0.5);
+}
+// 文字下陷效果
+.debossed-text(@bg-color) {
+    @color: darken(@bg-color, 3%);
+    color: rgba(red(@color), green(@color), blue(@color), 0.8);
+}
+.debossed-text(@bg-color, @fg-color) {
+    @color: darken(@fg-color, 3%);
+    color: rgba(red(@color), green(@color), blue(@color), 0.8);
+}
+.debossed-text(@bg-color, ...) {
+    text-shadow: 0 1px 1px @bg-color, 0 0 0 #000, 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+// 3D文本效果
+.3d-text(@color) {
+    color: @color;
+    text-shadow: 0 1px 0 @color - #272727, 0 2px 0 @color - #303030, 0 3px 0 @color - #393939, 0 4px 0 @color - #424242, 0 5px 0 @color - #5b5b5b, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 1px 1px 3px rgba(0, 0, 0, 0.3), 3px 3px 5px rgba(0, 0, 0, 0.2), 5px 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15);
+}
+// 文本发光效果
+.glow-text(@radius: 5px) when (isnumber(@radius)) {
+    text-shadow: 0 0 @radius;
+}
+.glow-text(@color, @radius: 5px) when (iscolor(@color)) {
+    text-shadow: 0 0 @radius @color;
+}
+// 文本模糊效果
+.blurry-text(@color, @radius: 0.15em) {
+    color: transparent;
+    text-shadow: 0 0 @radius @color;
+    // 0.1px of spread distance made the shadow visible under IE10
+    text-shadow: 0 0 @radius 0.1px @color;
+}
+//*****---------------Shapes
+//*****--------------------------------------------------
+// ### Usage:提供常见形状的生成。
+.triangle(@direction, @size, @color, @origin: corner) {
+    position: absolute;
+    .size(0);
+    @horizontal: ~`(function() { var match = '@{direction}'.match(/\b(?:right|left)\b/); return match ? match[0] : false; })()`;
+    @vertical: ~`(function() { var match = '@{direction}'.match(/\b(?:top|bottom)\b/); return match ? match[0] : false; })()`;
+    // diagonal
+    .output() when not (@horizontal = false) and not (@vertical = false) {
+        border: @size / 2 solid @color;
+        .border(top) {
+            border-bottom-color: transparent;
+        }
+        .border(bottom) {
+            border-top-color: transparent;
+        }
+        .border(right) {
+            border-left-color: transparent;
+        }
+        .border(left) {
+            border-right-color: transparent;
+        }
+        .border(top) when (@support-ie-version < 7) {
+            _border-bottom-style: dashed;
+        }
+        .border(bottom) when (@support-ie-version < 7) {
+            _border-top-style: dashed;
+        }
+        .border(right) when (@support-ie-version < 7) {
+            _border-left-style: dashed;
+        }
+        .border(left) when (@support-ie-version < 7) {
+            _border-right-style: dashed;
+        }
+        .border(@vertical);
+        .border(@horizontal);
+        .margin(corner) when (@vertical = bottom) {
+            margin-top: -@size;
+        }
+        .margin(corner) when (@horizontal = right) {
+            margin-left: -@size;
+        }
+        .margin(side) {
+            margin-top: -@size / 2;
+        }
+        .margin(side) {
+            margin-left: -@size / 2;
+        }
+        .margin(@origin);
+    }
+    // horizontal or vertical
+    .output() when (@horizontal = false),
+    (@vertical = false) {
+    @border-width: (@size / 2);
+    border: @border-width solid transparent;
+        .border-style() when (@support-ie-version < 7) {
+            _border-style: dashed;
+        }
+        .border-style();
+        .border(top) {
+            border-bottom-color: @color;
+        }
+        .border(right) {
+            border-left-color: @color;
+        }
+        .border(bottom) {
+            border-top-color: @color;
+        }
+        .border(left) {
+            border-right-color: @color;
+        }
+        .border(top) when (@support-ie-version < 7) {
+            _border-bottom-style: solid;
+        }
+        .border(right) when (@support-ie-version < 7) {
+            _border-left-style: solid;
+        }
+        .border(bottom) when (@support-ie-version < 7) {
+            _border-top-style: solid;
+        }
+        .border(left) when (@support-ie-version < 7) {
+            _border-right-style: solid;
+        }
+        .border(@direction);
+        .margin(corner) {
+            margin-left: -@border-width;
+        }
+        .margin(corner) {
+            margin-top: -@border-width;
+        }
+        .margin(side) when not (@vertical = false) {
+            margin-left: -@border-width;
+        }
+        .margin(side) when (@horizontal = left) {
+            margin-left: -@border-width * 2;
+        }
+        .margin(side) when not (@horizontal = false) {
+            margin-top: -@border-width;
+        }
+        .margin(side) when (@vertical = top) {
+            margin-top: -@border-width * 2;
+        }
+        .margin(@origin);
+    }
+    .output() when (@support-ie-version < 7) {
+        _font-size: 0;
+        _line-height: 0;
+    }
+    .output();
+}
+.circle(@size, @bg: false) {
+    .output() when (ispixel(@size)) {
+        .size(@size);
+        // for better compatibility
+        .border-radius(ceil(@size / 2));
+    }
+    .output() when (ispercentage(@size)) {
+        width: @size;
+        padding-top: @size;
+        .border-radius(50%);
+    }
+    .output() when (@size = 0) {
+        .size(0);
+    }
+    // minimize affected properties
+    .output() when (iscolor(@bg)) {
+        background-color: @bg;
+    }
+    .output() when not (@bg = false) and not (iscolor(@bg)) {
+        background: @bg;
+    }
+    .output();
+}
+//*****---------------Normalize
+//*****--------------------------------------------------
+// ### Usage:初始化整站样式时使用。
+.global-normalize() {
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    html,
+    button,
+    input,
+    select,
+    textarea {
+        .font-family(base);
+    }
+    code,
+    kbd,
+    pre,
+    samp {
+        .font-family(code);
+        font-size: 1em;
+    }
+    button,
+    input,
+    select,
+    textarea {
+        font-size: 100%;
+        margin: 0;
+    }
+    textarea {
+        overflow: auto;
+        vertical-align: top;
+    }
+    input {
+        .placeholder();
+        .opacity(80);
+        .rgba-background(red,60);
+        .border-radius();
+        .box-shadow(0 1px 3px rgba(0, 0, 0, 0.25),0 1px 3px rgba(255, 255, 255, 0.8));
+    }
+    body {
+        margin: 0;
+        .user-select(none);
+    }
+    form {
+        margin: 0;
+    }
+    a:focus {
+        outline: thin dotted;
+    }
+    a:active,
+    a:hover {
+        outline: 0;
+    }
+    b,
+    strong {
+        font-weight: bold;
+    }
+    pre {
+        white-space: pre;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+    nav ul,
+    nav ol {
+        list-style: none;
+        list-style-image: none;
+    }
+    img {
+        border: 0;
+        -ms-interpolation-mode: bicubic;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+}
+.global-normalize() when (@support-html5) {
+    article,
+    aside,
+    details,
+    figcaption,
+    figure,
+    footer,
+    header,
+    hgroup,
+    main,
+    nav,
+    section,
+    summary {
+        display: block;
+    }
+    audio,
+    canvas,
+    video {
+        .inline-block();
+    }
+    [hidden] {
+        display: none;
+    }
+    mark {
+        background: #ff0;
+        color: @default-text-color;
+    }
+    figure {
+        margin: 0;
+    }
+    input[type="search"] {
+        -webkit-appearance: textfield;
+        .box-sizing(content-box);
+    }
+}

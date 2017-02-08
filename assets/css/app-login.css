@@ -1,4 +1,8 @@
-
+@charset "utf-8";
+.head-top {
+  line-height: 44px;
+  height: 44px;
+}
 .head-top .login-ms {
   color: #bfbfc7;
 }
@@ -97,14 +101,11 @@
   position: relative;
 }
 .login-con {
-  width: 290px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 0 15px;
 }
-.login-con .dn{display: none;}
-.login-con button,.login-con input[type="button"]{border: 0;}
-.login-con .fl{float: left;}
-.login-con .fr{float: right;}
+.login-con .dn {
+  display: none;
+}
 .login-con .f-i-text {
   width: 100%;
   padding-left: 10px;
@@ -133,8 +134,8 @@
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  border: 1.5px solid #3085e9;
-  line-height: 27px;
+  border: 1px solid #3085e9;
+  line-height: 28px;
   float: left;
 }
 .password-tab .sub-nav {
@@ -221,9 +222,12 @@
 }
 .checkbox-cm {
   display: inline-block;
+  position: relative;
 }
 .checkbox-cm input.auto-login {
   opacity: 0;
+  position: absolute;
+  top: 0;
 }
 .checkbox-cm label {
   position: relative;
@@ -240,7 +244,7 @@
   left: 0;
   width: 13px;
   height: 13px;
-  background: #eee;
+  background: #fff;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
@@ -255,7 +259,7 @@
   left: 2px;
   box-sizing: border-box;
   background: transparent;
-  border: 1.5px solid #eee;
+  border: 1px solid #fff;
   border-top: none;
   border-right: none;
   -webkit-transform: rotate(-45deg);
@@ -279,7 +283,8 @@
 .login-bt-fix {
   position: absolute;
   bottom: 5px;
-  width: 290px;
+  left: 15px;
+  right: 15px;
 }
 .f-i-text {
   height: 36px;
@@ -310,7 +315,6 @@
   font-size: 14px;
   font-weight: 500;
 }
-
 .del-btn {
   width: 16px;
   height: 16px;
