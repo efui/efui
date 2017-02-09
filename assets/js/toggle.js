@@ -1,8 +1,10 @@
 +(function($) {
 
 	'use strict';
-	var Toggle = function(element, options) {
-		this.isShown = null
+	function Toggle(element, options) {
+		this.options = options;
+		this.ele = $(element);
+		this.isShown = null;
 	}
 	Toggle.DEFAULTS = {
 		show: true
@@ -11,9 +13,9 @@
 		console.log('toggle==');
 		return this.isShown ? this.hide() : this.show()
 	}
-
 	Toggle.prototype.show = function() {
 		console.log('show==');
+		console.log(this.ele);
 		var e = $.Event('show.bs.toggle');
 		if(this.isShown) return;
 		this.isShown = true;
@@ -30,12 +32,9 @@
 			var $this = $(this);
 			var data = $this.data('bs.toggle');
 			var options = $.extend({}, Toggle.DEFAULTS, $this.data(), typeof option == 'object' && option);
-
 			if(!data) $this.data('bs.toggle', (data = new Toggle(this, options)));
-			if(typeof option == 'string') {
-				console.log('data()[]()执行');
-				$(this).data('bs.toggle')[option]();
-			} else if(options.show) data.show();
+			if(typeof option == 'string') data[option]();
+			else if(options.show) data.show();
 		})
 	}
 
