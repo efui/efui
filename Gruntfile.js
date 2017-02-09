@@ -142,9 +142,7 @@ module.exports = function(grunt) {
 			},
 			docs: {
 				files: [
-					'<%= meta.lessPath %>/**/*.less',
-					'<%= meta.currentPath %>/*.css',
-					'<%= meta.currentPath %>/*.js'
+					'<%= meta.lessPath %>/**/*.less'
 				],
 				tasks: ['lesscss','min-css']
 			}

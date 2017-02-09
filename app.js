@@ -369,6 +369,10 @@
 				url: "/ajax",
 				templateUrl: "skills/ajax.html"
 			})
+			.state('skills.jquery', {
+				url: "/jquery",
+				templateUrl: "skills/jquery.html"
+			})
 			.state('skills.css3', {
 				url: "/css3",
 				templateUrl: "skills/css3.html"
