@@ -3,7 +3,7 @@
 
 	require('angular-ui-router');
 
-	var app = angular.module('myapp', ['ui.router']);
+	var app = angular.module('app', ['ui.router']);
 	
 	//directive定义
 	app.directive('headerPanel', function () {
