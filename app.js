@@ -6,13 +6,13 @@
 	var app = angular.module('app', ['ui.router']);
 	
 	//directive定义
-	app.directive('header-panel', function () {
+	app.directive('headerpanel', function () {
 	 	return { 
 	 		restrict: 'EA', 
 	 		templateUrl: 'common/header.html'
 	 	}; 
 	}); 
-	app.directive('footer-panel', function () {
+	app.directive('footerpanel', function () {
 	 	return { 
 	 		restrict: 'EA', 
 	 		templateUrl: 'common/footer.html'
