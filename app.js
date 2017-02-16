@@ -3,7 +3,103 @@
 
 	require('angular-ui-router');
 
-	var app = angular.module('app', ['ui.router']);
+	var app = angular.module('myapp', ['ui.router']);
+	
+	//directive定义
+	app.directive('headerPanel', function () {
+	 	return { 
+	 		restrict: 'EA', 
+	 		templateUrl: 'common/header.html'
+	 	}; 
+	}); 
+	app.directive('footerPanel', function () {
+	 	return { 
+	 		restrict: 'EA', 
+	 		templateUrl: 'common/footer.html'
+	 	}; 
+	}); 
+	app.directive('tabpanel', function () {
+	    return {
+	    	restrict: 'A'
+	    };
+	});
+	app.directive('my-class', function () {
+	    return {
+	    	restrict: 'C'
+	    };
+	});
+	app.directive('panel', function () {
+	    return {
+	    	restrict: 'E',
+	        template: 'Hi there <span ng-transclude></span>',
+	        transclude: true,
+	        link:function(scope){
+	        	scope.things = [1,2,3];
+	        }
+	    };
+	});
+	app.directive('expander', function () {
+	    return {
+	    	restrict: 'EA',
+	    	transclude : true,
+	    	replace:true,
+	        template : '<div>'
+	                 + '<div class="title" ng-click="toggle()"><span ng-hide="showMe">{{title}}</span><span ng-show="showMe">{{title2}}</span></div>'
+	                 + '<div class="body" ng-show="showMe" ng-transclude></div>'
+	                 + '</div>',
+	        link : function(scope, element, attrs) {
+	            scope.showMe = false;
+				scope.title = '点击展开';
+				scope.title2 = '点击缩回';
+				scope.text = '这里是内部的内容。';
+	            scope.toggle = function toggle() {
+	                scope.showMe = !scope.showMe;
+	            }
+	        }
+	    };
+	});	
+	app.directive('helloWorld', function() { 
+	 	return { 
+	 		restrict: 'E', 
+	 		templateUrl: 'hello.html', 
+	 		replace: true 
+	 	}; 
+	}); 
+	app.directive("helloWorld2",function(){ 
+	 	return{ 
+	 		restrict:'EAC', 
+	 		transclude: true, //注意此处必须设置为true 
+	 		controller: function ($scope, $element,$attrs,$transclude,$log) { //在这里你可以注入你想注入的服务 
+			  	$transclude(function (clone) { 
+			   		var a = angular.element('<p>'); 
+//			   		a.css('color', $attrs.mycolor); 
+			   		a.text(clone.text()); 
+//			   		$element.append(a); 
+//			   		var a = $transclude(); //$transclude()就是嵌入的内容
+			   		a.css('color', $attrs.mycolor); 
+  					$element.append(a); 
+			  		$log.info(clone); 
+			  	}); 
+			  	$log.info("hello everyone"); 
+	        } 
+	 	}; 
+	}); 
+	app.directive('myDirective', function () { 
+	 	return { 
+		 	restrict: 'EA', 
+		 	scope:true, 
+		 	template: '<div>儿子:{{ name }}<input ng-model="name"/></div>' 
+		}; 
+	});
+	
+	app.run(["$templateCache", function($templateCache) {
+	 	$templateCache.put("hello.html", "<div><h1>Hi 我是林炳文~~~6666</h1></div>"); 
+	 	$templateCache.put("hello2.html", "<div><h1>Hi 我是林炳文~~~8888</h1></div>"); 
+	}]); 
+	app.controller('MainController', function ($scope) { 
+	 	$scope.name = '林炳文'; 
+	}); 
+
 	app
 		.config(config)
 		.run(run);
@@ -16,7 +112,7 @@
 			.state('index', {
 				url: "/",
 				templateUrl: "common/main.html",
-				controller: function($scope, $location) {
+				controller: function($scope, $location) {	
 					$scope.docsTit = "Easy Fast UI Frame";
 					$scope.docsMsg = "EFUI为一款轻量级前端UI框架，通俗易懂的写法及模块式的拼装方便自由扩展，简单易用，轻量快捷。";
 				}
@@ -392,6 +488,7 @@
 	}
 
 	run.$inject = ['$rootScope', '$location'];
+	
 
 	function run($rootScope, $location) {
 		$rootScope.path = $location.path();

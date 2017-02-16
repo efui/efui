@@ -25,7 +25,7 @@ require.config({
 //require(['angular', 'app','efui','jquery.prettify','jquery.slider','jquery.collapse','highcharts','picker','tap'], function (angular) {
 require(['angular', 'app','efui','jquery.prettify','jquery.slider','jquery.collapse'], function (angular) {
     angular.element(document).ready(function () {
-        angular.bootstrap(document, ['app']);
+        angular.bootstrap(document, ['myapp']);
     });
 	$('.sidebar-toggle-btn').click(function(){
 		$('.sidebar-slide').navslider({

@@ -28,5 +28,32 @@
 			</div>
 		</div>
 	</div>
-
+	<expander class='expander' expander-title='title'>
+        {{text}}
+		<div tabpanel="tabpanel" class='tabpanel'>
+			<panel>
+			<div ng-repeat='thing in things'>
+	            {{thing}}.子面板1
+	        </div>
+	        </panel>
+		</div>		
+		<hello-world></hello-world> 
+		<hello-world2 title = '我是第二个directive' mycolor="red"><label for="">gdfgd</label></hello-world2> 
+		<div ng-controller='MainController'> 
+		 	父亲:{{name}}<input ng-model="name" /> 
+		 	<div my-directive></div> 
+		</div> 
+		<form name="mainForm" novalidate>
+		    <div ng-form="form1">
+				姓名:<input type="text" ng-required="true" ng-model="name"/><br>
+		  		证件号码:<input type="number" ng-minLength="15" ng-maxLength="18" ng-required="true" ng-model="idnum"/>
+		    </div>
+		    <div ng-form="form2">
+		  		监护人姓名:<input type="text" ng-required="true" ng-model="gname"/><br>
+		       	监护人证件号码:<input type="number" ng-minLength="15" ng-maxLength="18" ng-required="true" ng-model="gidnum"/>
+		    </div>
+		    <button ng-disabled="form1.$invalid && form2.$invalid">submit all</button>
+		</form>
+    </expander>
+    
 </div>

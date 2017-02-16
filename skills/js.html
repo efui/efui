@@ -26,6 +26,9 @@
 			<li>
 				<a href="">JS继承</a>
 			</li>
+			<li>
+				<a href="">JS赋值运算</a>
+			</li>
 		</ol>
 	</div>
 </div>
@@ -916,6 +919,81 @@ console.log(p5.getInfo());  //Andy 12 student</pre>
 	</div>
 </div>
 
+<div class="mswitch">
+	<h3 class="mb10">JS赋值运算</h3>
+	<div class="example-demo">
+	</div>
+	<div class="example-desc">
+		<ol>
+			<li>
+		<h3>引用类型的赋值运算：</h3>
+		<div class="html">
+			<pre>var foo = { n: 1 };
+var bar = foo;
+foo.x = foo = { n: 2 };
+console.log(foo.x); // undefined</pre>
+		</div>
+		<h5>解释上面的现象：</h5>
+		<ul>
+			<li>
+				<p>首先是两个变量的声明和初始化，var foo = { n: 1 }; var bar = foo;，这个很好理解，就是foo和bar同时指向了一个相同的对象{ n: 1 }。</p>
+			</li>
+			<li>
+				<p>对于表达式foo.x = foo = { n: 2 };，我们都知道它实际上等于是foo.x = (foo = { n: 2 })。<span class="red">* 赋值运算符具有右结合性</span></p>
+			</li>
+			<li>
+				<p>虽然赋值运算符具有右结合性，然而它首先做的是得到表达式foo.x的值，它返回一个指向对象{ n: 1}的x成员的引用，需要注意的是，这个时候foo并没有改变引用的指向。</p>
+			</li>
+			<li>
+				<p>计算右边的结果，就是让foo指向另外的一个对象{n: 2}，返回值就是其右边运算式的结果，即对象{n: 2}</p>
+			</li>
+			<li>
+				<p>那么现在应该清楚了，赋值语句中foo.x的结果是指向对象一成员x的引用。<span class="red">{n: 2}只有成员n,没有x</span>，而下面的console.log(foo.x)中的foo指向的是对象二，所以这里foo.x返回undefined就理所当然了。</p>
+			</li>
+		</ul>
+		<h5>试着输出对象一，即bar（因为它从始至终指向的是对象一）：</h5>
+		<div class="html">
+			<pre>var foo = { n: 1 };
+var bar = foo;
+foo.x = foo = { n: 2 };
+console.log(bar); // { n: 1, x: { n: 2 } }</pre>
+		</div>
+		
+		<h5>工作步骤图解：</h5>
+		<div class="html">
+			<pre><script>
+var a = {n:1}; 
+var b = a;  
+a.x = a = {n:2}; 
+console.log(a.x);// --> undefined 
+console.log(b.x);// --> [object Object] 
+</script></pre>
+		</div>
+		<ul>
+			<li>首先是<b>var a = {n:1}; var b = a;</b>
+				<p>在这里a指向了一个对象{n:1}（我们姑且称它为对象A），b指向了a所指向的对象，也就是说，在这时候a和b都是指向对象A的。</p>
+			</li>
+			<li><b>a.x = a = {n:2};</b>
+				<p>我们知道js的赋值运算顺序永远都是从右往左的，不过由于“.”是优先级最高的运算符，所以这行代码先“计算”了a.x。</p>
+				<p>这时候发生了这个事情——a指向的对象{n:1}新增了属性x（虽然这个x是undefined的）：</p>
+				<img src="assets/img/js-fz01.png"/>
+				<p>从图上可以看到，由于b跟a一样是指向对象A的，要表示A的x属性除了用a.x，自然也可以使用b.x来表示了。</p>
+			</li>
+			<li>
+				<p>接着，依循“从右往左”的赋值运算顺序先执行 a={n:2} ，这时候，a指向的对象发生了改变，变成了新对象{n:2}（我们称为对象B）：</p>
+				<img src="assets/img/js-fz02.png"/>
+				<p>接着继续执行 a.x=a，很多人会认为这里是“对象B也新增了一个属性x，并指向对象B自己”</p>
+				<p>但实际上并非如此，<span class="red">由于（ .  运算符最先计算）一开始js已经先计算了a.x，便已经解析了这个a.x是对象A的x，所以在同一条公式的情况下再回来给a.x赋值，也不会说重新解析这个a.x为对象B的x。</span></p>
+				<p>所以 a.x=a 应理解为对象A的属性x指向了对象B:</p>
+				<img src="assets/img/js-fz03.png"/>
+				<p>那么这时候结果就显而易见了。当console.log(a.x)的时候，a是指向对象B的，但对象B没有属性x。</p>
+				<p>而在console.log(b.x)的时候，由于b.x表示对象A的x属性，该属性是指向对象B，自然也输出了[object Object]了</p>
+			</li>
+		</ul>
+			</li>
+		</ol>
+	</div>
+</div>
 <div class="mswitch">
 	<h3 class="mb10"></h3>
 	<div class="example-demo">
