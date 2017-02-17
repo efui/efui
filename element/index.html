@@ -13,25 +13,25 @@
 				<section class="sidebar-slide-overlay">
 					<dl>
 						<dt><a href="javascript:;">CSS　样式</a></dt>			
-						<dd ui-sref-active="active"><a ui-sref="element.normalize">样式统一</a></dd>
-						<dd ui-sref-active="active"><a ui-sref="element.layout">网页布局</a></dd>
-						<dd ui-sref-active="active"><a ui-sref="element.publish">文字排版</a></dd>
-						<dd ui-sref-active="active"><a ui-sref="element.font">字体图标</a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'normalize'})">样式统一</a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'layout'})">网页布局</a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'publish'})">文字排版</a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'font'})">字体图标</a></dd>
 					</dl>
 					<dl>
 						<dt><a href="javascript:;">HTML 标签</a></dt>
-						<dd ui-sref-active="active"><a ui-sref="element.button">按钮 <span>Button</span></a></dd>
-						<dd ui-sref-active="active"><a ui-sref="element.code">代码 <span>Code</span></a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'button'})">按钮 <span>Button</span></a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'code'})">代码 <span>Code</span></a></dd>
 						<dd ui-sref-active="active">
 							<a href="javascript:;" data-toggleclass="active">表单 <span>Form</span><i class="f-keyboard_arrow_down"></i></a>
 							<p class="subnav">
-								<a ui-sref="element.input">- input</a>
-								<a ui-sref="element.textarea">- textarea</a>
-								<a ui-sref="element.select">- select</a>
+								<a ui-sref="element.pages({pageid: 'input'})">- input</a>
+								<a ui-sref="element.pages({pageid: 'textarea'})">- textarea</a>
+								<a ui-sref="element.pages({pageid: 'select'})">- select</a>
 							</p>
 						</dd>
-						<dd ui-sref-active="active"><a ui-sref="element.table">表格 <span>Table</span></a></dd>
-						<dd ui-sref-active="active"><a ui-sref="element.image">图片 <span>Image</span></a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'table'})">表格 <span>Table</span></a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'image'})">图片 <span>Image</span></a></dd>
 					</dl>
 				</section>
 			</div>

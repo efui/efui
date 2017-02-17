@@ -55,7 +55,7 @@
 	    	restrict: 'EA',
 	    	transclude : true,
 	 		replace: true,
-	        template : '<p ng-transclude></p>',
+	        template : '<div ng-transclude></div>',
 	        link : function(scope, element, attrs) {
 	            scope.showMe = false;
 				scope.title = '点击展开';
@@ -106,9 +106,9 @@
 //			   		var a = $transclude(); //$transclude()就是嵌入的内容
 			   		a.css('color', $attrs.mycolor); 
   					$element.append(a); 
-			  		$log.info(clone); 
+//			  		$log.info(clone); 
 			  	}); 
-			  	$log.info("hello everyone"); 
+//			  	$log.info("hello everyone"); 
 	        } 
 	 	}; 
 	}); 
@@ -171,49 +171,9 @@
 					$scope.docsMsg = "CSS规范、HTML规范、JavaScript规范、浏览器兼容性";
 				}
 			})
-			.state('standard.format', {
-				url: "/format",
-				templateUrl: "standard/css-format.html"
-			})
-			.state('standard.cssname', {
-				url: "/cssname",
-				templateUrl: "standard/css-name.html"
-			})
-			.state('standard.csssort', {
-				url: "/csssort",
-				templateUrl: "standard/css-sort.html"
-			})
-			.state('standard.cssoptimize', {
-				url: "/cssoptimize",
-				templateUrl: "standard/css-optimize.html"
-			})
-			.state('standard.html', {
-				url: "/htmlformat",
-				templateUrl: "standard/html-format.html"
-			})
-			.state('standard.htmlname', {
-				url: "/htmlname",
-				templateUrl: "standard/html-name.html"
-			})
-			.state('standard.js', {
-				url: "/jsformat",
-				templateUrl: "standard/js-format.html"
-			})
-			.state('standard.jsname', {
-				url: "/jsname",
-				templateUrl: "standard/js-name.html"
-			})
-			.state('standard.compatible', {
-				url: "/compatible",
-				templateUrl: "standard/compatible.html"
-			})
-			.state('standard.compatiblecss', {
-				url: "/compatiblecss",
-				templateUrl: "standard/compatible-css.html"
-			})
-			.state('standard.compatiblejs', {
-				url: "/compatiblejs",
-				templateUrl: "standard/compatible-js.html"
+			.state('standard.pages', {
+				url: "/:pageid",
+				templateUrl: function($paramid){return 'standard/'+$paramid.pageid+'.html';}
 			})
 			.state('element', {
 				url: "/element",
@@ -223,49 +183,9 @@
 					$scope.docsMsg = "CSS样式、HTML标签";
 				}
 			})
-			.state('element.normalize', {
-				url: "/normalize",
-				templateUrl: "element/normalize.html"
-			})
-			.state('element.layout', {
-				url: "/layout",
-				templateUrl: "element/layout.html"
-			})
-			.state('element.publish', {
-				url: "/publish",
-				templateUrl: "element/publish.html"
-			})
-			.state('element.font', {
-				url: "/font",
-				templateUrl: "element/font.html"
-			})
-			.state('element.button', {
-				url: "/button",
-				templateUrl: "element/button.html"
-			})
-			.state('element.code', {
-				url: "/code",
-				templateUrl: "element/code.html"
-			})
-			.state('element.input', {
-				url: "/input",
-				templateUrl: "element/input.html"
-			})
-			.state('element.textarea', {
-				url: "/textarea",
-				templateUrl: "element/textarea.html"
-			})
-			.state('element.select', {
-				url: "/select",
-				templateUrl: "element/select.html"
-			})
-			.state('element.table', {
-				url: "/table",
-				templateUrl: "element/table.html"
-			})
-			.state('element.image', {
-				url: "/image",
-				templateUrl: "element/image.html"
+			.state('element.pages',{
+				url:'/:pageid',
+				templateUrl:function($paramid){return 'element/'+$paramid.pageid+'.html';}
 			})
 			.state('component', {
 				url: "/component",
@@ -275,121 +195,9 @@
 					$scope.docsMsg = "基本组件、web组件";
 				}
 			})
-			.state('component.buttons', {
-				url: "/buttons",
-				templateUrl: "component/buttons.html"
-			})
-			.state('component.inputtext', {
-				url: "/inputtext",
-				templateUrl: "component/input-text.html"
-			})
-			.state('component.inputradiocheckbox', {
-				url: "/inputradiocheckbox",
-				templateUrl: "component/input-radiocheckbox.html"
-			})
-			.state('component.inputfile', {
-				url: "/inputfile",
-				templateUrl: "component/input-file.html"
-			})
-			.state('component.select', {
-				url: "/select",
-				templateUrl: "component/select.html"
-			})
-			.state('component.textarea', {
-				url: "/textarea",
-				templateUrl: "component/textarea.html"
-			})
-			.state('component.labeltext', {
-				url: "/labeltext",
-				templateUrl: "component/label-text.html"
-			})
-			.state('component.labeltag', {
-				url: "/labeltag",
-				templateUrl: "component/label-tag.html"
-			})
-			.state('component.labelbadge', {
-				url: "/labelbadge",
-				templateUrl: "component/label-badge.html"
-			})
-			.state('component.webheader', {
-				url: "/webheader",
-				templateUrl: "component/web-header.html"
-			})
-			.state('component.webnav', {
-				url: "/webnav",
-				templateUrl: "component/web-nav.html"
-			})
-			.state('component.webmenu', {
-				url: "/webmenu",
-				templateUrl: "component/web-menu.html"
-			})
-			.state('component.websearch', {
-				url: "/websearch",
-				templateUrl: "component/web-search.html"
-			})
-			.state('component.webtipsstatus', {
-				url: "/webtipsstatus",
-				templateUrl: "component/web-tips-status.html"
-			})
-			.state('component.webtipsnews', {
-				url: "/webtipsnews",
-				templateUrl: "component/web-tips-news.html"
-			})
-			.state('component.webtipsfloat', {
-				url: "/webtipsfloat",
-				templateUrl: "component/web-tips-float.html"
-			})
-			.state('component.webtabs', {
-				url: "/webtabs",
-				templateUrl: "component/web-tabs.html"
-			})
-			.state('component.webfold', {
-				url: "/webfold",
-				templateUrl: "component/web-fold.html"
-			})
-			.state('component.webtitle', {
-				url: "/webtitle",
-				templateUrl: "component/web-title.html"
-			})
-			.state('component.websidebar', {
-				url: "/websidebar",
-				templateUrl: "component/web-sidebar.html"
-			})
-			.state('component.weblisttext', {
-				url: "/weblisttext",
-				templateUrl: "component/web-list-text.html"
-			})
-			.state('component.weblisttextimg', {
-				url: "/weblisttextimg",
-				templateUrl: "component/web-list-textimg.html"
-			})
-			.state('component.weblistcomment', {
-				url: "/weblistcomment",
-				templateUrl: "component/web-list-comment.html"
-			})
-			.state('component.webprogress', {
-				url: "/webprogress",
-				templateUrl: "component/web-progress.html"
-			})
-			.state('component.webpop', {
-				url: "/webpop",
-				templateUrl: "component/web-pop.html"
-			})
-			.state('component.webad', {
-				url: "/webad",
-				templateUrl: "component/web-ad.html"
-			})
-			.state('component.webpagination', {
-				url: "/webpagination",
-				templateUrl: "component/web-pagination.html"
-			})
-			.state('component.webfooter', {
-				url: "/webfooter",
-				templateUrl: "component/web-footer.html"
-			})
-			.state('component.applogin', {
-				url: "/applogin",
-				templateUrl: "component/app-login.html"
+			.state('component.pages', {
+				url: "/:pageid",
+				templateUrl: function($routeParams){return 'component/'+$routeParams.pageid+'.html'}
 			})
 			.state('plugin', {
 				url: "/plugin",
@@ -399,81 +207,9 @@
 					$scope.docsMsg = "基于jQuery库的插件介绍";
 				}
 			})
-			.state('plugin.picslider', {
-				url: "/picslider",
-				templateUrl: "plugin/picslider.html"
-			})
-	     	.state('plugin.popup', {
-			   	url: "/popup",
-			   	templateUrl: "plugin/popup.html"
-	   		})
-			.state('plugin.waterfall', {
-				url: "/waterfall",
-				templateUrl: "plugin/waterfall.html"
-			})
-			.state('plugin.alert', {
-				url: "/alert",
-				templateUrl: "plugin/alert.html"
-			})
-			.state('plugin.dialog', {
-				url: "/dialog",
-				templateUrl: "plugin/dialog.html"
-			})
-			.state('plugin.tooltips', {
-				url: "/tooltips",
-				templateUrl: "plugin/tooltips.html"
-			})
-			.state('plugin.keyboard', {
-				url: "/keyboard",
-				templateUrl: "plugin/keyboard.html"
-			})
-			.state('plugin.picker', {
-				url: "/picker",
-				templateUrl: "plugin/picker.html"
-			})
-			.state('plugin.highchart', {
-				url: "/highchart",
-				templateUrl: "plugin/highchart.html"
-			})
-			.state('plugin.totop', {
-				url: "/totop",
-				templateUrl: "plugin/totop.html"
-			})
-			.state('plugin.tagcloud', {
-				url: "/tagcloud",
-				templateUrl: "plugin/tagcloud.html"
-			})
-			.state('plugin.fullswitch', {
-				url: "/fullswitch",
-				templateUrl: "plugin/fullswitch.html"
-			})
-			.state('plugin.autoscroll', {
-				url: "/autoscroll",
-				templateUrl: "plugin/autoscroll.html"
-			})
-			.state('plugin.scrollspy', {
-				url: "/scrollspy",
-				templateUrl: "plugin/scrollspy.html"
-			})
-			.state('plugin.iscroll', {
-				url: "/iscroll",
-				templateUrl: "plugin/iscroll.html"
-			})
-			.state('plugin.datetime', {
-				url: "/datetime",
-				templateUrl: "plugin/datetime.html"
-			})
-			.state('plugin.select', {
-				url: "/select",
-				templateUrl: "plugin/select.html"
-			})
-			.state('plugin.radiocheckbox', {
-				url: "/radiocheckbox",
-				templateUrl: "plugin/radiocheckbox.html"
-			})
-			.state('plugin.validate', {
-				url: "/validate",
-				templateUrl: "plugin/validate.html"
+			.state('plugin.pages', {
+				url: "/:pageid",
+				templateUrl: function($routeParams){return 'plugin/'+$routeParams.pageid+'.html'}
 			})
 			.state('skills', {
 				url: "/skills",
@@ -482,61 +218,45 @@
 					$scope.docsTit = "进阶";
 					$scope.docsMsg = "前端技能进阶";
 				}
-			})
-			.state('skills.js', {
-				url: "/js",
-				templateUrl: "skills/js.html"
-			})
-			.state('skills.module', {
-				url: "/module",
-				templateUrl: "skills/module.html"
-			})
-			.state('skills.mvc', {
-				url: "/mvc",
-				templateUrl: "skills/mvc.html"
-			})
-			.state('skills.regex', {
-				url: "/regex",
-				templateUrl: "skills/regex.html"
-			})
-			.state('skills.json', {
-				url: "/json",
-				templateUrl: "skills/json.html"
-			})
-			.state('skills.seo', {
-				url: "/seo",
-				templateUrl: "skills/seo.html"
-			})
-			.state('skills.ajax', {
-				url: "/ajax",
-				templateUrl: "skills/ajax.html"
-			})
-			.state('skills.jquery', {
-				url: "/jquery",
-				templateUrl: "skills/jquery.html"
-			})
-			.state('skills.css3', {
-				url: "/css3",
-				templateUrl: "skills/css3.html"
-			})
-			.state('skills.html5', {
-				url: "/html5",
-				templateUrl: "skills/html5.html"
-			})
-			.state('skills.nodejs', {
-				url: "/nodejs",
-				templateUrl: "skills/nodejs.html"
-			})
-			.state('skills.less', {
-				url: "/less",
-				templateUrl: "skills/less.html"
+			})			
+			.state('skills.pages', {
+				url: "/:pageid",
+				templateUrl: function($routeParams){return 'skills/'+$routeParams.pageid+'.html'}
 			})
 			.state('angular', {
 				url: "/angular",
 				templateUrl: "angular/index.html",
 				controller: function($scope, $location) {
 					$scope.docsTit = "angular专区";
-					$scope.docsMsg = "angularJs实例演示";
+					$scope.docsMsg = "angularJs实例演示"; 
+					$scope.departments = [  
+					    {  
+					        "firstName": "单页面1", 
+					        "likes": [
+					        	{
+					        		'title':"11111",
+					        		'submenu':[
+					        			{'name':"子页面1",'url':"angular-spa1"},
+					        			{'name':"子页面2",'url':"angular-spa2"},
+					        			{'name':"子页面3",'url':"angular-spa3"},
+					        			{'name':"子页面4",'url':"angular-spa4"}
+					        		]
+					        	}
+					        ]
+					    },  
+					    {  
+					        "firstName": "单页面2", 
+					        "likes": [
+					        	{
+					        		'title':"2222",
+					        		'submenu':[
+					        			{'name':"子页面3",'url':"angular-spa3"},
+					        			{'name':"子页面4",'url':"angular-spa4"}
+					        		]
+					        	}
+					        ]
+					    }
+					];
 					$scope.submitForm = function(isValid) {
 		                if (!isValid) {
 		                    alert('验证失败');
@@ -544,20 +264,9 @@
 		            };
 				}
 			})
-			.state('angular_pages', {
-                url: '/angular/:id',
-//				url: "/angular",
-				templateUrl: "angular/index.html",
-				controller: function($scope, $location,$stateParams) {
-					console.log($stateParams);
-					$scope.docsTit = "angular专区";
-					$scope.docsMsg = "angularJs实例演示";
-					$scope.submitForm = function(isValid) {
-		                if (!isValid) {
-		                    alert('验证失败');
-		                }
-		            };
-				}
+			.state('angular.pages', {
+                url: '/:pageid',
+				templateUrl:function($routeParams){return 'angular/'+$routeParams.pageid+'.html';}
 			})
 	}
 

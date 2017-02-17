@@ -1,0 +1,19 @@
+
+    <div id="expander">
+    	<expander ng-repeat="item in data" ng-class="className()">
+    		{{$index+1}}.{{item.str}}
+	     	<form class="form-horizontal" role="form" id="custom_form" name="custom_form" novalidate>
+	            <div class="form-group">
+	                <label class="col-sm-2 control-label">多个email</label>
+	
+	                <div class="col-sm-10">
+	                    <input multiple-email name="user_email" ng-model="user.email" required class="form-control" placeholder="自定义验证，多个邮箱地址，以“；”或者“;”分割" />
+	                    {{item.str}}验证通过：{{custom_form.user_email.$valid}}
+	                </div>
+	            </div>
+	            <div class="form-group  text-center">
+	                <input class="btn btn-primary btn-lg" ng-disabled="custom_form.$invalid" type="submit" value="提交" />
+	            </div>
+	        </form>
+    	</expander>
+    </div>
