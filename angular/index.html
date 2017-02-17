@@ -1,0 +1,26 @@
+<div class="docs-header">
+	<div class="container animation-scale-up" id="docs-con">
+		<h2>{{docsTit}}</h2>
+		<p>{{docsMsg}}</p>		
+	</div>
+</div>
+<div class="container">
+	<div class="row main-container clearfix">
+		<div class="col-xs-12 col-sm-3 col-md-3">
+			<panel class="sidebar-menu sidebar-slide">
+				<dl>
+					<dt><a href="javascript:;">主菜单</a></dt>
+					<dd ui-sref-active="active" ng-repeat='item in data'>
+			        	<a href="javascript:;" ng-click="toggle()" ng-class="{true :'active'}[showMe]">
+			        		子面板{{$index+1}} <span>({{title}})</span>
+			        		<i class="f-keyboard_arrow_down"></i>
+			        	</a>
+			            <expander class="subnav" ng-class="className()" ng-show="showMe">
+				    		<a ui-sref="angular_pages({id: $index+1})">- {{$index+1}}.{{item.str}}</a>
+				    	</expander>
+			        </dd>
+		        </dl>
+		    </panel>
+	    </div>
+    </div>
+</div>

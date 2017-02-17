@@ -18,11 +18,11 @@
 	 		templateUrl: 'common/footer.html'
 	 	}; 
 	}); 
-	app.directive('tabpanel', function () {
-	    return {
-	    	restrict: 'A'
-	    };
-	});
+//	app.directive('tabpanel', function () {
+//	    return {
+//	    	restrict: 'A'
+//	    };
+//	});
 	app.directive('my-class', function () {
 	    return {
 	    	restrict: 'C'
@@ -31,10 +31,22 @@
 	app.directive('panel', function () {
 	    return {
 	    	restrict: 'E',
-	        template: 'Hi there <span ng-transclude></span>',
+	 		replace: true,
+	        template: '<div><div ng-transclude class="sidebar-slide-overlay"></div></div>',
 	        transclude: true,
 	        link:function(scope){
-	        	scope.things = [1,2,3];
+	        	scope.things = [11,22,33];
+				scope.data =  [
+				    {
+				        str: '表单a'
+				    },
+				    {
+				        str: '表单b'
+				    },
+				    {
+				        str: '表单c'
+				    }
+				]; 
 	        }
 	    };
 	});
@@ -42,16 +54,32 @@
 	    return {
 	    	restrict: 'EA',
 	    	transclude : true,
-	    	replace:true,
-	        template : '<div>'
-	                 + '<div class="title" ng-click="toggle()"><span ng-hide="showMe">{{title}}</span><span ng-show="showMe">{{title2}}</span></div>'
-	                 + '<div class="body" ng-show="showMe" ng-transclude></div>'
-	                 + '</div>',
+	 		replace: true,
+	        template : '<p ng-transclude></p>',
 	        link : function(scope, element, attrs) {
 	            scope.showMe = false;
 				scope.title = '点击展开';
 				scope.title2 = '点击缩回';
 				scope.text = '这里是内部的内容。';
+				scope.data =  [
+				    {
+				        str: '表单a'
+				    },
+				    {
+				        str: '表单b'
+				    },
+				    {
+				        str: '表单c'
+				    }
+				]; 
+				scope.className = function() {
+			        var className = 'initClass';	
+			        var _num = parseInt(scope.$index);
+			        if (++_num)
+			            className += _num;			
+			        return className;
+			    };
+//				console.log(scope.$index);
 	            scope.toggle = function toggle() {
 	                scope.showMe = !scope.showMe;
 	            }
@@ -91,7 +119,25 @@
 		 	template: '<div>儿子:{{ name }}<input ng-model="name"/></div>' 
 		}; 
 	});
+	app.directive('multipleEmail', [function () {
+      	return {
+          	require: "ngModel",
+          		link: function (scope, element, attr, ngModel) {
+              	if (ngModel) {
+                  	var emailsRegexp = /^([a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*[;；]?)+$/i;
+              	}
+              	var customValidator = function (value) {
+                  	var validity = ngModel.$isEmpty(value) || emailsRegexp.test(value);
+                  	ngModel.$setValidity("multipleEmail", validity);
+                  	return validity ? value : undefined;
+              	};
+              	ngModel.$formatters.push(customValidator);
+              	ngModel.$parsers.push(customValidator);
+          	}
+		};
+	}]);
 	
+	/* 缓存模板templateUrl */
 	app.run(["$templateCache", function($templateCache) {
 	 	$templateCache.put("hello.html", "<div><h1>Hi 我是林炳文~~~6666</h1></div>"); 
 	 	$templateCache.put("hello2.html", "<div><h1>Hi 我是林炳文~~~8888</h1></div>"); 
@@ -114,7 +160,7 @@
 				templateUrl: "common/main.html",
 				controller: function($scope, $location) {	
 					$scope.docsTit = "Easy Fast UI Frame";
-					$scope.docsMsg = "EFUI为一款轻量级前端UI框架，通俗易懂的写法及模块式的拼装方便自由扩展，简单易用，轻量快捷。";
+					$scope.docsMsg = "EFUI为一款轻量级前端UI框架，通俗易懂的写法及模块式的拼装方便自由扩展，简单易用，轻量快捷。"; 					
 				}
 			})
 			.state('standard', {
@@ -484,6 +530,34 @@
 			.state('skills.less', {
 				url: "/less",
 				templateUrl: "skills/less.html"
+			})
+			.state('angular', {
+				url: "/angular",
+				templateUrl: "angular/index.html",
+				controller: function($scope, $location) {
+					$scope.docsTit = "angular专区";
+					$scope.docsMsg = "angularJs实例演示";
+					$scope.submitForm = function(isValid) {
+		                if (!isValid) {
+		                    alert('验证失败');
+		                }
+		            };
+				}
+			})
+			.state('angular_pages', {
+                url: '/angular/:id',
+//				url: "/angular",
+				templateUrl: "angular/index.html",
+				controller: function($scope, $location,$stateParams) {
+					console.log($stateParams);
+					$scope.docsTit = "angular专区";
+					$scope.docsMsg = "angularJs实例演示";
+					$scope.submitForm = function(isValid) {
+		                if (!isValid) {
+		                    alert('验证失败');
+		                }
+		            };
+				}
 			})
 	}
 
