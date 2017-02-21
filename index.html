@@ -46,7 +46,6 @@
 		plus.runtime.getProperty(plus.runtime.appid,function(inf){
 			wgtVer=inf.version;
 			//console.log("当前应用版本：" + wgtVer);
-			alert("当前应用版本：" + wgtVer);
 			console.log("=================版本测试=================");
 		});
 	}
@@ -71,14 +70,11 @@
 					//alert("检测更新成功：" + xhr.responseText);
 					// 读取最新版本号
 					var newVer = xhr.responseText;
-					alert("当前版本:" + wgtVer);
-					alert("最新版本:" + newVer);
 					if(wgtVer && newVer && (wgtVer != newVer)){
 						// H5 plus事件处理,弹出提示信息对话框
 						plus.nativeUI.confirm("检测到新版本,是否更新?", function(e) {
 							if(e.index == 0){
-								alert("确定！");
-								downWgt(); // 下载升级包
+								//downWgt(); // 下载升级包
 							}
 						}, "版本更新", ["确定", "取消"]);
 					}else{

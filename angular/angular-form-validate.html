@@ -1,4 +1,7 @@
-<div ng-click="toggle()"><span ng-show="showMe">{{title2}}</span><span ng-show="!showMe">{{title}}</span></div>
+
+
+<div top-Title></div> 
+<div ng-click="toggle()"><span ng-show="showMe">{{title2}}<i class="f-arrow_up"></i></span><span ng-show="!showMe">{{title}}<i class="f-arrow_down"></i></span></div>
 <expander class='expander' expander-title='title' ng-show="showMe">
     {{text}}
 	<div tabpanel="tabpanel" class='tabpanel'>
@@ -32,3 +35,21 @@
 	    <button ng-disabled="form1.$invalid && form2.$invalid" type="submit">submit all</button>
 	</form>
 </expander>
+ <div id="expander" class="mt25">
+    	<expander ng-repeat="item in data" ng-class="className()">
+    		{{$index+1}}.{{item.str}}
+	     	<form class="form-horizontal" role="form" id="custom_form" name="custom_form" novalidate>
+	            <div class="form-group">
+	                <label class="col-sm-2 control-label">多个email</label>
+	
+	                <div class="col-sm-10">
+	                    <input multiple-email name="user_email" ng-model="user.email" required class="form-control" placeholder="自定义验证，多个邮箱地址，以“；”或者“;”分割" />
+	                    {{item.str}}验证通过：{{custom_form.user_email.$valid}}
+	                </div>
+	            </div>
+	            <div class="btn-group  al-c">
+	                <input class="btn btn-primary" ng-disabled="custom_form.$invalid" type="submit" value="提交" />
+	            </div>
+	        </form>
+    	</expander>
+    </div>
