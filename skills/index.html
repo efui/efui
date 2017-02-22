@@ -9,25 +9,21 @@
 	<div class="row main-container clearfix">
 
 		<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
-			<div class="sidebar-menu sidebar-slide">
-				<section class="sidebar-slide-overlay">
-						<dl>
-							<dt><a href="javascript:;">技能进阶</a></dt>
-							<dd ui-sref-active="active"><a ui-sref="skills.pages({pageid: 'js'})">javascript</a></dd>
-							<dd ui-sref-active="active"><a ui-sref="skills.pages({pageid: 'module'})">模块化开发</a></dd>
-							<!--<dd ui-sref-active="active"><a ui-sref="skills.mvc">前端MVC-AngularJs</a></dd>-->
-							<dd ui-sref-active="active"><a ui-sref="skills.pages({pageid: 'regex'})">正则表达式</a></dd>
-							<dd ui-sref-active="active"><a ui-sref="skills.pages({pageid: 'json'})">json</a></dd>
-							<dd ui-sref-active="active"><a ui-sref="skills.pages({pageid: 'seo'})">seo</a></dd>
-							<dd ui-sref-active="active"><a ui-sref="skills.pages({pageid: 'ajax'})">ajax</a></dd>
-							<dd ui-sref-active="active"><a ui-sref="skills.pages({pageid: 'jquery'})">jquery</a></dd>
-							<dd ui-sref-active="active"><a ui-sref="skills.pages({pageid: 'css3'})">css3</a></dd>
-							<dd ui-sref-active="active"><a ui-sref="skills.pages({pageid: 'html5'})">html5</a></dd>
-							<dd ui-sref-active="active"><a ui-sref="skills.pages({pageid: 'nodejs'})">NodeJs</a></dd>
-							<dd ui-sref-active="active"><a ui-sref="skills.pages({pageid: 'less'})">less</a></dd>
-						</dl>
-				</section>
-			</div>
+			<panel class="sidebar-menu sidebar-slide">
+				<dl ng-repeat="ritem in menulist">
+					<dt><a href="javascript:;">{{ritem.firstName}}</a></dt>
+					<dd ui-sref-active="active" ng-repeat='item in ritem.likes'>
+						<a ui-sref="skills.pages({pageid:item.url})" ng-if="!item.submenu">{{item.title}}</a>
+						<a href="javascript:;" data-toggleclass="active" ng-if="item.submenu">
+			        		<span ng-bind="item.title"></span>
+			        		<i class="f-keyboard_arrow_down"></i>
+			        	</a>
+			        	<p class="subnav" ng-repeat='subitem in item.submenu'>
+			        		<a ui-sref="skills.pages({pageid:subitem.url})">{{subitem.name}}</a>
+			        	</p>							
+					</dd>
+				</dl>
+		    </panel>
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-9">
 			<div ui-view></div>

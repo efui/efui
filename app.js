@@ -10,7 +10,7 @@
 	app.run(["$templateCache", function($templateCache) {
 	 	$templateCache.put("hello.html", "<div><h1>Hi 我是林炳文~~~6666</h1></div>"); 
 	 	$templateCache.put("hello2.html", "<div><h1>Hi 我是林炳文~~~8888</h1></div>"); 
-	 	$templateCache.put("toptitle.html", '<h3 class="mb10" ng-repeat="data in menulist">'+
+	 	$templateCache.put("toptitle.html", '<h3 class="mb10" ng-repeat="data in menulist" ng-click="toggleClass()">'+
 			'<span ng-repeat="item in data.likes">'+
 				'<span class="red" ng-if="!item.submenu && item.title == pagename">{{item.title}}</span>'+
 				'<span ng-if="item.submenu" ng-repeat="subitem in item.submenu">'+
@@ -95,11 +95,110 @@
 				controller: function($scope, $location) {
 					$scope.docsTit = "进阶";
 					$scope.docsMsg = "前端技能进阶";
+					$scope.menulist = [  
+					    {  
+					        "firstName": "技能进阶", 
+					        "likes": [
+					        	{
+					        		'title':"javascript","url":"js"
+					        	},
+					        	{
+					        		'title':"模块化开发","url":"module"
+					        	},
+					        	{
+					        		'title':"正则表达式","url":"regex"
+					        	},
+					        	{
+					        		'title':"seo","url":"seo"
+					        	},
+//					        	{
+//					        		'title':"json","url":"json"
+//					        	},
+//					        	{
+//					        		'title':"ajax","url":"ajax"
+//					        	},
+					        	{
+					        		'title':"jquery","url":"jquery"
+					        	},
+					        	{
+					        		'title':"css3","url":"css3"
+					        	},
+					        	{
+					        		'title':"html5","url":"html5"
+					        	},
+					        	{
+					        		'title':"NodeJs","url":"nodejs"
+					        	}
+					        ]
+					    },  
+					    {  
+					        "firstName": "试题清单", 
+					        "likes": [
+					        	{
+					        		'title':"javascript",
+					        		'submenu':[
+					        			{'name':"概念题",'url':"note-js01"}
+					        		]
+					        	},
+					        	{
+					        		'title':"css",
+					        		'submenu':[
+					        			{'name':"概念题",'url':"note-css01"}
+					        		]
+					        	}
+					        ]
+					    }
+					];
 				}
 			})			
 			.state('skills.pages', {
 				url: "/:pageid",
-				templateUrl: function($routeParams){return 'skills/'+$routeParams.pageid+'.html'}
+				templateUrl: function($routeParams){return 'skills/'+$routeParams.pageid+'.html'},
+				controller:function($scope,$stateParams,$element){
+					$scope.pagename = $stateParams.pageid;
+					$scope.answertitle = '查看正确答案';
+					$scope.answertitle2 = '关闭正确答案';
+					/note-*/.test($scope.pagename) && $element.prepend('<link href="assets/css/note-question.min.css" rel="stylesheet">');
+					$scope.noteTitlelist = [
+						{"title":"JS的基本数据类型","content":'Undefined、Null、Boolean、Number、String'},
+						{"title":"JS有哪些内置对象","content":[
+							"Object 是 JavaScript 中所有对象的父对象；",
+							"数据封装类对象：Object、Array、Boolean、Number、String；",
+							"其他对象：Function、Argument、Math、Date、RegExp、Error。"
+						]},
+						{"title":"列举几条JS的基本代码规范","content":[
+							"不要在同一行声明多个变量；",
+							"如果你不知道数组的长度，使用 push；",
+							"请使用 ===/!== 来比较 true/false 或者数值；",
+							"使用对象字面量替代 new Array 这种形式；",
+							"不要使用全局函数；",
+							"总是使用 var 来声明变量，如果不这么做将导致产生全局变量，我们要避免污染全局命名空间；",
+							"Switch 语句必须带有 default 分支；",
+							"语句结束一定要加分号；",
+							"避免单个字符名，让你的变量名有描述意义；",
+							"当命名对象、函数和实例时使用驼峰命名规则。"
+						]},
+						{"title":"call和apply的作用是什么？区别是什么？","content":[
+							"call和apply的功能基本相同，都是实现继承或者转换对象指针的作用；",
+							"唯一不同的是前者参数是罗列出来的，后者是存到数组中的；",
+							{"tit":"语法：","desc":[
+								".call(对象[,参数1，参数2,....]);//此地参数是指的是对象的参数，非方法的参数；",
+								".apply(对象,参数数组)//参数数组的形式:[参数1，参数2,......]"
+							]}
+						]}
+					];
+					$scope.submitForm = function(answer,item) {	
+		                if (item !== answer) {
+		                    alert('回答错误');
+		                }
+		            };
+		            $scope.isArray = function(o){
+		            	return Object.prototype.toString.call(o) === '[object Array]';  
+					};
+		            $scope.isObj = function(o){
+		            	return Object.prototype.toString.call(o) === '[object Object]';  
+					};
+				}
 			})
 			.state('angular', {
 				url: "/angular",
@@ -155,6 +254,9 @@
 				templateUrl:function($routeParams){return 'angular/'+$routeParams.pageid+'.html';},
 				controller: function($scope, $location,$state,$stateParams,$element) {
 					$scope.pagename = $stateParams.pageid;
+					$scope.toggleClass = function(){
+						console.log($scope.pagename);
+					}
 //					console.log($element);
 //					console.log($state);
 //					console.log($stateParams);
@@ -253,6 +355,7 @@
 	        template : '<div ng-transclude></div>',
 	        link : function(scope, element, attrs) {
 	            scope.showMe = false;
+		     	scope.answershow = false;
 				scope.title = '点击展开';
 				scope.title2 = '点击缩回';
 				scope.text = '这里是内部的内容。';
@@ -268,11 +371,13 @@
 			            className += _num;			
 			        return className;
 			    };
-//				console.log(scope.$index);
 	            scope.toggle = function toggle() {
-	            	console.log('toggle me!');
+	            	//console.log('toggle me!');
 	                scope.showMe = !scope.showMe;
 	            }
+		     	scope.toggleanswer = function(){
+		         	scope.answershow = !scope.answershow;
+		   		};
 	        }
 	    };
 	});	

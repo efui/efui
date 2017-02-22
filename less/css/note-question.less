@@ -1,0 +1,24 @@
+@charset "utf-8"; //字符设置
+@import "../less.less";
+@import "../prefixes.less";
+
+input[type=button],input[type=password],input[type=text],textarea{-webkit-appearance:none;outline:0}
+.note-question{
+    
+}
+.note-title{margin-bottom: 2px;cursor:pointer;margin-top:15px;padding-right:30px;position:relative;font-size: 16px;line-height: 22px;padding-bottom:6px;border-bottom: 1px dashed #ccc;
+    [class*="f-arrow_"]{font-size: 30px;position: absolute;top:50%;margin-top:-16px;right: 0;}
+}
+.note-reply{position: relative;
+    .answer-area{background: #f5f5f5;margin-right: 70px;padding: 15px;
+        input,textarea{border: 0;width: 100%;background: none;}
+    }
+    .i-answer{display: block;}
+    .btn[type="submit"]{position: absolute;top:50%;right:0;margin-top: -16px;}
+}
+.note-desc{padding-bottom: 15px;
+    .html{padding: 10px 15px; margin: 5px 0 15px;background-color: #f5f5f5;border-left: 4px solid #91abd4;word-break: break-word;font-size: 15px;font-weight: 400;line-height: 30px;}
+}
+.active{
+    .note-title{}
+}
