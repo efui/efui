@@ -96,4 +96,43 @@ el.attachEvent("onclick",function(event){
 			</li>
 		</ol>
 	</li>
+	<li>
+		<h3>ios</h3>
+		<ol>
+			<li>
+				<h5>:active属性无效</h5>
+				<ul>
+					<li>要让a链接的Css active伪类生效，只需要给这个a链接的touch系列的任意事件touchstart/touchend绑定一个空的匿名方法即可hack成功。
+						<div class="html">
+							<pre><style>
+	a {color: #000;}
+	a:active {color: #fff;}
+	</style>
+	
+	<a herf='asdasd'>asdasd</a>
+	
+	<script>
+	var a=document.getElementsByTagName('a');
+	for(var i=0;i<a.length;i++){
+	  	a[i].addEventListener('touchstart',function(){},false);
+	}
+	</script></pre>
+						</div>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h5>click事件触发失灵</h5>
+				<ul>
+					<li>IOS浏览器的按钮和链接才响应click事件，其他标签不响应，所以点击链接和按钮之外的其他地方并不会把click事件冒泡到body上。</li>
+					<li>开启方法：给标签绑定一个任意事件
+						<div class="html">
+							<pre>/*给body里面的任意元素绑定事件，让这些标签能接受click事件*/
+$("body>*").bind("click",function(){});</pre>
+						</div>
+					</li>
+				</ul>
+			</li>
+		</ol>
+	</li>
 </ol>
