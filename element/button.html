@@ -1,0 +1,115 @@
+<div class="mlist">
+	<div class="mtit"><span>目录</span></div>
+	<div class="mcon">
+		<ol>
+			<li><a href="">基本使用</a></li>
+			<li><a href="">按钮状态</a></li>
+			<li><a href="">按钮Icon</a></li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">基本使用 </h3>
+	<div class="example-demo">
+		<div class="example-visualize">
+			<button type="button" class="btn btn-default">默认样式</button>
+			<button type="button" class="btn btn-primary">主色按钮</button>
+			<button type="button" class="btn btn-info">次色按钮</button>
+			<button type="button" class="btn btn-success">绿色按钮</button>
+			<button type="button" class="btn btn-warning">橙色按钮</button>
+			<button type="button" class="btn btn-danger">红色按钮</button>
+			<a class="btn btn-link">链接</a>
+		</div>
+		<div class="example-visualize">
+			<button type="button" class="btn btn-default radius">默认样式</button>
+			<button type="button" class="btn btn-primary radius">主色按钮</button>
+			<button type="button" class="btn btn-info radius">次色按钮</button>
+			<button type="button" class="btn btn-success radius">绿色按钮</button>
+			<button type="button" class="btn btn-warning radius">橙色按钮</button>
+			<button type="button" class="btn btn-danger radius">红色按钮</button>
+		</div>
+		<div class="example-visualize">
+			<button type="button" class="btn btn-default round">默认样式</button>
+			<button type="button" class="btn btn-primary round">主色按钮</button>
+			<button type="button" class="btn btn-info round">次色按钮</button>
+			<button type="button" class="btn btn-success round">绿色按钮</button>
+			<button type="button" class="btn btn-warning round">橙色按钮</button>
+			<button type="button" class="btn btn-danger round">红色按钮</button>
+		</div>
+		<div class="example-visualize">
+			<button type="button" class="btn btn-default btn-block">块级显示</button>
+			<button type="button" class="btn btn-primary btn-block">块级显示</button>
+		</div>
+		<div class="html">
+			<pre><button type="button" class="btn btn-default">默认样式</button>
+<button type="button" class="btn btn-primary">主色按钮</button>
+<button type="button" class="btn btn-info">次色按钮</button>
+<button type="button" class="btn btn-success">绿色按钮</button>
+<button type="button" class="btn btn-warning">橙色按钮</button>
+<button type="button" class="btn btn-danger">红色按钮</button>
+<a class="btn btn-link">链接</a></pre>
+		</div>		
+	</div>
+	<div class="example-desc">
+		<ul>
+			<li><b>初始化：</b>在要应用按钮样式的元素上添加 .btn，再设置相应的颜色；</li>
+			<li><b>圆角按钮：</b>在默认样式的基础上添加 .radius，默认4px；</li>
+			<li><b>椭圆形按钮：</b>在默认样式的基础上添加 .round，默认1000px。</li>
+			<li><b>块级显示：</b>在默认样式的基础上添加 .btn-block，默认1000px。</li>
+		</ul>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">按钮状态 </h3>
+	<div class="example-demo">
+		<div class="example-visualize">
+			<button type="button" class="btn btn-primary active">激活状态</button>
+			<button type="button" class="btn btn-default active">激活状态</button>
+			<br >
+			<br >
+			<a href="" class="btn btn-primary active" role="button">链接按钮激活状态</a>
+			<a href="" class="btn btn-default active" role="button">链接按钮激活状态</a>
+		</div>
+		<div class="example-visualize">
+			<button type="button" class="btn btn-primary disabled">禁用状态</button>
+			<button type="button" class="btn btn-default disabled">禁用状态</button>
+			<br >
+			<br >
+			<a href="" class="btn btn-primary disabled" role="button">链接按钮禁用状态</a>
+			<a href="" class="btn btn-default disabled" role="button">链接按钮禁用状态</a>
+		</div>
+		<div class="html">
+			<pre><button type="button" class="btn btn-primary active">Primary button</button>
+<button type="button" class="btn btn-default active">Button</button>
+<a href="#" class="btn btn-primary active" role="button">Primary link</a>
+<a href="#" class="btn btn-default active" role="button">Link</a></pre>
+		</div>	
+	</div>
+	<div class="example-desc">
+		当按钮处于激活状态时，其表现为被按压下去（底色更深、边框夜色更深、向内投射阴影）。对于 button 元素，是通过 :active 伪状态实现的，对于 a 元素，是通过 .active 类实现的。由于 :active 是伪状态，因此无需额外添加，但是在需要让其表现出同样外观的时候可以添加 .active 类。
+		<ul>
+			<li><b>激活状态：</b>在按钮上添加 .active；</li>
+			<li><b>禁用状态：</b>在按钮上添加 .disabled </li>
+		</ul>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">按钮Icon </h3>
+	<div class="example-demo">
+		<div class="example-visualize">			
+			<button class="btn btn-default"><i class="f-spinner icon-spin"></i> 加载中</button>
+			<button class="btn btn-primary"><i class="f-settings"></i> 设置</button>
+		</div>
+		<div class="html">
+			<pre><button class="btn btn-default">
+	<i class="f-spinner icon-spin"></i> 加载中
+</button>
+<button class="btn btn-primary">
+	<i class="f-settings"></i> 设置
+</button></pre>
+		</div>	
+	</div>
+	<div class="example-desc">
+		<div class="exm-t1">使用 Icon之前需先引入 font字体文件，加上.f-开头的class。</div>
+	</div>
+</div>

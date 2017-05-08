@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/app.css" rel="stylesheet" />
+		<link href="css/bootstrap-modal.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<nav class="bar bar-tab">
+			<a class="tab-item active" href="#order-do">
+				<span class="f-icon icon-user"></span>
+				<span class="tab-label">订单处理</span>
+			</a>
+			<a class="tab-item" id="trans-record-nav" href="#trans-record">
+				<span class="f-icon icon-th-list"></span>
+				<span class="tab-label">交易记录</span>
+			</a>
+			<a class="tab-item" href="#daily-batch">
+				<span class="f-icon icon-table"></span>
+				<span class="tab-label">日批结算</span>
+			</a>
+		</nav>
+		<div class="content">
+			<div id="order-do" class="control-content active">
+				<header class="bar bar-nav">
+					<span class="bar-title">订单处理</span>
+				</header>
+				<div class="content">
+					<div class="order-list" style="background: none;">
+						<div class="card">
+							<ul class="table-view order-list-cell">
+								<li class="order-list-media">
+									<a href="javascript:;" class="small-ticket">
+										<img class="media-object fl-l" src="img/avatar.jpg">
+										<span class="fl-r size-txt">#45</span>
+										<div class="media-body">
+											<b>下单用户名</b><p class='ellipsis'>NO.20160319153602</p>
+										</div>
+									</a>
+								</li>
+								<li class="order-list-details">
+									<a href="javascript:;">
+										<p class='ellipsis'><span>油品：</span>4号油枪-92#汽油</p>
+										<p class='ellipsis'><span>金额：</span><b>300.00元</b></p>
+										<p class='ellipsis'><span>时间：</span>2016-03-19 15:34:45</p>
+									</a>
+								</li>
+								<li class="order-list-buttons">
+									<button type="button" class="btn btn-outlined btn-cancel">取消订单</button><button type="button" class="btn btn-primary btn-sure">确认订单</button>
+								</li>
+							</ul>
+						</div>	
+						<div class="card">
+							<ul class="table-view order-list-cell">
+								<li class="order-list-media">
+									<a href="javascript:;" class="small-ticket">
+										<img class="media-object fl-l" src="img/avatar.jpg">
+										<span class="fl-r size-txt">#46</span>
+										<div class="media-body">
+											<b>下单用户名</b><p class='ellipsis'>NO.20160319153602</p>
+										</div>
+									</a>
+								</li>
+								<li class="order-list-details">
+									<a href="javascript:;">
+										<p class='ellipsis'><span>油品：</span>4号油枪-92#汽油</p>
+										<p class='ellipsis'><span>金额：</span><b>300.00元</b></p>
+										<p class='ellipsis'><span>时间：</span>2016-03-19 15:34:45</p>
+									</a>
+								</li>
+								<li class="order-list-buttons">
+									<button type="button" class="btn btn-outlined btn-cancel">取消订单</button><button type="button" class="btn btn-primary btn-sure">确认订单</button>
+								</li>
+							</ul>
+						</div>	
+					</div>
+					
+					<div class="popup fade">
+						<div class="popup-dialog">
+							<div class="popup-content">
+							  	<div class="popup-inner">
+									<div class="popup-title p-t-txt2">
+										<span>盛通卡签购单<br>（车主/商户存根联）</span>
+										<span class="f-icon icon-close fl-r" data-dismiss="modal"></span>
+									</div>	      	
+							        <div class="popup-text">
+										<div class="batch-pop-top">
+											<p>某某某油站</p>
+										</div>
+										<div class="small-ticket-list">
+							        		<p><span>商户名称：</span>云南新村油站有限公司</p>
+							        		<p><span>下单用户：</span>150****5563</p>
+							        		<p><span>消费时间：</span>2016-05-16 09:34:45</p>
+							        		<p><span>商品名称：</span>92#汽油</p>
+							        		<p><span>油枪号：</span>4号枪</p>
+							        		<p><span>当日单价：</span>6.28 元/升</p>
+							        		<p><span>消费金额：</span>300元</p>
+							        		<p><span>油量：</span>53.25升</p>
+							        		<p><span>交易编号：</span>2016051604556820</p>
+							        		<p><span>发票抬头：</span>某某某公司名称</p>
+							        	</div>
+										<div class="batch-pop-bottom">
+											<p>（本小票为重打印小票）</p>
+										</div>
+							        </div>
+							   	</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+			<div id="trans-record" class="control-content">
+				<header class="bar bar-nav">
+					<span class="bar-title">今日成功交易记录</span>
+				</header>
+				<div class="info-show">
+					<div class="bar">
+						共计：<span>34</span>单，总金额：<b>13242.00</b>元
+					</div>
+				</div>
+				<div class="content">
+					<div id="wrapper">
+						<div class="iscroll">
+						  	<div class="scroller">
+							   	<ul id="loadlist" class="table-view">
+							   	</ul>
+						  		<div class="pull-bottom-pocket">
+						  			<div class="pull">
+						  				<div class="pull-loading f-icon load-spinner"></div>
+						  				<div class="pull-caption pull-caption-refresh">加载中...</div>
+						  			</div>
+						  		</div>
+						  	</div>
+						</div>
+					</div>
+					<div class="popup fade">
+						<div class="popup-dialog">
+							<div class="popup-content">
+							  	<div class="popup-inner">
+							      	<div class="popup-title">
+							      		<span>交易详情</span><span class="f-icon icon-close fl-r" data-dismiss="modal"></span>
+							      	</div>					      	
+							        <div class="popup-text">
+							        	<ul>
+							        		<li>下单用户：137****5800</li>
+							        		<li>单号：2016021800356</li>
+							        		<li>油品：1号枪-92#汽油</li>
+							        		<li>金额：300.00元</li>
+							        		<li>时间：2016-2-18 08:53:14</li>
+							        	</ul>
+							        </div>
+							    </div>
+								<div class="popup-buttons"><span class="popup-button popup-button-bold" data-dismiss="modal">重打小票</span></div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div id="daily-batch" class="control-content">
+				<header class="bar bar-nav">
+					<a class="btn btn-link fl-r" href="javascript:;" id="unsettle-list">未结算清单</a>
+					<span class="bar-title">日批结算清单</span>
+				</header>
+				<div class="content">
+					<div class="batch-list unsettle-list">
+						<ul>
+							<li>
+								<div class="b-l-t">
+									<span class="fl-l">未结算清单</span>
+									<span class="fl-r">2016-03-19 15:34:45</span>
+								</div>
+								<div class="b-l-t">
+									<span class="fl-l">总单数：134</span>
+									<span class="fl-r">总金额：32355.00</span>
+								</div>
+							</li>
+						</ul>
+						<div class="popup fade">
+							<div class="popup-dialog">
+								<div class="popup-content">
+									<div class="popup-inner">
+										<div class="popup-title">
+											<span>当前未结算清单</span>
+											<span class="f-icon icon-close fl-r" data-dismiss="modal"></span>
+										</div>
+										<div class="popup-text">
+											<div class="batch-pop-list">
+												<div class="batch-pop-top">
+													<p>门店名称：某某某油站</p><p>时间：2016-04-22 20:05:20</p>
+												</div>
+												<table class="batch-pop-tb"><tbody>
+													<tr><th>油品类型</th><th>单数</th><th>金额</th></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+												</tbody>
+												</table>
+												<div class="batch-pop-total">
+													<span>总单数：34</span><span>总金额：12355.00</span>
+												</div>
+												<div class="batch-pop-tit">交易记录清单：</div>
+												<ul>
+													<li>
+														<label>#1</label>
+														<div class="batch-record-list">
+															<p><span>137****5896</span><span>4号枪-92#汽油</span></p>
+															<p><span>NO.5245256325</span><span>￥300.00</span></p>
+														</div>
+													</li>
+													<li>
+														<label>#2</label>
+														<div class="batch-record-list">
+															<p><span>137****5896</span><span>4号枪-92#汽油</span></p>
+															<p><span>NO.5245256325</span><span>￥300.00</span></p>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="popup-buttons"><span class="popup-button popup-button-bold" data-dismiss="modal">打印</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="batch-list settled-list">
+						<ul>
+							<li>
+								<div class="b-l-t">
+									<span class="fl-l">已结算清单#1</span>
+									<span class="fl-r">2016-03-19 15:34:45</span>
+								</div>
+								<div class="b-l-t">
+									<span class="fl-l">总单数：134</span>
+									<span class="fl-r">总金额：32355.00</span>
+								</div>
+							</li>
+							<li>
+								<div class="b-l-t">
+									<span class="fl-l">已结算清单#1</span>
+									<span class="fl-r">2016-03-19 15:34:45</span>
+								</div>
+								<div class="b-l-t">
+									<span class="fl-l">总单数：134</span>
+									<span class="fl-r">总金额：32355.00</span>
+								</div>
+							</li>
+						</ul>
+						<div class="popup fade">
+							<div class="popup-dialog">
+								<div class="popup-content">
+									<div class="popup-inner">
+										<div class="popup-title">
+											<span>已结算清单</span>
+											<span class="f-icon icon-close fl-r" data-dismiss="modal"></span>
+										</div>
+										<div class="popup-text">
+											<div class="batch-pop-list">
+												<div class="batch-pop-top">
+													<p>门店名称：某某某油站</p><p>时间：2016-04-22 20:05:20</p>
+												</div>
+												<table class="batch-pop-tb"><tbody>
+													<tr><th>油品类型</th><th>单数</th><th>金额</th></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+													<tr><td>5号枪-97#汽油</td><td>35</td><td>12425.00</td></tr>
+												</tbody>
+												</table>
+												<div class="batch-pop-total">
+													<span>总单数：34</span><span>总金额：12355.00</span>
+												</div>
+												<div class="batch-pop-tit">交易记录清单：</div>
+												<ul>
+													<li>
+														<label>#1</label>
+														<div class="batch-record-list">
+															<p><span>137****5896</span><span>4号枪-92#汽油</span></p>
+															<p><span>NO.5245256325</span><span>￥300.00</span></p>
+														</div>
+													</li>
+													<li>
+														<label>#2</label>
+														<div class="batch-record-list">
+															<p><span>137****5896</span><span>4号枪-92#汽油</span></p>
+															<p><span>NO.5245256325</span><span>￥300.00</span></p>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="popup-buttons"><span class="popup-button popup-button-bold" data-dismiss="modal">重新打印</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		
+		<script src="js/jquery-1.9.0.min.js"></script>
+		<script src="js/iscroll.js"></script>
+		<script src="js/jmodal.js"></script>	
+		<script>
+			$(function() {
+				_bg();
+               	$('.bar-tab .tab-item').each(function(e){
+					$(this).click(function(){
+						$(this).addClass("active").siblings().removeClass('active');
+						$('.control-content').eq(e).addClass('active').siblings('.control-content').removeClass('active');
+						if($(this).attr('id')=='trans-record-nav' && $('#loadlist li').length===0){
+							pullDownAction ();
+						};
+						_bg();
+					});
+				});
+				$('.small-ticket').click(function(){
+					$('#order-do .popup').modal('show');
+				});
+				$('#unsettle-list').click(function(){
+					$('.unsettle-list').show();
+				});
+				$('.order-list-buttons .btn-cancel').click(function(){
+					var _this = $(this);
+					var _obj = _this.closest('.card');
+					_this.confirm({
+                      	content: '取消#45订单将视为此次交易无效，不会打印加油小票。确认取消？',
+                      	confirmButton: '确定',
+        				cancelButton: '我点错了',
+        				cancelButtonClass: 'popup-button-bold',
+                        icon: 'f-icon icon-exclamation-circle',
+                        opacity: 0.5,
+                        confirm: function () {
+                         	_obj.remove();
+                           	_bg();
+                      	}
+                	});
+				});
+				$('.order-list-buttons .btn-sure').click(function(){
+					var _obj = $(this).closest('.card');
+					$(this).toast('订单交易达成');
+					setTimeout(function(){_obj.remove()},1200);
+				});
+				$('.batch-list li').each(function(){
+					$(this).click(function(){
+						$(this).closest('.batch-list').find('.popup').modal('show');
+					});
+				});
+			});
+			function _bg(){
+				if($('.order-list').css("visibility")!="hidden"){
+					if($('.order-list .card').length>0){
+						$('.order-list').css('background','none');
+						$('body').removeClass('box-s-bb h-full');
+					}
+					else {
+						$('.order-list').removeAttr('style');
+						$('body').addClass('box-s-bb h-full');
+					}
+				}
+				else{
+					$('body').removeClass('box-s-bb h-full');
+				}
+			}
+			var count = startX = startY = 0;
+			var myScroll;
+			function loaded () {
+				myScroll = new IScroll('#wrapper .iscroll', {
+					mouseWheel: true,
+					onScrollEnd: function () {
+						if(this.y<0){
+							pullDownAction();
+						}
+					}
+				});
+			}
+			function pullDownAction () {
+				$('.pull-bottom-pocket').show();
+				if(++count < 3){
+					setTimeout(function () {	
+						var el,i;
+						el = $('#loadlist');
+				
+						for (i=0; i<20; i++) {
+							var iconName = (i % 2 == 0) ? "tint" : "flask";
+							$("<li/>")
+							.html('<span class="f-icon icon-' + iconName + ' fl-l"></span>' +
+								'<div class="li-c"><p>137****4560（NO.2045256）</p><p>1号枪-0#柴油</p></div>' +
+								'<div class="fl-r"><p><span>3-15 15:34</span></p><p><b>￥500.00</b></p></div>')
+							.addClass("trans-list-cell")
+							.on({
+							    touchstart: function( e ) {
+							      	var evt = e.originalEvent;							      	
+									try {
+										var touch = evt.touches[0];
+										var x = Number(touch.pageX);
+										var y = Number(touch.pageY);
+										startX = x;
+										startY = y;
+									} catch (e) {
+									}
+							    },
+							    touchend:function(e){
+							    	var evt = e.originalEvent;		
+									try {
+										for (var i = 0; i < evt.changedTouches.length; i++) {
+											var ot = evt.changedTouches[i];
+											if (!ot) return;
+											var dx = startX - ot.clientX,
+												dy = startY - ot.clientY;
+								
+											if ((Math.abs(dx) === 0 && Math.abs(dy) === 0)) {
+												$('#trans-record .popup').modal('show');
+											}
+										}
+									} catch (e) {}
+							    },
+							    mousedown:function(e){
+							    	var evt = e.originalEvent;	
+									try {
+										startX = evt.pageX;
+										startY = evt.pageY;
+									} catch (e) {}
+							    },
+							    mouseup:function(e){
+							    	var evt = e.originalEvent;	
+							    	if(e.button===0){
+										try {
+											var dx = startX - evt.pageX,
+												dy = startY - evt.pageY;
+											if ((Math.abs(dx) === 0 && Math.abs(dy) === 0)) {
+												$('#trans-record .popup').modal('show');
+											}
+										} catch (e) {}
+									}
+							    }
+							}).appendTo(el);
+						}
+						$('.pull-bottom-pocket').hide();
+						myScroll.refresh();		
+					}, 1000);	
+				}
+				else{
+					$('.pull-bottom-pocket .pull').text('没有更多数据了');
+				}
+			}
+			
+			window.addEventListener('load', loaded, false);
+		</script>
+		
+	</body>
+
+</html>

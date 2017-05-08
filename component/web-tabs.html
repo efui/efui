@@ -1,0 +1,93 @@
+<ol>
+	<li>
+		<h3 class="mb10">基本使用</h3>
+		<div class="example-visualize">
+			<div class="tabs">
+				<ul class="tabs-nav clearfix">
+					<li class="active">
+						<a href="">青春</a>
+					</li>
+					<li class="">
+						<a href="">彩虹</a>
+					</li>
+					<li class="">
+						<a href="">歌唱</a>
+					</li>
+				</ul>
+				<div class="tabs-bd">
+					<div class="tab-panel active">
+						【青春】那时候有多好，任雨打湿裙角。忍不住哼起，心爱的旋律。绿油油的树叶，自由地在说笑。燕子忙归巢，风铃在舞蹈。经过青春的草地，彩虹忽然升起。即使视线渐渐模糊，它也在我心里。就像爱过的旋律，没人能抹去。因为生命存在失望，歌唱，所以才要歌唱。
+					</div>
+					<div class="tab-panel ">
+						【彩虹】那时候有多好，任雨打湿裙角。忍不住哼起，心爱的旋律。绿油油的树叶，自由地在说笑。燕子忙归巢，风铃在舞蹈。经过青春的草地，彩虹忽然升起。即使视线渐渐模糊，它也在我心里。就像爱过的旋律，没人能抹去。因为生命存在失望，歌唱，所以才要歌唱。
+					</div>
+					<div class="tab-panel ">
+						【歌唱】那时候有多好，任雨打湿裙角。忍不住哼起，心爱的旋律。绿油油的树叶，自由地在说笑。燕子忙归巢，风铃在舞蹈。经过青春的草地，彩虹忽然升起。即使视线渐渐模糊，它也在我心里。就像爱过的旋律，没人能抹去。因为生命存在失望，歌唱，所以才要歌唱。
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="html">
+			<pre><div class="tabs">
+	<ul class="tabs-nav clearfix">
+		<li class="active">
+			<a href="">青春</a>
+		</li>
+		<li class="">
+			<a href="">彩虹</a>
+		</li>
+		<li class="">
+			<a href="">歌唱</a>
+		</li>
+	</ul>
+	<div class="tabs-bd">
+		<div class="tab-panel active">1</div>
+		<div class="tab-panel ">2</div>
+		<div class="tab-panel ">3</div>
+	</div>
+</div></pre>
+		</div>
+		<div class="example-desc">
+			父元素用.tabs，菜单用.tabs-nav.clearfix，内容切换用.tab-panel，并包裹在父元素.tabs-bd里面
+		</div>
+	</li>
+	<li>
+		<h3>下边框选项卡</h3>		
+		<div class="example-visualize">
+			<div class="tabs tabs-navb">
+				<ul class="tabs-nav clearfix">
+					<li class="active">
+						<a href="">青春</a>
+					</li>
+					<li class="">
+						<a href="">彩虹</a>
+					</li>
+					<li class="">
+						<a href="">歌唱</a>
+					</li>
+				</ul>
+				<div class="tabs-bd">
+					<div class="tab-panel active">
+						【青春】
+					</div>
+					<div class="tab-panel ">
+						【彩虹】
+					</div>
+					<div class="tab-panel ">
+						【歌唱】
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="example-desc">
+			基本样式的基础上加上.tabs-navb类
+		</div>
+	</li>
+</ol>
+<script type="text/javascript">
+	$('.tabs .tabs-nav li').click(function(){			
+		var _index = $(this).index();
+		$(this).addClass('active').siblings().removeClass('active');
+		$(this).closest('.tabs').find('.tab-panel').eq(_index).addClass('active').siblings('.tab-panel').removeClass('active');
+	});
+</script>

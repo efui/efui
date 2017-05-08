@@ -1,0 +1,44 @@
+<h3>原生效果</h3>
+<select class="select" size="1" name="demo1">
+					<option value="" selected="">原生select</option>
+					<option value="1">菜单一</option>
+					<option value="2">菜单二</option>
+					<option value="3">菜单三</option>
+				</select>
+<h3>原生效果美化：</h3>
+<p>为select外层嵌套个 标签，设置边框，圆角，隐藏掉select本身的表框。</p>
+<h3>HTML代码</h3>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"select-box"</span><span class="tag">&gt;</span></li><li class="L1"><span class="pln">  </span><span class="tag">&lt;select</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"select"</span><span class="pln"> </span><span class="atn">size</span><span class="pun">=</span><span class="atv">"1"</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"demo1"</span><span class="tag">&gt;</span></li><li class="L2"><span class="pln">    </span><span class="tag">&lt;option</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">selected</span><span class="tag">&gt;</span><span class="pln">默认select</span><span class="tag">&lt;/option&gt;</span></li><li class="L3"><span class="pln">    </span><span class="tag">&lt;option</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"1"</span><span class="tag">&gt;</span><span class="pln">菜单一</span><span class="tag">&lt;/option&gt;</span></li><li class="L4"><span class="pln">    </span><span class="tag">&lt;option</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"2"</span><span class="tag">&gt;</span><span class="pln">菜单二</span><span class="tag">&lt;/option&gt;</span></li><li class="L5"><span class="pln">    </span><span class="tag">&lt;option</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"3"</span><span class="tag">&gt;</span><span class="pln">菜单三</span><span class="tag">&lt;/option&gt;</span></li><li class="L6"><span class="pln">  </span><span class="tag">&lt;/select&gt;</span></li><li class="L7"><span class="tag">&lt;/span&gt;</span></li></ol></pre>
+<h3>CSS代码</h3>
+<pre class="prettyprint linenums">.select-box {
+	border: solid 1px #ddd;
+	box-sizing: border-box;
+	vertical-align: middle;
+	width: 100%;
+	display: inline-block
+}
+
+.select {
+	border: solid 1px #ddd;
+	box-sizing: border-box;
+	cursor: pointer;
+	line-height: normal;
+	font-weight: normal;
+	width: 100%;
+	white-space: nowrap
+}
+
+.select-box .select {
+	border: 0
+}
+
+.select-box.inline,
+.select-box.inline .select {
+	width: auto
+}
+
+.select-box,
+.select-box.size-M {
+	padding: 4px 5px
+}</pre>
+

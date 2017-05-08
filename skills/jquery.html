@@ -1,0 +1,47 @@
+<div class="mlist">
+	<div class="mtit"><span>目录</span></div>
+	<div class="mcon">
+		<ol>
+			<li>
+				<a href="">data方法</a>
+			</li>
+		</ol>
+	</div>
+</div>
+
+<div class="mswitch">
+	<h3 class="mb10">data方法</h3>
+	<div class="example-demo">
+		<button class="toggle-demo">toggle</button>
+	</div>
+	<div class="example-desc" data-dropdown="open">
+		<h5>代码示例</h5>
+		<ol>
+			<li>
+				<h5>存储临时变量</h5>
+				<div class="html">
+					<pre>var o = this.data('pagination',o); /*this代表一个DOM元素，比如$("#XXX")，在这里，data的作用为向this所指DOM元素中添加一个名为pagination的临时变量，该变量值为o.（o为事先定义好的，具有多个变量一个对象）*/  </pre>
+				</div>
+			</li>
+			<li>
+				<h5>取出临时变量</h5>
+				<div class="html">
+					<pre>var o_new = this.data('pagination'), /*o_new为一个新定义的对象，该段代码的作用是取出属于this所指DOM元素中的名为pagination的临时变量，将该变量赋值给o_new*/  </pre>
+				</div>
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10"></h3>
+	<div class="example-demo">
+	</div>
+	<div class="example-desc">
+	</div>
+</div>
+<script src="assets/js/toggle.js"></script>
+<script type="text/javascript">
+$('.toggle-demo').click(function(){
+	$(this).toggle('toggle');
+});
+</script>

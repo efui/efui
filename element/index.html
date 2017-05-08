@@ -1,0 +1,43 @@
+<div class="docs-header">
+	<div class="container animation-scale-up" id="docs-con">
+		<h2>{{docsTit}}</h2>
+		<p>{{docsMsg}}</p>		
+	</div>
+</div>
+<div class="container">
+
+	<div class="row main-container clearfix">
+
+		<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
+			<div class="sidebar-menu sidebar-slide">
+				<section class="sidebar-slide-overlay">
+					<dl>
+						<dt><a href="javascript:;">CSS　样式</a></dt>			
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'normalize'})">样式统一</a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'layout'})">网页布局</a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'publish'})">文字排版</a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'font'})">字体图标</a></dd>
+					</dl>
+					<dl>
+						<dt><a href="javascript:;">HTML 标签</a></dt>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'button'})">按钮 <span>Button</span></a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'code'})">代码 <span>Code</span></a></dd>
+						<dd ui-sref-active="active">
+							<a href="javascript:;" data-toggleclass="active">表单 <span>Form</span><i class="f-keyboard_arrow_down"></i></a>
+							<p class="subnav">
+								<a ui-sref="element.pages({pageid: 'input'})">- input</a>
+								<a ui-sref="element.pages({pageid: 'textarea'})">- textarea</a>
+								<a ui-sref="element.pages({pageid: 'select'})">- select</a>
+							</p>
+						</dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'table'})">表格 <span>Table</span></a></dd>
+						<dd ui-sref-active="active"><a ui-sref="element.pages({pageid: 'image'})">图片 <span>Image</span></a></dd>
+					</dl>
+				</section>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-9 col-md-9 main-content">
+			<div ui-view></div>
+		</div>
+	</div>
+</div>

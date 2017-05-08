@@ -1,0 +1,408 @@
+<ol>
+	<li>
+		<h3>原则</h3>
+		<ol>
+			<li><b>变量名称</b>所有的变量名必须使用英文名称，必须为小写字母</li>
+			<li>
+				<b>变量如果设置为私有</b>，则前面必须添加下划线
+				<div class="html">
+					<pre>this._somePrivateVariable = statement;</pre>
+				</div>
+			</li>
+			<li>
+				<b>通用的变量</b>必须使用与其名字一致的类型名称
+				<div class="html">
+					<pre>setTopic(topic) // 变量 topic 为 Topic 类型的变量</pre>
+				</div>
+			</li>
+			<li>
+				<b>私有类的变量属性成员</b>必须使用混合名称（mixedCase）命名，并前面下下划线（_）
+				<div class="html">
+					<pre>var MyClass = function(){
+   var _buffer;
+   this.doSomething = function(){
+   };
+}</pre>
+				</div>
+			</li>
+			<li>
+				<b>如果变量有其隐含的返回值</b>，则避免使用其相似的方法
+				<div class="html">
+					<pre>getHandler(); // 避免使用 getEventHandler()</pre>
+				</div>
+			</li>
+			<li>
+				<b>公有变量</b>必须清楚的表达其自身的属性，避免字义含糊不清
+				<div class="html">
+					<pre>MouseEventHandler // 而非 MseEvtHdlr。
+dojo.events.mouse.Handler // 而非 dojo.events.mouse.MouseEventHandler</pre>
+				</div>
+			</li>
+			<li>
+				<b>CSS变量的命名 </b>必须使用其对应的相同的公共类变量
+			</li>
+			<li><b>类的命名</b>使用骆驼命名规则，例如：Account, EventHandler</li>
+			<li>
+				<b>类/构造函数</b>可以使用扩展其基类的名称命名，这样可以正确、迅速的找到其基类的名称
+				<div class="html">
+					<pre>EventHandler
+UIEventHandler
+MouseEventHandler</pre>
+				</div>
+			</li>
+			<li>
+				<b>常量</b>必须 在对象（类）或者枚举变量的前部声明。枚举变量的命名必须要有实际的意义，并且其成员必须使用骆驼命名规则或使用大写
+				<div class="html">
+					<pre>var NodeTypes = {
+    Element : 1,
+    DOCUMENT: 2
+}</pre>
+				</div>
+			</li>
+			<li><b>简写单词</b>不能使用大写名称作为变量名
+				<div class="html">
+					<pre>getInnerHtml(), getXml(), XmlDocument</pre>
+				</div>
+			</li>
+			<li>
+				<b>方法的命令</b>必须为动词或者是动词短语
+				<div class="html">
+					<pre>obj.getSomeValue()</pre>
+				</div>
+			</li>
+			<li>
+				<b>公有类的命名</b>必须使用混合名称（mixedCase）命名
+			</li>
+		</ol>
+	</li>
+	<li>
+		<h3>参考</h3>
+		<ul>
+			<li>
+				<h5>核心 API 请使用下面的风格</h5>
+
+				<table class="table">
+					<tbody>
+						<tr>
+							<td><strong>结构</strong></td>
+							<td><strong>规则</strong></td>
+							<td><strong>注释</strong></td>
+						</tr>
+						<tr>
+							<td>模块</td>
+							<td>小写</td>
+							<td>不要使用多重语义（Never multiple words）</td>
+						</tr>
+						<tr>
+							<td>类</td>
+							<td>骆驼</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>公有方法</td>
+							<td>混合</td>
+							<td>其他的外部调用也可以使用 lower_case()，这样的风格</td>
+						</tr>
+						<tr>
+							<td>公有变量</td>
+							<td>混合</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>常量</td>
+							<td>骆驼 或 大写</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</li>
+			<li>
+				<h5>下面的虽然不是必要的，但建议使用</h5>
+				<table class="table">
+					<tbody>
+						<tr>
+							<td><strong>结构</strong></td>
+							<td><strong>规则</strong></td>
+						</tr>
+						<tr>
+							<td>私有方法</td>
+							<td>混合，例子：<tt>_mixedCase</tt></td>
+						</tr>
+						<tr>
+							<td>私有变量</td>
+							<td>混合，例子：<tt>_mixedCase</tt></td>
+						</tr>
+						<tr>
+							<td>方法（method）参数</td>
+							<td>混合，例子：<tt>_mixedCase, mixedCase</tt></td>
+						</tr>
+						<tr>
+							<td>本地（local）变量</td>
+							<td>混合，例子：<tt>_mixedCase, mixedCase</tt>
+								<p></p>
+								<p><tt> </tt></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<h3>命名规范</h3>
+		<ol>
+			<li>
+				<h5>文件</h5>
+				<ul>
+					<li>缩进请使用 4 个空白符的制表位</li>
+					<li>表达式的缩进与变量声明应为一致的</li>
+					<li>函数的参数应采用明确的缩进，缩进规则与其他块保持一致</li>
+				</ul>
+			</li>
+			<li>
+				<h5>变量</h5>
+				<ol>
+					<li>变量必须在声明初始化以后才能使用，即便是 NULL 类型。</li>
+					<li>变量不能产生歧义。</li>
+					<li>相关的变量集应该放在同一代码块中，非相关的变量集不应该放在同一代码块中。</li>
+					<li>变量应该尽量保持最小的生存周期。</li>
+					<li>循环/重复变量的规范：</li>
+					<ol>
+						<li>只有循环控制块的话，则必须使用 FOR 循环。</li>
+						<li>循环变量应该在循环开始前就被初始化；如使用 FOR 循环，则使用 FOR 语句初始化循环变量。</li>
+						<li>“do … while” 语句是被允许的。</li>
+						<li>“break” 和 “continue” 语句仍然允许使用（但请注意）。</li>
+					</ol>
+					<li>条件表达式</li>
+					<ol>
+						<li>应该尽量避免复杂的条件表达式，如有必要可以使用临时布尔变量。</li>
+						<li>The nominal case SHOULD be put in the “if” part and the exception in the “else” part of an “if” statement.</li>
+						<li>应避免在条件表达式中加入块。</li>
+					</ol>
+					<li>杂项</li>
+					<ol>
+						<li>尽量避免幻数（Magic numbers），他们应该使用常量来代替。</li>
+						<li>浮点变量必须指明小数点后一位（即使是 0）。</li>
+						<li>浮点变量必须指明实部，即使它们为零（使用 0. 开头）。</li>
+					</ol>
+				</ol>
+			</li>
+		</ol>
+	</li>
+	<li>
+		<h3>特殊命名规范</h3>
+		<ol>
+			<li>术语 “get/set” 不要和一个字段相连，除非它被定义为私有变量。</li>
+			<li>前面加 “is” 的变量名 应该 为布尔值，同理可以为 “has”, “can” 或者 “should”。</li>
+			<li>术语 “compute” 作为变量名应为已经计算完成的变量。</li>
+			<li>术语 “find” 作为变量名应为已经查找完成的变量。</li>
+			<li>术语 “initialize” 或者 “init” 作为变量名应为已经实例化（初始化）完成的类或者其他类型的变量。</li>
+			<li>UI （用户界面）控制变量应在名称后加控制类型，例如： leftComboBox, TopScrollPane。</li>
+			<li>复数必须有其公共的名称约定（原文：Plural form MUST be used to name collections）。</li>
+			<li>带有 “num” 或者 “count” 开头的变量名约定为数字（对象）。</li>
+			<li>重复变量建议使用 “i”, “j”, “k” （依次类推）等名称的变量。</li>
+			<li>补充用语必须使用补充词，例如： get/set, add/remove, create/destroy, start/stop, insert/delete, begin/end, etc.</li>
+			<li>能缩写的名称尽量使用缩写。</li>
+			<li>避免产生歧义的布尔变量名称，例如：<br> 　　isNotError, isNotFound 为非法</li>
+			<li>错误类建议在变量名称后加上 “Exception” 或者 “Error”。</li>
+			<li>方法如果返回一个类，则应该在名称上说明返回什么；如果是一个过程，则应该说明做了什么。</li>
+		</ol>
+	</li>
+	<li>
+		<h3>布局/块</h3>
+		<ul>
+			<li>
+				普通代码段应该看起来如下：
+				<div class="html">
+					<pre>while (!isDone){
+ 	doSomething();
+    isDone = moreToDo();
+}</pre>
+				</div>
+			</li>
+			<li>
+				IF语句应该看起来像这样：
+				<div class="html">
+					<pre>if (someCondition){
+	statements;
+} else if (someOtherCondition){
+    statements;
+} else {
+    statements;
+}</pre>
+				</div>
+			</li>
+			<li>
+				FOR语句应该看起来像这样：
+				<div class="html">
+					<pre>for (initialization; condition; update){
+	statements;
+}</pre>
+				</div>
+			</li>
+			<li>
+				WHILE语句应该看起来像这样：
+				<div class="html">
+					<pre>while (!isDone) {
+ 	doSomething();
+    isDone = moreToDo();
+}</pre>
+				</div>
+			</li>
+			<li>
+				DO … WHILE语句应该看起来像这样：
+				<div class="html">
+					<pre>do {
+ 	statements;
+} while (condition);</pre>
+				</div>
+			</li>
+			<li>
+				SWITCH语句应该看起来像这样：
+				<div class="html">
+					<pre>switch (condition) {
+case ABC:
+    statements;
+    //  fallthrough
+case DEF:
+    statements;
+    break;
+default:
+        statements;
+    break;
+}</pre>
+				</div>
+			</li>
+			<li>
+				TRY … CATCH语句应该看起来像这样：
+				<div class="html">
+					<pre>try {
+    statements;
+} catch(ex) {
+    statements;
+} finally {
+    statements;
+}</pre>
+				</div>
+			</li>
+			<li>
+				单行的 IF – ELSE，WHILE或者FOR语句也必须加入括号，不过他们可以这样写：
+				<div class="html">
+					<pre>if (condition){ statement; }
+while (condition){ statement; }
+for (intialization; condition; update){ statement; }</pre>
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<h3>空格</h3>
+
+		<ol>
+			<li>操作符 建议 使用空格隔开（包括三元操作符）。</li>
+			<li>下面的关键字 避免使用 空白隔开：
+				<ul>
+					<li>break</li>
+					<li>catch</li>
+					<li>continue</li>
+					<li>do</li>
+					<li>else</li>
+					<li>finally</li>
+					<li>for</li>
+					<li>function （如果为匿名函数，例如：var foo = function(){}; ）</li>
+					<li>if</li>
+					<li>return</li>
+					<li>switch</li>
+					<li>this</li>
+					<li>try</li>
+					<li>void</li>
+					<li>while</li>
+					<li>with</li>
+				</ul>
+			</li>
+			<li>下面的关键字必须使用空白隔开：
+				<ul>
+					<li>case</li>
+					<li>default</li>
+					<li>delete</li>
+					<li>function （如果为申明，例如：function foo(){}; ）</li>
+					<li>in</li>
+					<li>instanceof</li>
+					<li>new</li>
+					<li>throw</li>
+					<li>typeof</li>
+					<li>var</li>
+				</ul>
+			</li>
+			<li>逗号（,） 建议 使用空白隔开。</li>
+			<li>冒号（:） 建议 使用空白隔开。</li>
+			<li>点（.） 在后部 建议 使用空白隔开。</li>
+			<li>点（.） 避免 在前部使用空白。</li>
+			<li>函数调用和方法 避免 使用空白，例如： doSomething(someParameter); // 而非 doSomething (someParameter)</li>
+			<li>逻辑块 之间使用空行。</li>
+			<li>声明 建议 对齐使其更容易阅读。</li>
+		</ol>
+	</li>
+	<li>
+		<h3>注释</h3>
+		<ol>
+			<li>生涩的代码就 <i>没有必要</i> 添加注释了，首先您需要 <strong>重写</strong> 它们。 </li>
+			<li>所有的注释请使用英文。 </li>
+			<li>从已解决的方案到未开发的功能，注释 <i>必须</i> 与代码相关。 </li>
+			<li>大量的变量申明后 <i>必须</i> 跟随一段注释。 </li>
+			<li>注释需要说明的是代码段的用处，尤其是接下来的代码段。 </li>
+			<li>注释 <i>没有必要</i> 每行都添加。 </li>
+		</ol>
+	</li>
+	<li>
+		<h3>文档</h3>
+		<p>下面提供了一些基本的函数或者对象的描述方法：</p>
+		<ul>
+			<li><strong>总结（summary）</strong>: 简短的表述此函数或者对象实现的目的 </li>
+			<li><strong>描述（description）</strong>: 对于此函数或者类的简短的描述 </li>
+			<li><strong>返回（return）</strong>: 描述此函数返回什么（并不包括返回类型） </li>
+		</ul>
+		<div class="html">
+			<pre>基本函数信息
+function(){
+    // summary: Soon we will have enough treasure to rule all of New Jersey.
+    // description: Or we could just get a new roomate.
+    //          Look, you go find him.  He don't yell at you.
+    //          All I ever try to do is make him smile and sing around
+    //          him and dance around him and he just lays into me.
+    //          He told me to get in the freezer 'cause there was a carnival in there.
+    // returns:  Look, a Bananarama tape!
+}</pre>
+<pre>对象函数信息
+没有返回值描述
+{
+    // summary: Dingle, engage the rainbow machine!
+    // description: 
+    //          Tell you what, I wish I was--oh my g--that beam,
+    //          coming up like that, the speed, you might wanna adjust that.
+    //          It really did a number on my back, there. I mean, and I don't
+    //          wanna say whiplash, just yet, cause that's a little too far,
+    //          but, you're insured, right?
+}</pre>
+<pre>函数的声明
+在有的情况下，对于函数的调用和声明是隐义（invisible）的。在这种情况下，我们没有办法在函数中加入说明等（供程序调用）。如果您遭遇了这种情况，您可以使用一个类来封装函数。
+注：此此方法只能在函数没有初始化的参数情况下。如过不是，则它们会被忽略。
+dojo.declare(
+    "foo",
+    null,
+    {
+        // summary: Phew, this sure is relaxing, Frylock.
+        // description: 
+        //              Thousands of years ago, before the dawn of
+        //              man as we knew him, there was Sir Santa of Claus: an
+        //              ape-like creature making crude and pointless toys out
+        //              of dino-bones, hurling them at chimp-like creatures with
+        //              crinkled hands regardless of how they behaved the
+        //              previous year.
+        // returns: Unless Carl pays tribute to the Elfin Elders in space.
+        }
+);
+</pre>
+		</div>
+	</li>
+</ol>

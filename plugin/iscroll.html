@@ -1,0 +1,148 @@
+<ol>
+	<li>
+		<h3 class="mb10">可拖动进度条</h3>
+		<div class="example-demo">
+			<div class="example-visualize">
+				<div class="panel-plugin">
+					<p class="progressbar mb20">
+						<span style="transform: translate3d(-80%, 0px, 0px);"></span>
+					</p>
+
+					<div id="progressbar">
+						<div id="scrollBar">
+							<div id="scroll_Track"></div>
+							<div id="scroll_Thumb"></div>
+						</div>
+						<p id="scrollBarTxt" style="text-align:center;"></p>
+					</div>
+					<div id="progressbar2">
+						<div id="scrollBar2">
+							<div id="scroll_Track2"></div>
+							<div id="scroll_Thumb2"></div>
+						</div>
+						<p id="scrollBarTxt2" style="text-align:center;"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</li>
+</ol>
+
+<script type="text/javascript">
+	var ScrollBar = {
+		value: 20,
+		maxValue: 100,
+		currentX: 0,
+		_left:$("#progressbar").offset().left,
+		Initialize: function() {
+			if(this.value > this.maxValue) {
+				alert("给定当前值大于了最大值");
+				return;
+			}
+			this.currentX = $("#scrollBar").width() * (this.value / this.maxValue);
+			$("#scroll_Track").css("width", this.currentX + 2 + "px");
+			$("#scroll_Thumb").css("margin-left", this.currentX + "px");
+			this.Value();
+			$("#scrollBarTxt").html(ScrollBar.value + "/" + ScrollBar.maxValue);
+		},
+		Value: function() {
+			var valite = false;
+			var currentValue = ScrollBar.currentX;
+			$("#scroll_Thumb").mousedown(function(e) {
+				valite = true;
+				$(document.body).mousemove(function(event) {
+					if(valite == false) return;
+					currentValue = event.clientX - ScrollBar._left;
+					$("#scroll_Thumb").css("margin-left", currentValue + "px");
+					$("#scroll_Track").css("width", currentValue + 2 + "px");
+					
+					if((currentValue + 25) >= $("#scrollBar").width()) {
+						$("#scroll_Thumb").css("margin-left", $("#scrollBar").width() - 25 + "px");
+						$("#scroll_Track").css("width", $("#scrollBar").width() + 2 + "px");
+						ScrollBar.value = ScrollBar.maxValue;
+					} else if(currentValue <= 0) {
+						$("#scroll_Thumb").css("margin-left", "0px");
+						$("#scroll_Track").css("width", "0px");
+					} else {
+						ScrollBar.value = Math.round(100 * (currentValue / $("#scrollBar").width()));
+					}
+					$("#scrollBarTxt").html(ScrollBar.value + "/" + ScrollBar.maxValue);
+				});
+			});
+			$(document.body).mouseup(function() {
+				ScrollBar.value = Math.round(100 * (currentValue / $("#scrollBar").width()));
+				valite = false;
+				if(ScrollBar.value >= ScrollBar.maxValue) ScrollBar.value = ScrollBar.maxValue;
+				if(ScrollBar.value <= 0) ScrollBar.value = 0;
+				$("#scrollBarTxt").html(ScrollBar.value + "/" + ScrollBar.maxValue);
+			});
+		}
+	};
+	
+	var touchScrollBar = {
+		value: 20,
+		maxValue: 100,
+		currentX: 0,
+		_left:$("#progressbar2").offset().left,
+		Initialize: function() {
+			if(this.value > this.maxValue) {
+				alert("给定当前值大于了最大值");
+				return;
+			}
+			this.currentX = $("#scrollBar2").width() * (this.value / this.maxValue);
+			$("#scroll_Track2").css("width", this.currentX + 2 + "px");
+			$("#scroll_Thumb2").css("margin-left", this.currentX + "px");
+			this.Value();
+			$("#scrollBarTxt2").html(touchScrollBar.value + "/" + touchScrollBar.maxValue);
+		},
+		Value: function() {
+			var valite = false;
+			var currentValue = touchScrollBar.currentX;
+			$("#scroll_Thumb2").on({
+				touchstart:function() {
+					valite = true;
+					$(document.body).on({
+						touchmove:function(event) {
+							if(valite == false) return;
+							var evt = event.originalEvent;
+							try {
+								for(var i = 0; i < evt.changedTouches.length; i++) {
+									var ot = evt.changedTouches[i];
+									if(!ot) return;
+									currentValue = ot.clientX - touchScrollBar._left;
+									$("#scroll_Thumb2").css("margin-left", currentValue + "px");
+									$("#scroll_Track2").css("width", currentValue + 2 + "px");
+									
+									if((currentValue + 25) >= $("#scrollBar2").width()) {
+										$("#scroll_Thumb2").css("margin-left", $("#scrollBar2").width() - 23 + "px");
+										$("#scroll_Track2").css("width", $("#scrollBar2").width() + 2 + "px");
+										touchScrollBar.value = touchScrollBar.maxValue;
+									} else if(currentValue <= 0) {
+										$("#scroll_Thumb2").css("margin-left", "0px");
+										$("#scroll_Track2").css("width", "0px");
+									} else {
+										touchScrollBar.value = Math.round(100 * (currentValue / $("#scrollBar2").width()));
+									}
+									$("#scrollBarTxt2").html(touchScrollBar.value + "/" + touchScrollBar.maxValue);
+								}
+							} catch(e) {}
+						}
+					});
+				}
+			});
+			$(document.body).on({
+				touchend:function() {
+					touchScrollBar.value = Math.round(100 * (currentValue / $("#scrollBar2").width()));
+					valite = false;
+					if(touchScrollBar.value >= touchScrollBar.maxValue) touchScrollBar.value = touchScrollBar.maxValue;
+					if(touchScrollBar.value <= 0) touchScrollBar.value = 0;
+					$("#scrollBarTxt2").html(touchScrollBar.value + "/" + touchScrollBar.maxValue);
+				}
+			});
+		}
+	}
+	$(document).ready(function() {
+		ScrollBar.Initialize();
+		touchScrollBar.Initialize();
+	});
+</script>

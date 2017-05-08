@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title>EFUI - Easy Fast front-end UI frame</title>
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="assets/css/reset.min.css" rel="stylesheet">
+		<link href="assets/css/efui.min.css" rel="stylesheet">
+		<link href="assets/css/main.min.css" rel="stylesheet">
+		<link href="assets/css/nav.min.css" rel="stylesheet">
+		<link href="assets/css/sidebar.min.css" rel="stylesheet">
+		<link href="assets/css/prettyprint.min.css" rel="stylesheet">
+		<link href="assets/css/button.min.css" rel="stylesheet">
+		<link href="assets/css/popup.min.css" rel="stylesheet">
+		<link href="assets/css/animation.min.css" rel="stylesheet">
+		<link href="assets/css/ncss.min.css" rel="stylesheet">
+		<link href="assets/css/plugin.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+	    <script src="assets/js/lib/html5.js"></script>
+	    <!--<![endif]-->
+	</head>
+
+	<body ng-class="{index: path == '/'}">
+		<headerpanel class="navbar navbar-inverse navbar-shadows navbar-fixed-top"></headerpanel>
+		<div ui-view class="view-container"></div>
+		<footerpanel class="navbar-fixed-bottom"></footerpanel>
+		<a href="javascript:;" title="回到顶部" class="icon-arrow-up" id="go-top"><span class="f-arrow_up"></span></a>
+		<a href="javascript:;" class="sidebar-toggle sidebar-toggle-btn show-sm-only" data-am-offcanvas="">
+			<span class="f-minus"></span>
+			<span class="f-minus"></span>
+			<span class="f-minus"></span>
+		</a>
+		<script data-main="assets/js/lib/main" src="assets/js/lib/require.js" defer async="true"></script>
+	</body>
+	
+<script type="text/javascript">
+	var wgtVer = null;
+	function plusReady(){
+		// 获取本地应用资源版本号
+		plus.runtime.getProperty(plus.runtime.appid,function(inf){
+			wgtVer=inf.version;
+			//console.log("当前应用版本：" + wgtVer);
+			console.log("=================版本测试=================");
+		});
+	}
+	
+	if(window.plus){
+		plusReady();
+	}else{
+		document.addEventListener('plusready',plusReady,false);
+		document.addEventListener('plusready',checkUpdate,false);
+	}
+	
+	// 检测更新
+	var checkUrl="http://zhouweivita.cn/appupdate.php";
+	function checkUpdate(){
+		plus.nativeUI.showWaiting("检测更新...");
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function(){
+			switch(xhr.readyState){
+				case 4:
+				plus.nativeUI.closeWaiting();
+				if(xhr.status == 200){
+					//alert("检测更新成功：" + xhr.responseText);
+					// 读取最新版本号
+					var newVer = xhr.responseText;
+					if(wgtVer && newVer && (wgtVer != newVer)){
+						// H5 plus事件处理,弹出提示信息对话框
+						plus.nativeUI.confirm("检测到新版本,是否更新?", function(e) {
+							if(e.index == 0){
+								//downWgt(); // 下载升级包
+							}
+						}, "版本更新", ["确定", "取消"]);
+					}else{
+						plus.nativeUI.alert("无新版本可更新！");
+					}
+				}else{
+					//console.log("检测更新失败！");
+					plus.nativeUI.alert("检测更新失败！");
+				}
+				break;
+				default:
+				break;
+			}
+		}
+		xhr.open('GET',checkUrl);
+		xhr.send();
+	}
+	
+	// 下载wgt文件
+	var wgtUrl = "http://zhouweivita.cn/H501507B9.wgt";
+	
+	function downWgt(){
+		plus.nativeUI.showWaiting("下载wgt文件...");
+				
+		plus.downloader.createDownload( wgtUrl, {filename:"_doc/update/"}, function(d,status){
+			if ( status == 200 ) { 
+				alert("下载wgt成功："+d.filename);
+				//installWgt(d.filename);	// 安装wgt包
+			} else {
+				//console.log("下载wgt失败！");
+				plus.nativeUI.alert("下载wgt失败！");
+			}
+			plus.nativeUI.closeWaiting();
+		}).start();
+	}
+	
+	// 更新应用资源
+	function installWgt(path){
+		plus.nativeUI.showWaiting("安装wgt文件...");
+		// force:false进行版本号校验，如果将要安装应用的版本号不高于现有应用的版本号则终止安装，并返回安装失败
+		plus.runtime.install(path,{force:false},function(){
+			plus.nativeUI.closeWaiting();
+			alert("安装wgt文件成功！");
+			plus.nativeUI.alert("应用资源更新完成！",function(){
+				plus.runtime.restart();
+			});
+		},function(e){
+			plus.nativeUI.closeWaiting();
+			//console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
+			plus.nativeUI.alert("安装wgt文件失败[" + e.code + "]：" + e.message);
+		});
+	}
+</script>
+</html>

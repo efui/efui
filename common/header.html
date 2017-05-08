@@ -1,0 +1,23 @@
+<header>
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle show-sm-only" data-collapse="{target: '.nav-collapse'}">
+			  	<span class="icon-bar"></span>
+			  	<span class="icon-bar"></span>
+			  	<span class="icon-bar"></span>
+		  	</button>
+			<a class="navbar-brand" ui-sref="index"><img src="logo.png"></a>
+		</div>
+		<nav class="collapse nav-collapse">
+			<ul class="nav nav-right">
+				<li ng-class="{active: path == '/'}"><a ui-sref="index" class="active">首页</a></li>
+				<li ng-class="{active: path == '/standard'}"><a ui-sref="standard.pages({pageid: 'css-format'})">规范</a></li>
+				<li ng-class="{active: path == '/element'}"><a ui-sref="element.pages({pageid: 'normalize'})">元素</a></li>
+				<li ng-class="{active: path == '/component'}"><a ui-sref="component.pages({pageid: 'buttons'})">组件</a></li> 
+				<li ng-class="{active: path == '/plugin'}"><a ui-sref="plugin.pages({pageid: 'popup'})">JS插件</a></li>
+				<li ng-class="{active: path == '/skills'}"><a ui-sref="skills.pages({pageid: 'js'})">进阶</a></li>   	  	
+				<li ng-class="{active: path == '/frame'}"><a ui-sref="frame.pages({pageid: 'angular-form-validate'})">框架</a></li>   	  	
+			</ul>
+		</nav>
+	</div>
+</header>

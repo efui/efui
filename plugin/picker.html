@@ -1,0 +1,42 @@
+<ol>
+	<li>
+		<h3 class="mb10">弹出选择列表</h3>
+		<div class="example-demo">
+			<div class="example-visualize">
+				<div class="panel-plugin">
+					<div class="ui-select" id="site-touch">
+						<span class="no-select select-val i-text">选择油站名称</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</li>
+</ol>
+<script type="text/javascript">
+require(['picker','tap'],function(){
+		var userPicker = new $.PopPicker();
+		userPicker.setData([{
+			value: '1',
+			text: '中石化科苑加油站1'
+		}, {
+			value: '2',
+			text: '中石化科苑加油站2'
+		}, {
+			value: '3',
+			text: '中石化科苑加油站3'
+		}, {
+			value: '4',
+			text: '中石化科苑加油站4'
+		}, {
+			value: '5',
+			text: '中石化科苑加油站5'
+		}]);
+		var showUserPickerButton = document.getElementById('site-touch');
+		showUserPickerButton.addEventListener('tap', function(event) {
+			var _this = $(this);
+			userPicker.show(function(items) {
+				_this.find('.select-val').removeClass('no-select').text(items[0].text);
+			});
+		}, false);
+});
+</script>

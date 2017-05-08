@@ -1,0 +1,138 @@
+<ol>
+	<li>
+		<h3>文本内容</h3>
+		<ol>
+			<li>
+				<h5>innerText innerHTML textContent的区别及兼容性问题</h5>
+			</li>
+			<ul>
+				<li>innerText 属性并不适用于所有浏览器，因此出于兼容性原因，你可能需要避免使用该属性。</li>
+				<li>IE支持innerHTML与innerText</li>
+				<li>FireFox支持innerHTML与textContent</li>
+				<li>所以在IE与FireFox中使用显示内容时，必须得先判断浏览器，然后决定使用innerText还是textContent。</li>
+				<li>W3C 只支持innerHTML. 其他都是微软的规定.(outerHTML,outerText,innerText只有微软的IE 好使, 其他浏览器不好用(firefox,mozilla等),必须用其他方法实现)</li>
+			</ul>
+
+		</ol>
+	</li>
+	<li>
+		<h3>事件绑定</h3>
+		<ol>
+			<li>
+				<h5>attachEvent</h5>
+				<ul>
+					<li>attachEvent是ie添加事件处理程序，接收两个参数，其中事件类型名称要加"on"；</li>
+					<li>可以添加多个事件处理程序，按照添加顺序相反的顺序触发，如果想删除事件请使用detachEvent；</li>
+					<li>attachEvent的事件处理程序会在全局作用域中运行，this等于window对象；</li>
+					<li>attachEvent方法只支持IE9以下浏览器
+						<div class="html">
+							<pre>if (obj.addEventListener) {
+}
+else if(obj.attachEvent){////IE9以下执行
+	obj.attachEvent( "onload", loadHandler );
+}</pre>
+						</div>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h5>addEventListener</h5>
+				<ul>
+					<li>addEventListener是给非ie添加事件处理程序，接收三个参数，第一个是事件名，不需要加“on”，第二个是绑定的函数，第三个参数是一个布尔值，是事件的方式，意思是是否使用useCatch方式，如果是false，就使用传统的冒泡方式，如果为true，就在捕获阶段调用事件处理程序。</li>
+					<li>可以添加多个事件处理程序，按照添加顺序触发，如果想删除事件请使用removeEventListener；</li>
+					<li>addEventLinstener添加的事件处理程序是在其依附的元素的作用域中运行的，this等于绑定元素对象；
+						<div class="html">
+							<pre>//如果想要实现this关键字指向相同的话，要用Function的apply或者call方法。示例代码如下：
+function bind(el, fn, type){
+	var _fn = function(){
+   		fn.apply(el, arguments);
+	};
+	window.addEventListener ? el.addEventListener(type, _fn, false) : el.attachEvent("on" + type, _fn);
+}
+//即用el来代替_fn里的this。							
+							</pre>
+						</div>
+					</li>					
+				</ul>
+			</li>
+			<li>
+				<h5>element.onclick</h5>
+				<ul>
+					<li>element.onclick相当于在标签上写onclick，用addEventListener和attachEvent是通过DOM接口去绑定事件，用于分离式开发。</li>
+					<li>element.onclick=null;这样就可以取消绑定在element上的事件处理程序了。</li>
+				</ul>
+			</li>
+			<li>
+				<h5>在事件函数里面获取event对象</h5>
+				<ul>
+					<li>这要分浏览器，IE和非IE的事件对象不同。兼容DOM的浏览器(非IE)会将一个event对象传入到事件处理程序中，无论指定事件处理程序使用什么方法，都会传入event对象。
+						<div class="html">
+							<pre>el.onclick=function(event){
+　　alert(event.type);           //"click"
+};
+el.addEventListener("click",function(event){
+　　alert(event.type);               //"click"
+},false);</pre>
+						</div>
+					</li>
+					<li>在IE中，要访问event对象有几种不同的方式：
+						<div class="html">
+							<pre>//通过el.onclick绑定的事件处理程序中，event对象作为window对象的一个属性存在。
+el.onclick=function(){
+　　var event=window.event;
+　　alert(event.type);              //"click"
+}
+如果通过attachEvent()添加事件处理程序时，event对象作为参数被传入事件处理程序，
+el.attachEvent("onclick",function(event){
+　　alert(event.type);                 //"click"
+});</pre>
+通过HTML标签属性指定的事件处理程序时，变量event中保存着event对象。这点和非IE一样。
+						</div>
+					</li>
+					<li>
+						综上，跨浏览器的事件对象获取方法是： return event?event:window.event;
+					</li>
+				</ul>
+			</li>
+		</ol>
+	</li>
+	<li>
+		<h3>ios</h3>
+		<ol>
+			<li>
+				<h5>:active属性无效</h5>
+				<ul>
+					<li>要让a链接的Css active伪类生效，只需要给这个a链接的touch系列的任意事件touchstart/touchend绑定一个空的匿名方法即可hack成功。
+						<div class="html">
+							<pre><style>
+	a {color: #000;}
+	a:active {color: #fff;}
+	</style>
+	
+	<a herf='asdasd'>asdasd</a>
+	
+	<script>
+	var a=document.getElementsByTagName('a');
+	for(var i=0;i<a.length;i++){
+	  	a[i].addEventListener('touchstart',function(){},false);
+	}
+	</script></pre>
+						</div>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h5>click事件触发失灵</h5>
+				<ul>
+					<li>IOS浏览器的按钮和链接才响应click事件，其他标签不响应，所以点击链接和按钮之外的其他地方并不会把click事件冒泡到body上。</li>
+					<li>开启方法：给标签绑定一个任意事件
+						<div class="html">
+							<pre>/*给body里面的任意元素绑定事件，让这些标签能接受click事件*/
+$("body>*").bind("click",function(){});</pre>
+						</div>
+					</li>
+				</ul>
+			</li>
+		</ol>
+	</li>
+</ol>

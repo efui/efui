@@ -1,0 +1,54 @@
+<div top-Title></div> 
+<!--<ul class="note-question">
+	<li ng-repeat='item in noteTitlelist' ng-class="{true :'active'}[showMe]">
+		<div ng-click="toggle()" class="note-title">
+			{{item.title}}<span ng-show="showMe"><i class="f-arrow_up"></i></span>
+			<span ng-show="!showMe"><i class="f-arrow_down"></i></span>
+		</div>
+		<expander class='expander' expander-title='title' ng-show="showMe">
+		    <div class="note-desc">
+		    	<div class="html" ng-bind="item.content"></div>
+		    </div>
+		</expander>
+	</li>
+</ul>-->
+<ul class="note-question mt25">
+	<li ng-repeat='item in noteTitlelist' ng-class="{true :'active'}[showMe]">
+		<div ng-click="toggle()" class="note-title">
+			{{item.title}}<span ng-show="showMe"><i class="f-arrow_up"></i></span>
+			<span ng-show="!showMe"><i class="f-arrow_down"></i></span>
+		</div>
+		<expander class='expander' expander-title='title' ng-show="showMe">
+			<div class="note-reply">
+				<form name="answerForm" ng-submit="submitForm(answer,item.content)">  
+				    <button ng-disabled="answerForm.$invalid" type="submit" class="btn btn-default">提交</button>
+			        <div class="mb15 answer-area" ng-class="{ 'has-error' : answerForm.answer.$invalid && !answerForm.answer.$pristine }">
+			            <textarea type="text" name="answer" class="i-answer" ng-model="answer" required></textarea>
+			            <p ng-show="answerForm.answer.$invalid && !answerForm.answer.$pristine" class="red">请输入您的答案!</p>
+			        </div>   
+				</form>
+			</div>
+		    <div class="note-desc" ng-click="toggleanswer()">
+		    	<a href="javascript:;" ng-show="!answershow">{{answertitle}}<i class="f-fast-forward"></i></a>
+		    	<a href="javascript:;" ng-show="answershow"><i class="f-rewind"></i>{{answertitle2}}</a>
+		    	<div class="html" ng-show="answershow">
+		    		<ol ng-if="isArray(item.content)">
+		    			<li ng-repeat="txt in item.content">
+		    				<div ng-if="isObj(txt)">
+		    					<p>{{txt.tit}}</p>
+			    				<ul>
+			    					<li ng-repeat="txtitem in txt.desc">
+			    						{{txtitem}}
+			    					</li>
+			    				</ul>
+		    				</div>
+		    				<p ng-if="!isObj(txt)">{{txt}}</p>
+		    			</li>
+		    		</ol>
+		    		<p ng-if="!isArray(item.content)">{{item.content}}</p>
+		    	</div>
+		    </div>
+		</expander>
+	</li>
+</ul>
+	

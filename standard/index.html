@@ -1,0 +1,45 @@
+<div class="docs-header">
+	<div class="container animation-scale-up" id="docs-con">
+		<h2>{{docsTit}}</h2>
+		<p>{{docsMsg}}</p>
+	</div>
+</div>
+<div class="container">
+
+	<div class="row main-container clearfix">
+
+		<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
+			<div class="sidebar-menu sidebar-slide">
+				<section class="sidebar-slide-overlay">
+						<dl>
+							<dt><a href="javascript:;">CSS规范</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="standard.pages({pageid: 'css-format'})">代码格式</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.pages({pageid: 'css-name'})">命名规范</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.pages({pageid: 'css-sort'})">分类方法</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.pages({pageid: 'css-optimize'})">优化方案</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="javascript:;">HTML规范</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="standard.pages({pageid: 'html-format'})">代码格式</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.pages({pageid: 'html-name'})">命名规范</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="javascript:;">javascript规范</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="standard.pages({pageid: 'js-format'})">代码格式</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.pages({pageid: 'js-name'})">命名规范</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="javascript:;">浏览器兼容性</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="standard.pages({pageid: 'compatible'})">兼容性</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.pages({pageid: 'compatible-css'})">css</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="standard.pages({pageid: 'compatible-js'})">js</a></dd>
+						</dl>
+				</section>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-9 col-md-9">
+			<div ui-view></div>
+		</div>
+
+	</div>
+</div>

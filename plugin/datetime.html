@@ -1,0 +1,64 @@
+<h3>倒计时：</h3>
+<div class="example-demo">
+	<div class="example-visualize">
+		<div class="panel-plugin">
+			<p class="pro-time" data-downtime="2016/09/21 10:20:30">
+				<span>距开始</span>
+				<span class="t_h"><i>0</i><i>0</i>时</span>
+				<span class="t_m"><i>1</i><i>3</i>分</span>
+				<span class="t_s"><i>2</i><i>7</i>秒</span>
+			</p>
+		</div>
+		<div class="panel-plugin mt20">
+			<p class="pro-time" data-downtime="2016/08/21 20:10:05">
+				<span>距开始</span>
+				<span class="t_h"><i>0</i><i>0</i>时</span>
+				<span class="t_m"><i>1</i><i>3</i>分</span>
+				<span class="t_s"><i>2</i><i>7</i>秒</span>
+			</p>
+		</div>
+	</div>
+	<div class="html">
+		<pre><p class="pro-time" data-downtime="2016/08/21 20:10:05">
+	<span>距开始</span>
+	<span class="t_h"><i>0</i><i>0</i>时</span>
+	<span class="t_m"><i>1</i><i>3</i>分</span>
+	<span class="t_s"><i>2</i><i>7</i>秒</span>
+</p></pre>
+	</div>
+</div>
+<div class="example-desc">
+	<ul>
+		<li>自动触发有属性data-downtime的元素，并以data的值为第一个参数，本身为第二个参数执行。</li>
+		<li>以_h结尾的class是时钟</li>
+		<li>以_m结尾的class是分钟</li>
+		<li>以_s结尾的class是秒钟</li>
+	</ul>
+</div>
+<script language="javascript" type="text/javascript">
+	var DownTime = function(d, o) {
+		return function() {
+			var EndTime = new Date(d);
+			var NowTime = new Date();
+			var t = EndTime.getTime() - NowTime.getTime();
+			var h = 0;
+			var m = 0;
+			var s = 0;
+			t >= 0 && (
+				h = Math.floor(t / 1000 / 60 / 60 % 24) < 10 ? '0' + Math.floor(t / 1000 / 60 / 60 % 24) : Math.floor(t / 1000 / 60 / 60 % 24),
+				m = Math.floor(t / 1000 / 60 % 60) < 10 ? '0' + Math.floor(t / 1000 / 60 % 60) : Math.floor(t / 1000 / 60 % 60),
+				s = Math.floor(t / 1000 % 60) < 10 ? '0' + Math.floor(t / 1000 % 60) : Math.floor(t / 1000 % 60)
+			);
+			o.find("[class$='_h']").length && o.find("[class$='_h']").html("<i>" + String(h)[0] + "</i><i>" + String(h)[1] + "</i>时");
+			o.find("[class$='_m']").length && o.find("[class$='_m']").html("<i>" + String(m)[0] + "</i><i>" + String(m)[1] + "</i>分");
+			o.find("[class$='_s']").length && o.find("[class$='_s']").html("<i>" + String(s)[0] + "</i><i>" + String(s)[1] + "</i>秒");
+		}
+	}
+	$('[data-downtime]').each(function() {
+		var $this = $(this);
+		var option = $this.data();
+		var $time = option.downtime ? option.downtime : "";
+		//console.log($time);
+		setInterval(new DownTime($time, $this), 0);
+	});
+</script>

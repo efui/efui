@@ -1,0 +1,452 @@
+<div class="mlist">
+	<div class="mtit"><span>目录</span></div>
+	<div class="mcon">
+		<ol>
+			<li><a href="">正则表达式的用途</a></li>
+			<li><a href="">正则表达式定义</a></li>
+			<li><a href="">正则表达式方法</a></li>
+			<li><a href="">正则表达式的字符</a></li>
+			<li><a href="">常用的正则表达式</a></li>
+			<li><a href="">捕获组</a></li>
+			<li><a href="">反向引用</a></li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">一、正则表达式的用途  </h3>
+<div class="example-desc">
+	<ol>
+		<li><span class="red">验证</span>字符串是否符合指定特征，比如验证是否是合法的邮件地址。</li>
+		<li>用来<span class="red">查找</span>字符串，从一个长的文本中查找符合指定特征的字符串，比查找固定字符串更加灵活方便。</li>
+		<li>用来<span class="red">替换</span>，比普通的替换更强大。</li>
+	</ol>
+</div>
+</div>
+<div class="mswitch">
+<h3 class="mb10">二、正则表达式定义  </h3>
+<div class="example-demo">
+	<pre>var re =new RegExp("\\?(\\w{1,}=\\w{1,}&){1,}\\w{1,}=\\w{1,}");
+var re =new RegExp( /^\?(\w{1,}=\w{1,}&){1,}\w{1,}=\w{1,}/);
+var re =/\?(\w{1,}=\w{1,}&){1,}\w{1,}=\w{1,}/;</pre>
+</div>
+<div class="example-desc">
+	<div class="exm-t1">在js中定义正则表达式有两种方式：</div>
+	<ol>
+		<li>通过构造函数
+			<ul>
+				<li>使用构造函数定义正则表达式，注意大小写，否则就会不起作用。由于构造函数的参数是一个字符串，也可以是两个斜杠的方式定义，遇到一些特殊字符就需要使用\进行转义
+					<pre>var re = new RegExp();//RegExp是一个对象,和Aarray一样  
+//但这样没有任何效果,需要将正则表达式的内容作为字符串传递进去  
+re = new RegExp("a");//最简单的正则表达式,将匹配字母a  
+re = new RegExp("a","i");//第二个参数,表示匹配时不分大小写  </pre></li>
+				<li>RegExp构造函数第一个参数为正则表达式的文本内容,而第一个参数则为可选项标志.标志可以组合使用
+					<ul>
+						<li>g （全文查找） </li>
+						<li>i （忽略大小写） </li>
+						<li>m （多行查找） </li>
+					</ul>
+				</li>
+			</ul>
+			
+		</li>
+		<li>通过//，也就是两个斜杠</li>
+	</ol>
+</div>
+</div>
+<div class="mswitch">
+<h3 class="mb10">三、正则表达式方法  </h3>
+<div class="example-demo">
+	<pre>function test(){ 
+    	var text="index.aspx?test=1&ww=2&www=3"; //    
+  	var   re =/\?(\w{1,}=\w{1,}&){1,}\w{1,}=\w{1,}/;
+    //  var   re =new RegExp("\\?(\\w{1,}=\\w{1,}&){1,}\\w{1,}=\\w{1,}");
+ 	var result=  re.test(text);
+  	if(result){
+        	console.log("ok");   
+	}else{
+      		console.log("err");  
+	}                 
+}
+//改写
+function exec(){ 
+   	var text="index.aspx?test=1&ww=2&www=3";
+	var   re = /\?(\w{1,}=\w{1,}&){1,}\w{1,}=\w{1,}/;
+   	//  var   re =new RegExp( "\\?(\\w{1,}=\\w{1,}&){1,}\\w{1,}=\\w{1,}");
+	var result=  re.exec(text); 
+	if(result){
+    		console.log("ok"); 
+    		console.log(result);  // 是?test=1&ww=2&www=3,ww=2&     
+     		console.log(result[0]+",0");//是?test=1&ww=2&www=3
+     		console.log(result[1]+",1");//是ww=2&     
+	}else{
+      		console.log("err");  
+	}   
+}
+//改写
+function match(){ 
+    	var text="index.aspx?test=1&ww=234"; //
+	var   re = /\?(\w{1,}=\w{1,}&){1,}\w{1,}=\w{1,}/;
+ 	//   var   re2 = "(\\w{1,}=\\w{1,}&){1,}\\w{1,}=\\w{1,}"
+ 	var result= text.match(re);
+	if(result){
+  		console.log(result);//?test=1&ww=234,test=1&        
+  		console.log(result[0]+",0");//?test=1&ww=234
+        	console.log(result[1]+",1");//test=1&
+   	}else{
+  		console.log("err");  
+ 	}  
+}</pre>
+<script>
+	+function(){ 
+    	var text="index.aspx?test=1&ww=2&www=3"; //    
+  	var   re =/\?(\w{1,}=\w{1,}&){1,}\w{1,}=\w{1,}/;
+    //  var   re =new RegExp("\\?(\\w{1,}=\\w{1,}&){1,}\\w{1,}=\\w{1,}");
+ 	var result=  re.test(text);
+  	if(result){
+        	console.log("ok");   
+    		console.log(result);  // 是true
+	}else{
+      		console.log("err");  
+	}                 
+}();
+//改写
++function(){ 
+   	var text="index1.aspx?test=1&ww=2&www=3";
+	var   re = /\?(\w{1,}=\w{1,}&){1,}\w{1,}=\w{1,}/;
+   	//  var   re =new RegExp( "\\?(\\w{1,}=\\w{1,}&){1,}\\w{1,}=\\w{1,}");
+	var result=  re.exec(text); 
+	if(result){
+    		console.log("ok"); 
+    		console.log(result);  // 是?test=1&ww=2&www=3,ww=2&     
+     		console.log(result[0]+",0");//是?test=1&ww=2&www=3
+     		console.log(result[1]+",1");//是ww=2&     
+     		console.log(result.length);//是2     
+	}else{
+      		console.log("err");  
+	}   
+}();
+//改写
++function(){ 
+    	var text="index11.aspx?test=1&ww=234"; //
+	var   re = /\?(\w{1,}=\w{1,}&){1,}\w{1,}=\w{1,}/;
+ 	//   var   re2 = "(\\w{1,}=\\w{1,}&){1,}\\w{1,}=\\w{1,}"
+ 	var result= text.match(re);
+	if(result){
+  		console.log(result);//?test=1&ww=234,test=1&        
+  		console.log(result[0]+",0");//?test=1&ww=234
+        	console.log(result[1]+",1");//test=1&
+   	}else{
+  		console.log("err");  
+ 	}  
+}();
+</script>
+</div>
+<div class="example-desc">
+	<div class="exm-t1">使用正则表达式的主要有字符串的方法match，正则表达式的方法exec，test</div>
+	<ol>
+		<li>match
+			<ul>
+				<li>是字符串的方法，但参数确是一个正则表达式</li>
+			</ul>
+		</li>
+		<li>test
+			<ul>
+				<li>测试给定的字符串是否满足正则表达式，<span class="red">返回值是bool类型的，只有真和假</span>，如果只是单纯的判断，不需要其他的处理，可以使用尤其是验证时。</li>
+			</ul>
+		</li>
+		<li>exec
+			<ul>
+				<li>测试给定的字符串是否满足正则表达式，<span class="red">返回匹配到的字符串，如果没有匹配的则返回null</span>，和test基本一致，如果需要获取匹配的各个子字符串，可以使用下标的方式</li>
+			</ul>
+		</li>
+		<li>compile
+			<ul><li>把正则表达式编译为内部格式，从而执行得更快。</li></ul>
+		</li>
+		<li>source
+			<ul><li>返回正则表达式模式的文本的复本。只读。</li></ul>
+		</li>
+		<li>replace
+			<ul><li>替换与正则表达式匹配的子串。</li></ul>
+		</li>
+		<li>search
+			<ul><li>检索与正则表达式相匹配的值。</li></ul>
+		</li>
+		<li>split
+			<ul><li>把字符串分割为字符串数组。</li></ul>
+		</li>
+	</ol>
+</div>
+</div>
+<div class="mswitch">
+<h3 class="mb10">四、正则表达式的字符 </h3>
+<div class="example-demo">
+	<pre>var   re  = /^\?(\w{1,}=\w{1,}&){1,}\w{1,}=\w{1,}/;//  \?表示配置问号?
+var   re1 =new RegExp( "^\\?(\\w{1,}=\\w{1,}&){1,}\\w{1,}=\\w{1,}");//  \\?表示配置问号?</pre>
+</div>
+<div class="example-desc">
+	<div class="exm-t1"></div>
+	<ol>
+		<li>普通字符(直接量字符)：
+			<ul>
+				<li>字母、数字、汉字、下划线、以及后边章节中没有特殊定义的标点符号，都是"普通字符"。表达式中的普通字符，在匹配一个字符串的时候，匹配与之相同的一个字符。</li>
+			</ul>
+		</li>
+		<li>转义字符：\
+			<ul>
+				<li>做为转意，即通常在"\"后面的字符不按原来意义解释，如/b/匹配字符"b"，当b前面加了反斜杆后/\b/，转意为匹配一个单词的边界。</li>
+				<li>对正则表达式功能字符的还原，如"*"匹配它前面元字符0次或多次，/a*/将匹配a,aa,aaa，加了"\"后，/a\*/将只匹配"a*"。</li>
+				<li>在正则表达式中会经常出现转义字符，例如问号?在正则表达式中有特殊的含义，如果需要匹配问号?就需要转义，使用转义字符反斜杠\</li>
+			</ul>
+		</li>
+		<li>元字符：
+			<ul>
+				<li>元字符是正则表达式的一部分，当我们要匹配正则表达式本身时，必须对这些元字符转义<pre>( [ { \ ^ $ | ) ? * + . //正则表达式用到的所有元字符
+//----------------------
+
+//1.使用正则表达式字面量创建正则表达式
+var str = "?";  
+var re = /?/;  
+alert(re.test(str));//出错，因为？是元字符，必须转义  
+re = /\?/;  
+alert(re.test(str));//true  
+
+//2.使用RegExp构造函数创建正则表达式
+var str = "\?";  
+alert(str);//只会输出?  
+var re = /\?/;//将匹配?  
+alert(re.test(str));//true  
+re = new RegExp("\?");//出错,因为这相当于re = /\?/  
+re = new RegExp("\\?");//正确，将匹配？  
+alert(re.test(str));//true  </pre></li>
+				<li> ? 的四种用法:
+					<ol>
+						<li><span class="red">原文符号：</span>
+							<ul>
+								<li>因为?在正则表达式中有特殊的含义，所以如果想匹配?本身，则需要转义，\?</li>
+							</ul>
+						</li>
+						<li><span class="red">有无量词：</span>
+							<ul>
+								<li>问号可以表示重复前面内容的0次或一次，也就是要么不出现，要么出现一次。</li>
+							</ul>
+						</li>
+						<li><span class="red">非贪婪匹配：</span>
+							<ul>
+								<li>贪婪匹配
+									<ul>
+										<li>在满足匹配时，匹配尽可能长的字符串，默认情况下，采用贪婪匹配<pre>string pattern1 = @"a.*c";   // greedy match 
+Regex regex = new Regex(pattern1);
+regex.Match("abcabc"); // return "abcabc"</pre></li>
+									</ul>
+								</li>
+								<li>非贪婪匹配
+									<ul>
+										<li>在满足匹配时，匹配尽可能短的字符串，使用?来表示非贪婪匹配<pre>string pattern1 = @"a.*?c";   // non-greedy match 
+Regex regex = new Regex(pattern1);
+regex.Match("abcabc"); // return "abc"</pre></li>
+									</ul>
+								</li>
+								<li>几个常用的非贪婪匹配Pattern
+									<ul>
+										<li>*? 重复任意次，但尽可能少重复</li>
+										<li>+? 重复1次或更多次，但尽可能少重复</li>
+										<li>?? 重复0次或1次，但尽可能少重复</li>
+										<li>{n,m}? 重复n到m次，但尽可能少重复</li>
+										<li>{n,}? 重复n次以上，但尽可能少重复</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><span class="red">不捕捉模式：</span>
+							<ul>
+								<li>如何关闭圆括号的捕获能力？而只是用它来做分组，方法是在左括号的后边加上?:，这里第一个圆括弧只是用来分组，而不会占用捕获变量，所以$1的内容只能是steak或者burger，而永远不可能是bronto。<pre>while(<>){
+    if(/(?:bronto)(steak|burger)/){
+        print "Fred wants a $1\n" ;
+    }
+}</pre></li>
+								<li>不捕获分组的匹配结果不能继续使用，而捕获分组可以通过\1或者 \2 这样的方式来使用匹配到并捕获的分组结果，或者通过\k&lt;name&gt;或者\k'name'这样的方式来反向使用前面匹配到的捕获结果。</li>
+							</ul>
+						</li>
+					</ol>
+				</li>
+			</ul>
+		</li>
+		<li>预定义特殊字符：
+			<ul>
+				<li>一些不便书写的字符，采用在前面加 "\" 的方法。
+					<ul>
+						<li><span class="col-1"> \r </span>： <span class="col-2">代表回车</span></li>
+						<li><span class="col-1"> \f </span>： <span class="col-2">换页符（Tab） </span></li>
+						<li><span class="col-1"> \n </span>： <span class="col-2">代表换行符</span></li>
+						<li><span class="col-1"> \b </span>： <span class="col-2">退格符(BackSpace)</span></li>
+						<li><span class="col-1"> \t </span>： <span class="col-2">制表符</span></li>
+						<li><span class="col-1"> \v </span>： <span class="col-2">垂直制表符</span></li>
+						<li><span class="col-1"> \\ </span>： <span class="col-2">代表 "\" 本身</span></li>
+						<li><span class="col-1"> \cX </span>： <span class="col-2">与X对应的控制字符</span></li>
+						<li><span class="col-1"> \0 </span>： <span class="col-2">空字符("")</span></li>
+					</ul>
+				</li>
+				<li>还有其他一些有特殊用处的标点符号，在前面加 "\" 后，就代表该符号本身。比如：^, $ ,.都有特殊意义，如果要想匹配字符串中 "^" , "$" , "." 字符，则表达式就需要写成 "\^" , "\$" , "\."。</li>
+			</ul>
+		</li>
+		<li>代表抽象意义的特殊符号(<span class="red">本身不匹配任何字符</span>)：
+			<ul>
+				<li><span class="col-1"> ^ </span>： <span class="col-2">与字符串开始的地方匹配，不匹配任何字符</span><pre>表达式 "^aaa" 在匹配 "xxx aaa xxx" 时，匹配结果是：失败。因为 "^" 要求与字符串开始的地方匹配，因此，只有当 "aaa" 位于字符串的开头的时候，"^aaa" 才能匹配，比如："aaa xxx xxx"。</pre></li>
+				<li><span class="col-1"> $ </span>： <span class="col-2">与字符串结束的地方匹配，不匹配任何字符</span><pre>表达式 "aaa$" 在匹配 "xxx aaa xxx" 时，匹配结果是：失败。因为 "$" 要求与字符串结束的地方匹配，因此，只有当 "aaa" 位于字符串的结尾的时候，"aaa$" 才能匹配，比如："xxx xxx aaa"。</pre></li>
+				<li><span class="col-1"> \b </span>： <span class="col-2">匹配一个<span class="red">单词</span>边界，也就是单词和空格之间的位置，不匹配任何字符</span><pre>表达式 ".\b." 在匹配 "@@@abc" 时，匹配结果是：成功；匹配到的内容是："@a"；匹配到的位置是：开始于2，结束于4。</pre></li>
+			</ul>
+			<div class="exm-t1 mb25">进一步说明："\b" 与 "^" 和 "$" 类似，本身不匹配任何字符，但是它要求它在匹配结果中所处位置的左右两边，其中一边是 "\w" 范围，另一边是 非"\w" 的范围。<pre>表达式 "\bend\b" 在匹配 "weekend,endfor,end" 时，匹配结果是：成功；匹配到的内容是："end"；匹配到的位置是：开始于15，结束于18</pre></div>
+		</li>
+		<li>预定义类：
+			<ul>
+				<li><span class="col-1"> . </span>： <span class="col-2 red">IE下[^\n]，其它[^\n\r]</span><span class="col-3">匹配除换行符之外的任何一个字符</span></li>
+				<li><span class="col-1"> \d </span>： <span class="col-2 red">[0-9]</span><span class="col-3">匹配数字</span></li>
+				<li><span class="col-1"> \D </span>： <span class="col-2 red">[^0-9]</span><span class="col-3">匹配非数字字符</span></li>
+				<li><span class="col-1"> \s </span>： <span class="col-2 red">[ \n\r\t\f\x0B]</span><span class="col-3">匹配一个空白字符</span></li>
+				<li><span class="col-1"> \S </span>： <span class="col-2 red">[^ \n\r\t\f\x0B]</span><span class="col-3">匹配一个非空白字符</span></li>
+				<li><span class="col-1"> \w </span>： <span class="col-2 red">[a-zA-Z0-9_]</span><span class="col-3">匹配字母数字和下划线</span></li>
+				<li><span class="col-1"> \W </span>： <span class="col-2 red">[^a-zA-Z0-9_]</span><span class="col-3">匹配除字母数字下划线之外的字符</span></li>
+			</ul>
+		</li>
+		<li>量词匹配次数：
+			<ul>
+				<li>量词单个出现时皆是<b class="red">贪婪量词</b>
+					<ul>
+						<li><span class="col-1"> * </span>： <span class="col-2 red">匹配前面的子表达式零次或多次。</span><span class="col-3">例如，zo* 能匹配 "z" 以及 "zoo"。 * 等价于{0,}</span></li>
+						<li><span class="col-1"> + </span>： <span class="col-2 red">匹配前面的子表达式一次或多次。</span><span class="col-3">例如，'zo+' 能匹配 "zo" 以及 "zoo"，但不能匹配 "z"。+ 等价于 {1,}</span></li>
+						<li><span class="col-1"> ? </span>： <span class="col-2 red">匹配前面的子表达式零次或一次。</span><span class="col-3">例如，"do(es)?" 可以匹配 "do" 或 "does" 中的"do" 。? 等价于 {0,1}</span></li>
+						<li><span class="col-1"> {n} </span>： <span class="col-2 red">n 是一个非负整数，匹配确定的 n 次。</span><span class="col-3">例如，'o{2}' 不能匹配 "Bob" 中的 'o'，但是能匹配 "food" 中的两个 o</span></li>
+						<li><span class="col-1"> {n,} </span>： <span class="col-2 red">n 是一个非负整数，至少匹配n 次。</span><span class="col-3">例如，'o{2,}' 不能匹配 "Bob" 中的 'o'，但能匹配 "foooood" 中的所有 o。'o{1,}' 等价于 'o+'。'o{0,}' 则等价于 'o*'</span></li>
+						<li><span class="col-1"> {n,m} </span>： <span class="col-2 red">m 和 n 均为非负整数，其中n <= m。最少匹配 n 次且最多匹配 m 次。</span><span class="col-3">例如，"o{1,3}" 将匹配 "fooooood" 中的前三个 o。'o{0,1}' 等价于 'o?'。请注意在逗号和两个数之间不能有空格</span></li>
+					</ul>
+				</li>
+				<li>在贪婪量词后面加个"?"则为<b class="red">惰性量词</b>,如"a+"是贪婪匹配的,"a+?"则是惰性的 </li>
+				<li>用贪婪量词进行匹配时，它首先会将整块字符串当成一个匹配，如果匹配的话就退出，如果不匹配，就截去最后一个字符进行匹配，如果不匹配，继续将最后一个字符截去进行匹配，直到有匹配为止。直到现在我们遇到的量词都是贪婪量词 </li>
+				<li>用惰性量词进行匹配时，它首先将第一个字符当成一个匹配，如果成功则退出，如果失败，则测试前两个字符，依次增加，直到遇到合适的匹配为止</li>
+			</ul>
+			<pre>var str = "abc";  
+var re = /\w+/;//将匹配abc  
+re = /\w+?/;//将匹配a  </pre>
+		</li>
+		<li>反向引用： \1, \2...
+			<ul>
+				<li>表达式后边的部分，可以引用前面 "括号内的子匹配已经匹配到的字符串"。引用方法是 "\" 加上一个数字。</li>
+				<li>"\1" 引用第1对括号内匹配到的字符串，"\2" 引用第2对括号内匹配到的字符串……以此类推</li>
+				<li>如果一对括号内包含另一对括号，则外层的括号先排序号。换句话说，哪一对的左括号 "(" 在前，那这一对就先排序号。<pre>表达式 "<(\w+)\s*(\w+(=('|").*?\4)?\s*)*>.*?</\1>" 在匹配 "&lt;td id='td1' style="bgcolor:white"&gt;&lt;/td&gt;" 时，匹配结果是成功。如果 "&lt;td&gt;" 与 "&lt;/td&gt;" 不配对，则会匹配失败；如果改成其他配对，也可以匹配成功。</pre></li>
+			</ul>
+		</li>
+	</ol>
+</div>
+</div>
+<div class="mswitch">
+<h3 class="mb10">五、常用的正则表达式 </h3>
+<div class="example-demo">
+	<pre>"^\\d+$"　　//非负整数（正整数 + 0） 
+"^[0-9]*[1-9][0-9]*$"　　//正整数 
+"^((-\\d+)|(0+))$"　　//非正整数（负整数 + 0） 
+"^-[0-9]*[1-9][0-9]*$"　　//负整数 
+"^-?\\d+$"　　　　//整数 
+"^\\d+(\\.\\d+)?$"　　//非负浮点数（正浮点数 + 0） 
+"^(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*))$"　　//正浮点数 
+"^((-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$"　　//非正浮点数（负浮点数 + 0） 
+"^(-(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*)))$"　　//负浮点数 
+"^(-?\\d+)(\\.\\d+)?$"　　//浮点数 
+"^[A-Za-z]+$"　　//由26个英文字母组成的字符串 
+"^[A-Z]+$"　　//由26个英文字母的大写组成的字符串 
+"^[a-z]+$"　　//由26个英文字母的小写组成的字符串 
+"^[A-Za-z0-9]+$"　　//由数字和26个英文字母组成的字符串 
+"^\\w+$"　　//由数字、26个英文字母或者下划线组成的字符串 
+"^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$"　　　　//email地址 
+"^[a-zA-z]+://(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*))*(\\?\\S*)?$"　　//url </pre>
+</div>
+<div class="example-desc">
+	<ol>		
+		<li>"^\\d+$"　　//非负整数（正整数 + 0）</li>
+		<li>"^[0-9]*[1-9][0-9]*$"　　//正整数</li>
+		<li>"^((-\\d+)|(0+))$"　　//非正整数（负整数 + 0） </li>
+		<li>"^-[0-9]*[1-9][0-9]*$"　　//负整数 </li>
+		<li>"^-?\\d+$"　　　　//整数 </li>
+		<li>"^\\d+(\\.\\d+)?$"　　//非负浮点数（正浮点数 + 0）</li>
+		<li>"^(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*))$"　　//正浮点数 </li>
+		<li>"^((-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$"　　//非正浮点数（负浮点数 + 0） </li>
+		<li>"^(-(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*)))$"　　//负浮点数</li>
+		<li>"^(-?\\d+)(\\.\\d+)?$"　　//浮点数</li>
+		<li>"^[A-Za-z]+$"　　//由26个英文字母组成的字符串</li>
+		<li>"^[A-Z]+$"　　//由26个英文字母的大写组成的字符串 </li>
+		<li>"^[a-z]+$"　　//由26个英文字母的小写组成的字符串 </li>
+		<li>"^[A-Za-z0-9]+$"　　//由数字和26个英文字母组成的字符串  </li>
+		<li>"^\\w+$"　　//由数字、26个英文字母或者下划线组成的字符串  </li>
+		<li>"^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$"　　　　//email地址  </li>
+		<li>"^[a-zA-z]+://(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*))*(\\?\\S*)?$"　　//url </li>
+	</ol>
+</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">六、捕获组 </h3>
+	<div class="example-demo">
+		<pre>//语法
+	普通捕获组：(Expression)
+	命名捕获组：(?&lt;name&gt;Expression)</pre>
+	</div>
+	<div class="example-desc">
+		捕获组就是把正则表达式中子表达式匹配的内容，保存到内存中以数字编号或显式命名的组里，方便后面引用。当然，这种引用既可以是在正则表达式内部，也可以是在正则表达式外部。
+		<ol>
+			<li>普通捕获组
+				<ul>
+					<li>普通捕获组在大多数支持正则表达式的语言或工具中都是支持的</li>
+				</ul>
+			</li>
+			<li>命名捕获组
+				<ul>
+					<li>命名捕获组目前只有.NET、PHP、Python等部分语言支持，据说Java会在7.0中提供对这一特性的支持</li>
+				</ul>
+			</li>
+		</ol>
+		<div>上面给出的命名捕获组的语法是.NET中的语法，另外在.NET中使用(?'name'Expression)与使用(?&lt;name&gt;Expression)是等价的。在PHP和Python中命名捕获组语法为：(?P&lt;name&gt;Expression)。</div>
+		<div>另外需要说明的一点是，除(Expression)和(?&lt;name&gt;Expression)语法外，其它的(?...)语法都不是捕获组。</div>
+		<div>由于<span class="red">JavaScript中不支持命名捕获组</span>，所以对于捕获组的引用就只支持普通捕获组的反向引用和$number方式的引用。程序中的引用一般在替换和匹配时使用。</div>
+		<div class="mt25">捕获分组常有的用法:</div>
+		<ol>
+			<li>"(exp)"    匹配exp,并捕获文本到自动命名的组里</li>
+			<li>"(?&lt;name&gt;exp)"   匹配exp,并捕获文本到名称为name的组里</li>
+			<li>"(?:exp)"  匹配exp,不捕获匹配的文本，也不给此分组分配组号</li>
+			<li>"(?=exp)"  匹配exp前面的位置
+				<pre>如 "How are you doing" 正则"(?&lt;txt&gt;.+(?=ing))" 这里取ing前所有的字符，并定义了一个捕获分组名字为 "txt" 而"txt"这个组里的值为"How are you do";</pre>
+			</li>
+			<li>"(?&lt;=exp)"  匹配exp后面的位置 
+				<pre>　如 "How are you doing" 正则"(?&lt;txt&gt;(?&lt;=How).+)" 这里取"How"之后所有的字符，并定义了一个捕获分组名字为 "txt" 而"txt"这个组里的值为" are you doing"; </pre>
+			</li>
+			<li>"(?!exp)"  匹配后面跟的不是exp的位置
+				<pre> 如 "123abc" 正则 "\d{3}(?!\d)"匹配3位数字后非数字的结果</pre>
+			</li>
+			<li>"(?&lt;!exp)"  匹配前面不是exp的位置 
+				<pre> 如 "abc123 " 正则 "(?&lt;![0-9])123" 匹配"123"前面是非数字的结果也可写成"(?!&lt;\d)123" </pre>
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">七、反向引用 </h3>
+	<div class="example-demo">
+		<pre>//从一个简单例子说起:
+	源字符串：abcdebbcde
+	正则表达式：([ab])\1
+		//对于正则表达式“([ab])\1”，捕获组中的子表达式“[ab]”虽然可以匹配“a”或者“b”，但是捕获组一旦匹配成功，反向引用的内容也就确定了。如果捕获组匹配到“a”，那么反向引用也就只能匹配“a”，同理，如果捕获组匹配到的是“b”，那么反向引用也就只能匹配“b”。由于后面反向引用“\1”的限制，要求必须是两个相同的字符，在这里也就是“aa”或者“bb”才能匹配成功。
+	
+	扩展一下，正则表达式“([a-z])\1{2}”也就表达连续三个相同的小写字母。
+		
+	//一个复杂例子的分析:
+	源字符串：aaa bbbb ffffff 999999999
+	正则表达式：(\w)((?=\1\1\1)(\1))+</pre>
+	</div>
+	<div class="example-desc">
+		<div>捕获组捕获到的内容，不仅可以在正则表达式外部通过程序进行引用，也可以在正则表达式内部进行引用，这种引用方式就是反向引用。</div>
+		<div>反向引用的作用通常是用来查找或限定重复、查找或限定指定标识配对出现等等。</div>
+		<div>对于普通捕获组和命名捕获组的引用，语法如下：</div>
+		<ul>
+			<li>普通捕获组反向引用：\k&lt;number&gt;，通常简写为\number</li>
+			<li>命名捕获组反向引用：\k&lt;name&gt;或者\k'name'</li>
+			<li>普通捕获组反向引用中number是十进制的数字，即捕获组的编号；命名捕获组反向引用中的name为命名捕获组的组名。</li>
+		</ul>
+	</div>
+</div>

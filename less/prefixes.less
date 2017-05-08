@@ -1,0 +1,542 @@
+// Prefixes  
+//  See https://css-tricks.com/
+// *常用的有：
+// *-moz-     /* 火狐等使用Mozilla浏览器引擎的浏览器 */
+// *-webkit-  /* Safari, 谷歌浏览器等使用Webkit引擎的浏览器 */
+// *-o-       /* Opera浏览器(早期) */
+// *-ms-      /* Internet Explorer (不一定) */ 
+
+// - Animations
+// - Box shadow
+// - Box sizing
+// - Content columns
+// - Placeholder text
+// - Transformations
+// - Transitions
+// - User Select
+// - radius
+// - flex
+// - scroll
+
+
+// Animations
+// Browser support:IE10+
+.animation(@animation, ...) {
+    @animations: ~`(function() { var args = "@{arguments}".replace(/[[\]]/g, ""); if(!args.match(/[^,]\s+[^,]/)) { args = args.replace(/,(?=[^()]*\))/g, "%est%").replace(/,/g, "").replace(/%est%/g, ","); } return args;})()`;
+    -webkit-animation: @animations;
+       -moz-animation: @animations;
+         -o-animation: @animations;
+            animation: @animations;
+}
+.animation-name(@name: none, ...) {
+    @names: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    -webkit-animation-name: @names;
+       -moz-animation-name: @names;
+         -o-animation-name: @names;
+            animation-name: @names;
+}
+.animation-duration(@duration: 0s, ...) {
+    @durations: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    -webkit-animation-duration: @durations;
+       -moz-animation-duration: @durations;
+         -o-animation-duration: @durations;
+            animation-duration: @durations;
+}
+.animation-timing-function(@timing-function: ease, ...) {
+    @timing-functions: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    -webkit-animation-timing-function: @timing-functions;
+       -moz-animation-timing-function: @timing-functions;
+         -o-animation-timing-function: @timing-functions;
+            animation-timing-function: @timing-functions;
+}
+.animation-delay(@delay: 0s, ...) {
+    @delays: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    -webkit-animation-delay: @delays;
+       -moz-animation-delay: @delays;
+         -o-animation-delay: @delays;
+            animation-delay: @delays;
+}
+.animation-iteration-count(@count: 1, ...) {
+    @counts: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    -webkit-animation-iteration-count: @counts;
+       -moz-animation-iteration-count: @counts;
+         -o-animation-iteration-count: @counts;
+            animation-iteration-count: @counts;
+}
+.animation-direction(@direction: normal, ...) {
+    @directions: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    -webkit-animation-direction: @directions;
+       -moz-animation-direction: @directions;
+         -o-animation-direction: @directions;
+            animation-direction: @directions;
+}
+.animation-play-state(@state: running, ...){
+    @states: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    -webkit-animation-play-state: @states;
+       -moz-animation-play-state: @states;
+         -o-animation-play-state: @states;
+            animation-play-state: @states;
+}
+.animation-fill-mode(@mode: none, ...) {
+    @modes: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    -webkit-animation-fill-mode: @modes;
+       -moz-animation-fill-mode: @modes;
+         -o-animation-fill-mode: @modes;
+            animation-fill-mode: @modes;
+}
+
+// shadows
+// Browser support:IE9+
+.box-shadow(@shadow: @default-box-shadow, ...){
+    @shadows: ~`(function() { 
+        var args = "@{arguments}".replace(/[[\]]/g, ""); 
+        if(!args.match(/[^,]\s+[^,]/)) { 
+            args = args.replace(/,(?=[^()]*\))/g, "%est%").replace(/,/g, "").replace(/%est%/g, ","); 
+        } return args;})()`;
+    -webkit-box-shadow: @shadows;
+       -moz-box-shadow: @shadows;
+            box-shadow: @shadows;
+}
+
+// Box sizing
+// Browser support:IE8+
+.box-sizing(@boxmodel) {
+  -webkit-box-sizing: @boxmodel;
+     -moz-box-sizing: @boxmodel;
+          box-sizing: @boxmodel;
+}
+
+// CSS3 Content Columns
+// Browser support:IE10+
+.content-columns(@column-count; @column-gap: @grid-gutter-width) {
+  -webkit-column-count: @column-count;
+     -moz-column-count: @column-count;
+          column-count: @column-count;
+  -webkit-column-gap: @column-gap;
+     -moz-column-gap: @column-gap;
+          column-gap: @column-gap;
+}
+
+// Placeholder text
+// Browser support:IE10+
+.placeholder(@color: default-input-placeholder-color) {
+  &::-moz-placeholder {
+    color: @color;
+    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+  }
+  &:-moz-placeholder {color: @color;} /* Firefox 18- */
+  &:-ms-input-placeholder { color: @color; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: @color; } // Safari and Chrome
+}
+.placeholder(@color: default-input-placeholder-color,@size:default-font-size) {
+  &::-moz-placeholder {
+    color: @color;
+    font-size: @size;
+    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+  }
+  &:-moz-placeholder {color: @color;font-size: @size;} /* Firefox 18- */
+  &:-ms-input-placeholder { color: @color; font-size: @size;} // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: @color;font-size: @size; } // Safari and Chrome
+}
+
+// Transformations
+.transform(...){
+    -webkit-transform: @arguments;
+       -moz-transform: @arguments;
+        -ms-transform: @arguments;
+         -o-transform: @arguments;
+            transform: @arguments;
+}
+.transform-style(@style){
+    -webkit-transform-style: @style;
+       -moz-transform-style: @style;
+            transform-style: @style;
+}
+.transform-origin(@origin){
+    -webkit-transform-origin: @origin;
+       -moz-transform-origin: @origin;
+        -ms-transform-origin: @origin;
+         -o-transform-origin: @origin;
+            transform-origin: @origin;
+}
+.transform-single(@transform-function, @rest...) {
+    @args: ~`"@{rest}".replace(/[\[\]]/g, "")`;
+        -webkit-transform: ~`"@{transform-function}(@{args})"`;
+           -moz-transform: ~`"@{transform-function}(@{args})"`;
+            -ms-transform: ~`"@{transform-function}(@{args})"`;
+             -o-transform: ~`"@{transform-function}(@{args})"`;
+                transform: ~`"@{transform-function}(@{args})"`;
+}
+//------------ Backface visibility ------------
+.backface-visibility(@visibility){
+  -webkit-backface-visibility: @visibility;
+     -moz-backface-visibility: @visibility;
+          backface-visibility: @visibility;
+}
+//---------2D transform functions----------
+// Browser support:IE9+
+.matrix(@a, @b, @c, @d, @tx, @ty) {
+    .transform-single(matrix, @arguments);
+}
+
+.translate(@tx) {
+    .transform-single(translate, @arguments);
+}
+.translate(@tx, @ty) {
+    .transform-single(translate, @arguments);
+}
+
+.translateX(@tx) {
+    .transform-single(translateX, @arguments);
+}
+
+.translateY(@ty) {
+    .transform-single(translateY, @arguments);
+}
+
+.scale(@sx) {
+    .transform-single(scale, @arguments);
+}
+.scale(@sx, @sy) {
+    .transform-single(scale, @arguments);
+}
+
+.scaleX(@sx) {
+    .transform-single(scaleX, @arguments);
+}
+
+.scaleY(@sy) {
+    .transform-single(scaleY, @arguments);
+}
+
+.rotate(@angle) {
+    .transform-single(rotate, @arguments);
+}
+.rotateX(@degrees) {
+    .transform-single(rotateX, @arguments);
+}
+.rotateY(@degrees) {
+    .transform-single(rotateY, @arguments);
+}
+
+.skew(@ax) {
+    .transform-single(skew, @arguments);
+}
+.skew(@ax, @ay) {
+    .transform-single(skew, @arguments);
+}
+
+.skewX(@ax) {
+    .transform-single(skewX, @arguments);
+}
+
+.skewY(@ay) {
+    .transform-single(skewY, @arguments);
+}
+//--------3D transform  functions---------
+// Browser support:IE10+
+.matrix3d(@a1, @b1, @c1, @d1, @a2, @b2, @c2, @d2,
+           @a3, @b3, @c3, @d3, @a4, @b4, @c4, @d4) {
+    .transform-single(matrix3d, @arguments);
+}
+
+.translate3d(@tx, @ty, @tz) {
+    .transform-single(translate3d, @arguments);
+}
+
+.translateZ(@tz) {
+    .transform-single(translateZ, @arguments);
+}
+
+.scale3d(@sx, @sy, @sz) {
+    .transform-single(scale3d, @arguments);
+}
+
+.scaleZ(@sz) {
+    .transform-single(scaleZ, @arguments);
+}
+
+.rotate3d(@x, @y, @z, @angle) {
+    .transform-single(rotate3d, @arguments);
+}
+
+.rotateX(@angle) {
+    .transform-single(rotateX, @arguments);
+}
+
+.rotateY(@angle) {
+    .transform-single(rotateY, @arguments);
+}
+
+.rotateZ(@angle) {
+    .transform-single(rotateZ, @arguments);
+}
+
+.perspective(@d) {
+    .transform-single(perspective, @d);
+}
+.perspective-origin(@perspective) {
+  -webkit-perspective-origin: @perspective;
+     -moz-perspective-origin: @perspective;
+          perspective-origin: @perspective;
+}
+
+// Transitions
+// Browser support:IE10+
+.transition(@transition, ...) {
+    @transitions: ~`(function() { var args = "@{arguments}".replace(/[[\]]/g, ""); if(!args.match(/[^,]\s+[^,]/)) { args = args.replace(/,(?=[^()]*\))/g, "%est%").replace(/,/g, "").replace(/%est%/g, ","); } return args;})()`;
+    @webkit-transitions: ~`"@{transitions}".replace(/(transform|perspective|border(?:-\w+)*?-radius|box-shadow)/g, "-webkit-$1")`;
+    @moz-transitions: ~`"@{transitions}".replace(/(transform|perspective|border(?:-\w+)*?-radius|box-shadow)/g, "-moz-$1")`;
+    @o-transitions: ~`"@{transitions}".replace(/(transform|perspective|border(?:-\w+)*?-radius|box-shadow)/g, "-o-$1")`;
+    -webkit-transition: @webkit-transitions;
+       -moz-transition: @moz-transitions;
+         -o-transition: @o-transitions;
+            transition: @transitions;
+}
+.transition-property(@property: all, ...) {
+    @properties: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    @webkit-properties: ~`"@{properties}".replace(/(transform|perspective|border(?:-\w+)*?-radius|box-shadow)/g, "-webkit-$1")`;
+    @moz-properties: ~`"@{properties}".replace(/(transform|perspective|border(?:-\w+)*?-radius|box-shadow)/g, "-moz-$1")`;
+    @o-properties: ~`"@{properties}".replace(/(transform|perspective|border(?:-\w+)*?-radius|box-shadow)/g, "-o-$1")`;
+    -webkit-transition-property: @webkit-properties;
+       -moz-transition-property: @moz-properties;
+         -o-transition-property: @o-properties;
+            transition-property: @properties;
+}
+.transition-delay(@delay: 0s, ...) {
+    @delays: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    -webkit-transition-delay: @delays;
+       -moz-transition-delay: @delays;
+         -o-transition-delay: @delays;
+            transition-delay: @delays;
+}
+.transition-duration(@duration: 0s, ...) {
+    @durations: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    -webkit-transition-duration: @durations;
+       -moz-transition-duration: @durations;
+         -o-transition-duration: @durations;
+            transition-duration: @durations;
+}
+.transition-timing-function(@timing-function: ease, ...) {
+    @timing-functions: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    -webkit-transition-timing-function: @timing-functions;
+       -moz-transition-timing-function: @timing-functions;
+         -o-transition-timing-function: @timing-functions;
+            transition-timing-function: @timing-functions;
+}
+.transition-transform(@transition) {
+  -webkit-transition: -webkit-transform @transition;
+     -moz-transition: -moz-transform @transition;
+       -o-transition: -o-transform @transition;
+          transition: transform @transition;
+}
+
+
+// User select
+// Browser support:IE10+
+// For selecting text on the page
+.user-select(@select) {
+  -webkit-user-select: @select;
+     -moz-user-select: @select;
+      -ms-user-select: @select; // IE10+
+          user-select: @select;
+}
+
+// Radius
+// Browser support:IE9+
+.border-radius(@radius: @default-border-radius){
+    -webkit-border-radius: @radius;
+       -moz-border-radius: @radius;
+            border-radius: @radius;
+}
+// top left
+.border-top-left-radius(@radius) when not (@use-autoprefixer) {
+    -webkit-border-top-left-radius: @radius;
+        -moz-border-radius-topleft: @radius;
+            border-top-left-radius: @radius;
+}
+.border-top-left-radius(@radius) when (@use-autoprefixer) {
+    border-top-left-radius: @radius;
+}
+.border-top-left-radius(@radius-x, @radius-y) {
+    .border-top-left-radius(@radius-x ~"/" @radius-y);
+}
+
+// top right
+.border-top-right-radius(@radius) when not (@use-autoprefixer) {
+    -webkit-border-top-right-radius: @radius;
+        -moz-border-radius-topright: @radius;
+            border-top-right-radius: @radius;
+}
+.border-top-right-radius(@radius) when (@use-autoprefixer) {
+    border-top-right-radius: @radius;
+}
+.border-top-right-radius(@radius-x, @radius-y) {
+    .border-top-right-radius(@radius-x ~"/" @radius-y)
+}
+
+// bottom right
+.border-bottom-right-radius(@radius) when not (@use-autoprefixer) {
+    -webkit-border-bottom-right-radius: @radius;
+        -moz-border-radius-bottomright: @radius;
+            border-bottom-right-radius: @radius;
+}
+.border-bottom-right-radius(@radius) when (@use-autoprefixer) {
+    border-bottom-right-radius: @radius;
+}
+.border-bottom-right-radius(@radius-x, @radius-y) {
+    .border-bottom-right-radius(@radius-x ~"/" @radius-y)
+}
+
+// bottom left
+.border-bottom-left-radius(@radius) when not (@use-autoprefixer) {
+    -webkit-border-bottom-left-radius: @radius;
+        -moz-border-radius-bottomleft: @radius;
+            border-bottom-left-radius: @radius;
+}
+.border-bottom-left-radius(@radius) when (@use-autoprefixer) {
+    border-bottom-left-radius: @radius;
+}
+.border-bottom-left-radius(@radius-x, @radius-y) {
+    .border-bottom-left-radius(@radius-x ~"/" @radius-y);
+}
+
+// top
+.border-top-radius(@radius) {
+    .border-top-left-radius(@radius);
+    .border-top-right-radius(@radius);
+}
+.border-top-radius(@radius-x, @radius-y) {
+    .border-top-radius(@radius-x ~"/" @radius-y);
+}
+
+// right
+.border-right-radius(@radius) {
+    .border-top-right-radius(@radius);
+    .border-bottom-right-radius(@radius);
+}
+.border-right-radius(@radius-x, @radius-y) {
+    .border-right-radius(@radius-x ~"/" @radius-y);
+}
+
+// bottom
+.border-bottom-radius(@radius) {
+    .border-bottom-right-radius(@radius);
+    .border-bottom-left-radius(@radius);
+}
+.border-bottom-radius(@radius-x, @radius-y) {
+    .border-bottom-radius(@radius-x ~"/" @radius-y);
+}
+
+// left
+.border-left-radius(@radius) {
+    .border-top-left-radius(@radius);
+    .border-bottom-left-radius(@radius);
+}
+.border-left-radius(@radius-x, @radius-y) {
+    .border-left-radius(@radius-x ~"/" @radius-y);
+}
+
+// Flex
+// Browser support:IE10+
+.display-flex(){  
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+.flex(@flex){         
+//  /* for uc */
+-webkit-box-flex: @flex;      
+   -moz-box-flex: @flex;         
+        -ms-flex: @flex;  
+    -webkit-flex: @flex;          
+            flex: @flex;     
+}
+.flex-grow(@flex){
+    -webkit-flex-grow: @flex;
+    -ms-flex-positive: @flex;
+            flex-grow: @flex;
+}
+.flex-shrink(@flex){
+    -webkit-flex-shrink: @flex;
+      -ms-flex-negative: @flex;
+            flex-shrink: @flex;
+}
+.flex-basis(@size){
+    -ms-flex-preferred-size: @size;
+         -webkit-flex-basis: @size;
+                 flex-basis: @size;
+}
+.flex-direction(@direction){
+    @dir: ~`"@{direction}".replace(/[\[\],]/g, "")`;
+    @column:~`/^(?:column|column-reverse)(?:\s+(?:column|column-reverse))?$/.test("@{dir}") ? "true": "false"`;
+    .output() when (@column) {
+//  /* for uc */
+        -webkit-box-orient: vertical;
+           -moz-box-orient: vertical;
+                box-orient: vertical;
+    }
+    .output();
+    -webkit-flex-direction: @direction;
+        -ms-flex-direction: @direction;
+            flex-direction: @direction;
+}
+.flex-wrap(@wrap){
+    -webkit-flex-wrap: @wrap;
+        -ms-flex-wrap: @wrap;
+            flex-wrap: @wrap;
+}
+.flex-flow(@flow){
+    -webkit-flex-flow: @flow;
+        -ms-flex-flow: @flow;
+            flex-flow: @flow;
+}
+.order(@order){
+    -ms-flex-order: @order;
+     -webkit-order: @order;
+             order: @order;
+}
+.justify-content(@align){
+    @flex-pack: ~`"@{align}".replace(/flex-/ig, "").replace(/space-between/ig, "justify").replace(/space-around/ig, "distribute")`;
+    -ms-flex-pack: @flex-pack;
+    -webkit-justify-content: @align;
+            justify-content: @align;
+}
+.align-items(@align){
+    @flex-align: ~`"@{align}".replace(/flex-/ig, "")`;
+//  /* for uc */
+      -webkit-box-align: @align;
+         -ms-flex-align: @flex-align;
+    -webkit-align-items: @align;
+            align-items: @align;
+}
+.align-self(@align){
+    @flex-align: ~`"@{align}".replace(/flex-/ig, "")`;
+    -ms-flex-item-align: @flex-align;
+     -webkit-align-self: @align;
+             align-self: @align;
+}
+.align-content(@align){
+    @flex-line-pack: ~`"@{align}".replace(/flex-/ig, "").replace(/space-between/ig, "justify").replace(/space-around/ig, "distribute")`;
+    -ms-flex-line-pack: @flex-line-pack;
+    -webkit-align-content: @align;
+            align-content: @align;
+}
+.webkit-scrollbar(@x,@y){
+//  ::-webkit-scrollbar        滚动条整体部分，其中的属性有width,height,background,border（就和一个块级元素一样）等。
+//  ::-webkit-scrollbar-button      滚动条两端的按钮。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果。
+//  ::-webkit-scrollbar-track         外层轨道。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果。
+//  ::-webkit-scrollbar-track-piece        内层轨道，滚动条中间部分（除去）。
+//  ::-webkit-scrollbar-thumb               滚动条里面可以拖动的那部分
+//  ::-webkit-scrollbar-corner               边角，及两个滚动条的交汇处
+//  ::-webkit-resizer                       定义右下角拖动块的样式, 两个滚动条的交汇处上用于通过拖动调整元素大小的小控件
+    &::-webkit-scrollbar{.size(@x,@y)}
+    &::-webkit-scrollbar-button{background-color:#FF7677;}
+    &::-webkit-scrollbar-track{ background:#FF66D5;}
+    &::-webkit-scrollbar-track-piece{background:#ddd;}
+    &::-webkit-scrollbar-thumb{background:#000;border-radius:4px;}
+    &::-webkit-scrollbar-corner{background:#fff;}
+    &::-webkit-resizer{background:#FF0BEE;}
+}

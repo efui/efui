@@ -1,0 +1,152 @@
+
+		<link href="assets/css/app-login.min.css" rel="stylesheet">
+		<header id="header">
+		</header>
+		<article class="content_w login-fix">
+			<div class="head-top head-fixed mt40 al-c">
+				<a href="javascript:history.go(-1);"><i class="i-back"></i></a>
+				<span class="login-ms"><b class="current">手机号登录</b><b>账号登录</b></span>
+			</div>
+			<section class="login-con mt84">
+				<div class="sub-form">
+					<div class="login-panel">
+						<div class="form-input clearfix">
+							<div class="input-group">
+								<div class="del_touch"><span class="del-btn i-input-op"></span></div>
+								<input class="f-i-text i-text-block" placeholder="请输入手机号" />
+							</div>
+							<div class="password-tab mt">
+								<span class="sub-nav active">客户密码</span>
+								<span class="sub-nav">动态密码</span>
+							</div>
+							<div class="input-group fl-l mt password-panel">
+								<div class="del_touch"><span class="i-psw i-psw-show i-input-op"></span></div>
+								<input style="display:none;" type="password" id="passwordRaw" placeholder="请输入密码" class="f-i-text i-text-block" onkeyup="onchangePasswordRaw(this,'passwordRaw2')" />
+								<input style="display:block;" type="text" id="passwordRaw2" placeholder="请输入密码" class="f-i-text i-text-block" onkeyup="onchangePasswordRaw(this,'passwordRaw')" />				
+							</div>
+							<div class="input-group fl-l mt password-panel" style="display: none;">
+								<div class="del_touch get-dt-code">
+									<input type="button" class="get-code-txt" onclick="settime(this)" value="获取动态密码" />
+									<span class="i-input-op">&nbsp;</span>
+								</div>
+								<input placeholder="请输入动态密码" class="f-i-text i-text-block" />
+							</div>
+						</div>
+					</div>
+					<div class="login-panel" style="display: none;">
+						<div class="form-input clearfix">
+							<div class="input-group">
+								<div class="del_touch"><span class="del-btn i-input-op"></span></div>
+								<input class="f-i-text i-text-block" placeholder="请输入手机号" />
+							</div>
+							<div class="input-group mt">
+								<div class="del_touch"><span class="i-psw i-psw-show i-input-op"></span></div>
+								<input style="display:none;" type="password" id="npasswordRaw" placeholder="请输入密码" class="f-i-text i-text-block" onkeyup="onchangePasswordRaw(this,'npasswordRaw2')" />
+								<input style="display:block;" type="text" id="npasswordRaw2" placeholder="请输入密码" class="f-i-text i-text-block" onkeyup="onchangePasswordRaw(this,'npasswordRaw')" />				
+							</div>
+							<div class="input-group mt">
+								<div class="del_touch enter-v-code">
+									<img src="img/v-code.png" class="v-code" />
+									<span class="i-input-op">&nbsp;</span>
+								</div>
+								<input class="f-i-text i-text-block" placeholder="请输入验证码" />
+							</div>
+						</div>
+					</div>
+					<div class="feedback_bar clearfix">
+	                    <span class="fl-l checkbox-cm">
+	                        <input type="checkbox" id="autoLogin" checked="checked" class="auto-login"><label for="autoLogin">下次自动登录</label>
+	                    </span>
+	                    <span class="fl-r forget_psw">
+	                        <a href="">忘记密码？</a>
+	                        <a href="" style="display: none;">未收到动态密码？</a>
+	                    </span>
+	                </div>
+	                <div class="error-bar dn">
+	                	<i class="i-warn f-notification"></i><span class="tips-txt">呀~ 手机号或密码不对哦，请重新输入</span>
+	                </div>
+	                <div class="login-bt-fix">
+						<div class="plrall">
+							<button class="submit-btn login-btn-grey">登录</button>
+						</div>
+						<div class="login-fttxt al-c"><a href="">开立账户</a>，可以获得更多直播间的专享福利</div>
+	                </div>
+				</div>
+			</section>
+		</article>
+		
+		<script type="text/javascript">
+			$(function() {
+				$('body').on('input propertychange','.f-i-text',function(){
+	            	$('.error-bar').addClass('dn');
+					!this.value && $(this).parent().find('.i-input-op').hide();
+					!!this.value && $(this).parent().find('.i-input-op').show();
+					submitBtnShow();
+	            });
+	            //输入清空
+	            $('.del-btn').click(function(){
+	            	$(this).hide();
+	            	$('.submit-btn').addClass('login-btn-grey');
+	            	$('.error-bar').addClass('dn');
+	            	var _obj = $(this).closest('.input-group');
+	            	_obj.find('.f-i-text').val(null);
+	            });
+	            //密码隐藏显示切换
+	            $('.i-psw').click(function(){
+	            	$(this).toggleClass('i-psw-show').toggleClass('i-psw-hide');
+	            	var _obj = $(this).closest('.input-group');
+	            	_obj.find('.f-i-text').toggle();
+	            });
+	            //提交操作
+	            $('body').on('click','.submit-btn:not(.login-btn-grey)',function(){
+	            	var _tips1 = "呀~ 手机号或密码不对哦，请重新输入";
+	            	var _tips2 = "呀~ 手机号不对哦，请重新输入";
+	            	var _tips = $('.get-dt-code').parent().is(':visible')?_tips2:_tips1;
+	            	$('.error-bar').removeClass('dn').find('.tips-txt').text(_tips);
+	            });
+	            //登录切换
+	            $('.head-top .login-ms b').click(function(){
+	            	var _index = $(this).index();
+	            	$('.error-bar').addClass('dn');
+	            	$(this).addClass('current').siblings().removeClass('current');
+	            	$('.login-panel').eq(_index).show().siblings('.login-panel').hide();
+	            	_index && $('.forget_psw a').eq(0).show().siblings().hide();
+	            	!_index && $('.forget_psw a').eq($('.sub-nav.active').index()).show().siblings().hide();
+	            	submitBtnShow();	            	
+	            });
+	            //登录密码切换
+	            $('.password-tab .sub-nav').click(function(){
+	            	var _index = $(this).index();
+	            	$('.error-bar').addClass('dn');
+	            	$(this).addClass('active').siblings().removeClass('active');
+	            	$('.password-panel').eq(_index).show().siblings('.password-panel').hide();
+	            	$('.forget_psw a').eq(_index).show().siblings().hide();
+	            	submitBtnShow();	            	
+	            })
+			});	
+			function onchangePasswordRaw(param,param2){
+				$("#"+param2).val(param.value);
+			}
+			function submitBtnShow(){
+				var _inputlen = $('.input-group:visible .i-input-op').length;
+				var _inputvlen = $('.input-group:visible .i-input-op:visible').length;
+				(_inputvlen===_inputlen) && $('.submit-btn').removeClass('login-btn-grey');
+				!(_inputvlen===_inputlen) && $('.submit-btn').addClass('login-btn-grey');
+			}
+            //获取验证码
+            var countdown =119;
+			function settime(obj) { 
+			    if (countdown == 0) { 
+			        obj.removeAttribute("disabled");    
+			        obj.value="获取动态密码"; 
+			        countdown = 119; 
+			        return;
+			    } else { 
+			        obj.setAttribute("disabled", true); 
+			        obj.value="重新获取(" + countdown + ")"; 
+			        countdown--; 
+			    } 
+				setTimeout(function() {settime(obj)},1000) 
+			}
+  
+		</script>

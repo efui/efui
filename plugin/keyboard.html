@@ -1,0 +1,48 @@
+<h3 class="mb10">数字键盘底部滑出</h3>
+<div class="example-demo">
+	<div class="example-visualize">
+		<div class="panel-plugin">
+		<div class="keyboard">
+			<span class="enter-price i-text" id="enter-price"><span>请输入金额</span></span>
+			<div class="keyboard-block">
+				<div class="k-table">
+					<table id="num-keyborder">
+						<tr>
+							<td><button>100</button></td>
+							<td><button>1</button></td>
+							<td><button>2</button></td>
+							<td><button>3</button></td>
+							<td><button class="f-cross del-btn"></button></td>
+						</tr>
+						<tr>
+							<td><button>200</button></td>
+							<td><button>4</button></td>
+							<td><button>5</button></td>
+							<td><button>6</button></td>
+							<td><button>.</button></td>
+						</tr>
+						<tr>
+							<td><button>300</button></td>
+							<td><button>7</button></td>
+							<td><button>8</button></td>
+							<td><button>9</button></td>
+							<td rowspan="2"><button class="pay-btn">完成</button></td>
+						</tr>
+						<tr>
+							<td><button>500</button></td>
+							<td><button class="close-btn f-arrow_down"></button></td>
+							<td><button>0</button></td>
+							<td><button></button></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>
+<script>
+require(['keyboard'],function(){
+	$('.keyboard').Keyboard();
+});
+</script>

@@ -1,0 +1,369 @@
+<ol>
+	<li>
+		<h3>编程规范</h3>
+		<ol>
+			<li>
+				<h5>JavaScript文件</h5>
+				<ul>
+					<li>JavaScript程序应独立保存在后缀名为.js的文件中。</li>
+					<li>JavaScript代码不应该被包含在HTML文件中,除非这是段特定只属于此部分的代码。在HTML中的JavaScript代码会明显增加文件大小,而且也不能对其进行缓存和压缩。</li>
+					<li>应尽量放到body的后面。这样可以减少因为载入script而造成其他页面内容载入也被延迟的问题。也没有必要使用language或者type属性。MIME类型是由服务器而非script tag来决定的。
+						<div class="html">
+							<pre>&lt;script src= filename.js></pre>
+						</div>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h5>缩进</h5>
+				<ul>
+					<li>缩进的单位为四个空格。</li>
+					<li>避免使用Tab键来缩进(即使现在已经是21世纪了),也始终没有个统一的Tab长短标准。</li>
+					<li>虽然使用空格会增加文件的大小,但在局域网中几乎可以忽略,且在最小化过程中也可被消除掉。</li>
+				</ul>
+			</li>
+			<li>
+				<h5>注释</h5>
+				<ul>
+					<li>重点在解释那些不容易立即明白的逻辑上</li>
+					<li>使用单行注释。块注释用于注释正式文档和无用代码。</li>
+				</ul>
+			</li>
+			<li>
+				<h5>变量声明</h5>
+				<ul>
+					<li>所有的变量必须在使用前进行声明。JavaScript并不强制必须这么做,但是这么做可以让程序易于阅读,且也容易发现那些没声明的变量(它们会被编译成 全局变量)。</li>
+					<li>将var语句放在函数的首部。尽量减少全局变量的使用</li>
+					<li>最好把每个变量的声明语句单独放到一行,并加上注释说明。所有变量按照字母排序。</li>
+				</ul>
+			</li>
+			<li>
+				<h5>函数声明</h5>
+				<ul>
+					<li>所有的函数在使用前进行声明。</li>
+					<li>内函数的声明跟在var语句的后面。这样可以帮助判断哪些变量是在函数范围内的。
+						<div class="html">
+							<pre>function outer(c, d) {
+        var e = c * d;
+
+        function inner(a, b) {
+            return (e * a) + b;
+        }
+
+        return inner(0, 1);
+}</pre>
+						</div>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h5>命名</h5>
+				<ul>
+					<li>变量名应由26个大小写字母(A..Z,a..z),10个数字(0..9),和_(下划线)组成。</li>
+					<li>大多数的变量名和方法命应以小写字母开头。</li>
+					<li>不要把_(下划线)作为变量名的第一个字符。</li>
+					<li>必须与new共同使用的构造函数名应以大写字母开头。当new被省略时JavaScript不会有任何编译错误或运行错误抛出。忘记加new时会让不好的事情发生(比如被当成一般的函数),所以大写构造函数名是我们来尽量避免这种情况发生的唯一办法。</li>
+					<li>全局变量应该全部大写。(JavaScript没有宏或者常量,所以不会因此造成误会)</li>
+				</ul>
+			</li>
+			<li>
+				<h5>语句</h5>
+				<ul>
+					<li>
+						简单语句：每一行最多只包含一条语句。把";"放到每条简单语句的结尾处。
+					</li>
+					<li>
+						复合语句：复合语句是被包含在"{ }"的语句序列。
+					</li>
+					<li>
+						return 语句：
+						<ul>
+							<li>不要使用( )(括号)来括住返回值；</li>
+							<li>如果返回表达式,则表达式应与return 关键字在同一行,以避免误加分号错误。</li>
+						</ul>
+					</li>
+					<li>
+						if 语句：
+						<div class="html">
+							<pre>if (condition){
+	statements;
+}
+
+if (condition) {
+	statements;
+} else {
+	statements;
+}
+
+if (condition) {
+ 	statements;
+} else if (condition) {
+	statements;
+} else {
+	statements;
+}</pre>
+						</div>						
+					</li>
+					<li>
+						for 语句：
+						<div class="html">
+							<pre>for (initialization;condition; update) {
+	statements;
+}
+
+for (variable in object)if (filter) {
+	statements;
+}</pre>
+						</div>
+						<ul>
+							<li>第一种形式的循环用于已经知道相关参数的数组循环。</li>
+							<li>第二种形式应用于对象中。object原型中的成员将会被包含在迭代器中。通过预先定义hasOwnProperty方法来区分真正的object成员是个不错方法:
+								<div class="html">
+									<pre>for (variablein object) if (object.hasOwnProperty(variable)){
+	statements;
+}</pre>
+								</div>
+							</li>
+						</ul>
+					</li>
+					<li>
+						while 语句：
+						<div class="html">
+							<pre>while (condition){
+	statements;
+}</pre>
+						</div>
+					</li>
+					<li>
+						do 语句：
+						<div class="html">
+							<pre>do {
+	statements;
+} while (condition);</pre>
+						</div>
+						<ul>
+							<li>不像别的复合语句,do语句总是以;(分号)结尾。</li>
+						</ul>
+					</li>
+					<li>
+						switch 语句：
+						<div class="html">
+							<pre>switch (expression){
+case expression:
+    statements;
+default:
+    statements;
+}</pre>
+						</div>
+						<ul>
+							<li>每个 case与switch对齐。这可避免过分缩进。</li>
+							<li>每一组statements(除了default)应以 break,return,或者throw结尾。不要让它顺次往下执行。</li>
+						</ul>
+					</li>
+					<li>
+						try 语句：
+						<div class="html">
+							<pre>try {
+	statements;
+} catch (variable){
+	statements;
+}
+
+try {
+    statements;
+} catch (variable){
+    statements;
+} finally {
+    statements;
+}</pre>
+						</div>
+					</li>
+					<li>
+						continue 语句：避免使用continue语句。它很容易使得程序的逻辑过程晦涩难懂。
+					</li>
+					<li>
+						空格：
+						<ul>
+							<li>跟在"("后面的关键字应被一个空格隔开</li>
+							<li>函数参数与"("之间不应该有空格。这能帮助区分关键字和函数调用。</li>
+							<li>所有的二元操作符,除了"." 和"("和 "["应用空格将其与操作数隔开。</li>
+							<li>一元操作符与其操作数之间不应有空格,除非操作符是个单词,比如typeof。</li>
+							<li>每个在控制部分,比如for 语句中的";"后须跟一个空格。</li>
+							<li>每个","后应跟一个空格。</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ol>
+	</li>
+	<li>
+		<h3>另外的建议</h3>
+		<ol>
+			<li>
+				<h5>{} 和[]</h5>
+				<ul>
+					<li>使用{}代替new Object()。使用[]代替new Array()。</li>
+					<li>当成员名是一组有序的数字时使用数组来保存数据。当成员名是无规律的字符串或其他时使用对象来保存数据。</li>
+				</ul>
+			</li>
+			<li>
+				<h5>","操作符</h5>
+				<ul>
+					<li>避免使用逗号操作符,除非在特定的for 语句的控制部分。</li>
+					<li>可用在对象定义,数组定义,var语句,和参数列表中的逗号分隔符。</li>
+				</ul>
+			</li>
+			<li>
+				<h5>作用域</h5>
+				在JavaScript中块没有域。只有函数有域。不要使用块,除非在复合语句中。
+				<ul>
+					<li>块级作用域：任何一对花括号（｛和｝）中的语句集都属于一个块，在这之中定义的所有变量在代码块外都是不可见的，我们称之为块级作用域。</li>
+					<li>函数作用域：定义在函数中的参数和变量在函数外部是不可见的。</li>
+					<li>大多数类C语言都拥有块级作用域，JS却没有
+						<div class="html">
+							<pre>//C语言 
+#include &lt;stdio.h> 
+void main() { 
+	int i=2; 
+	i--; 
+	if(i) { 
+		int j=3; 
+	} 
+	printf("%d/n",j); 
+}
+//运行这段代码，会出现“use an undefined variable:j”的错误。可以看到，C语言拥有块级作用域，因为j是在if的语句块中定义的，因此，它在块外是无法访问的。</pre>
+</div>
+而JS是如何表现的呢?
+<div class="html">
+	<pre>functin test(){ 
+	for(var i=0;i<3;i++){ 
+		
+	} 
+	alert(i); 
+} 
+test();
+//运行这段代码，弹出"3"，可见，在块外，块中定义的变量i仍然是可以访问的。也就是说，JS并不支持块级作用域，它只支持函数作用域，而且在一个函数中的任何位置定义的变量在该函数中的任何地方都是可见的。</pre>
+</div>
+那么我们该如何使JS拥有块级作用域呢？是否还记得，在一个函数中定义的变量，当这个函数调用完后，变量会被销毁，我们是否可以用这个特性来模拟出JS的块级作用域呢？
+<div class="html">
+	<pre>function test(){ 
+	(function (){ 
+		for(var i=0;i<4;i++){ 
+		} 
+	})(); 
+	alert(i); 
+} 
+test();
+//这时候再次运行，会弹出"i"未定义的错误，哈哈，实现了吧~~~这里，我们把for语句块放到了一个闭包之中，然后调用这个函数，当函数调用完毕，变量i自动销毁，因此，我们在块外便无法访问了。</pre>
+</div>
+在JS中，为了防止命名冲突，我们应该尽量避免使用全局变量和全局函数。那么，该如何避免呢？
+<div class="html">
+	<pre>//我们可以把要定义的所有内容放入到一个闭包之中
+(function (){ 
+//内容 
+})();
+//这时候，我们相当于给它们的外层添加了一个函数作用域，该作用域之外的程序是无法访问它们的。</pre>
+</div>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h5>赋值表达式</h5>
+				<ul>
+					<li>避免在if和while语句的条件部分进行赋值。
+						<div class="html">
+							<pre>var a;
+console.log(a=10);  // => 输出  10
+if(a=20){
+	console.log('ok');  
+}  // => 输出  ok</pre>
+<pre>var a;
+if(a=0){
+	console.log('ok');  
+}else{
+	console.log('shit');
+}  // => 输出  shit</pre>
+						</div>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h5>===和!==操作符</h5>
+				<ul>
+					<li>使用===和!==操作符会相对好点。==和!=操作符会进行类型强制转换。!= 在表达式两边的数据类型不一致时,会隐式转换为相同数据类型,然后对值进行比较</li>
+					<li>不要将==用于与错值比较( false,null,undefined,“”,0,NaN)
+						<ul>
+							<li>JavaScript中undefined==null，但undefined!==null，undefined与null转换成布尔值都是false 
+								<div class="html">
+									<pre>console.log(null == false);             // false
+console.log(undefined == false);        // false
+console.log(undefined === null);        // false
+console.log(undefined == null);         // true  </pre>
+								</div>
+							</li>
+							<li>
+								NaN==NaN返回false
+							</li>
+							<li>
+								对于类型不同的两个标量的比较，JS就有一套严格的规则：
+								<ol>
+									<li>ECMAScript规范中指出，a与b进行比较，如果a与b是Number,String,Boolean这三种类型中的一种， 
+并且a与b的类型不同，那么就将a与b都转换成数字再进行比较 
+								<div class="html">
+									<pre>console.log(1==true);//true转换成数字也是1
+console.log('1'==true);//将字符串'1'与true都转换成数字
+console.log('abc'==true);//虽然字符串'abc'转换成布尔值是true，但这里会返回false
+//因为'abc'转换成数字是NaN，而true转换成数字是1
+console.log(123=='123');//同理，true</pre>
+								</div></li>
+									<li>而如果a是Number,String,Boolean这三种类型中的一种，而b是一个复合对象时（Object,Array等） 
+则对b执行ToPrimitive操作（这步是JS解释器执行的） 
+									<div class="html">
+										<pre>var a="abc";
+var b={};
+console.log(a==b);
+//上面的一行代码在JS解析时将被解释成
+//a==ToPrimitive(b);</pre>
+									</div>
+									</li>
+								</ol>
+							</li>
+						</ul>
+						<h5>总结：</h5>
+						<ul class="red">
+							<li>undefined == null这可能是一种硬性规定</li>
+							<li>Number,Boolean,String,Undefined这几种基本类型混合比较时，会将其转换成数字再进行比较 </li>
+							<li>基本类型与复合对象进行比较时，会先将复合对象转换成基本类型（依次调用valueOf与toString方法）再进行比较</li>
+							<li>undefined被当成基本类型，undefined转换成数字是NaN，因此undefined与除null之外的其它类型值进行比较时始终返回false(注意NaN==NaN返回false)</li>
+							<li>null被当成复合对象，由于null没有valueOf与toString方法，因此和除了undefined之外的其它类型值进行比较时始终返回false</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h5>令人迷惑的加号和减号</h5>
+				<ul>
+					<li>小心在+后紧跟+或++。这种形式很容易让人迷惑。应插入括号以便于理解
+						<div class="html">
+							<pre>total = subtotal + +myInput.value;</pre>
+							<pre>total = subtotal + (+myInput.value);</pre>
+						</div>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h5>eval 是恶魔</h5>
+				<ul>
+					<li>eval是JavaScript中最容易被滥用的方法。避免使用它。</li>
+					<li>eval有别名。不要使用Function构造器。不要给setTimeout或者setInterval传递字符串参数。</li>
+				</ul>
+			</li>
+		</ol>
+	</li>
+</ol>
+<script type="text/javascript">
+console.log(null == false);             // false
+console.log(undefined == false);        // false
+console.log(undefined === null);        // false
+console.log(undefined == null);         // true  
+</script>

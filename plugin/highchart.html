@@ -1,0 +1,128 @@
+<div class="mlist">
+	<div class="mtit"><span>目录</span></div>
+	<div class="mcon">
+		<ol>
+			<li>
+				<a href="">曲线图</a>
+			</li>
+			<li>
+				<a href="">区域图</a>
+			</li>
+			<li>
+				<a href="">3D图</a>
+			</li>
+			<li>
+				<a href="">柱状图</a>
+			</li>
+			<li>
+				<a href="">饼图</a>
+			</li>
+			<li>
+				<a href="">散列图</a>
+			</li>
+			<li>
+				<a href="">动态更新</a>
+			</li>
+			<li>
+				<a href="">混合图</a>
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<ol>
+		<li>
+			<h3 class="mb10">折线图:</h3>
+			<div class="example-demo">
+				<div class="example-visualize">
+					<div id="container" style="min-width:300px;height:300px"></div>
+				</div>
+				<div class="html">
+					<pre><div id="container" style="min-width:300px;height:300px"></div></pre>
+					<pre></pre>
+				</div>
+			</div>
+			<div class="example-desc">
+				<div class="exm-t1"><b>初始化：</b>引入highcharts.js，再配置其他参数。</div>				
+			</div>
+		</li>
+	</ol>
+</div>
+
+<script type="text/javascript">
+require(['highcharts'],function(){
+	$('#container').highcharts({
+			colors: ['#888', '#ccc'],
+			title: {
+				text: '七日年华收益率(%)',
+				x: 20, 
+				style: {
+	                fontSize: '12px'
+	            },
+				align:  "left"
+			},
+			xAxis: {
+				title:{
+					text:"x轴"
+				},
+				plotLines: [{
+					value: 0,
+					width: 2,
+					color: 'transprent'
+				}],
+				gridLineColor: 'red',
+				gridLineWidth:2,
+				lineColor:"#5687D4",
+				lineWidth:2,
+				tickWidth:0,
+            	tickmarkPlacement: 'on',
+				categories: ['1', '20', '40', '60']
+			},
+			yAxis: {
+				title: {
+					text: 'y轴'
+				},
+				categories: ['1', '20', '40', '60','80'],
+				plotLines: [{
+					value: 0,
+					width: 2,
+					color: 'transprent'
+				}],
+				gridLineColor: 'red',
+				gridLineWidth:2,
+				lineColor:"#5687D4",
+				lineWidth:2
+			},
+			chart:{
+//				shadow: true,
+//				plotBorderWidth:1,
+//				backgroundColor: '#fff'
+			},
+			plotOptions:{
+				line:{
+					lineWidth:5,
+					marker:{
+						lineWidth:0,
+						radius:0
+					}
+				}
+			},
+			tooltip: {
+				valueSuffix: '°C'
+			},
+			credits:{
+				enabled:false
+			},
+			legend: {
+				enabled:false
+			},
+			series: [{
+				name: 'Tokyo',
+				data: [2.5, 2.7, 3.5,2.9]
+			}, {
+				name: 'London',
+				data: [0, 3.2, 3,3.9]
+			}]
+		});
+});
+</script>

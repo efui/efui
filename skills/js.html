@@ -1,0 +1,1003 @@
+<div class="mlist">
+	<div class="mtit"><span>目录</span></div>
+	<div class="mcon">
+		<ol>
+			<li>
+				<a href="">立即执行函数</a>
+			</li>
+			<li>
+				<a href="">namespace命名空间</a>
+			</li>
+			<li>
+				<a href="">两种继承方式call和apply</a>
+			</li>
+			<li>
+				<a href="">Touch与Mouse事件</a>
+			</li>
+			<li>
+				<a href="">使定时器settimeout、setInterval能够执行带参数的函数</a>
+			</li>
+			<li>
+				<a href="">jquery中$(document).on的一些疑惑</a>
+			</li>
+			<li>
+				<a href="">JS类的封装及实现</a>
+			</li>
+			<li>
+				<a href="">JS继承</a>
+			</li>
+			<li>
+				<a href="">JS赋值运算</a>
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">一、立即执行函数 </h3>
+	<div class="example-demo">
+		<pre>(function(){…}) ()
+(function(){…} ())</pre>
+	</div>
+	<div class="example-desc">
+		<div class="exm-t1"><b>要理解立即执行函数，需要先理解一些函数的基本概念。</b></div>
+		<ul>
+			<li><b>函数声明</b>
+				<ul>
+					<li>函数声明：function fnName () {…};使用function关键字声明一个函数，再指定一个函数名，叫函数声明。</li>
+				</ul>
+			</li>
+			<li><b>函数表达式</b>
+				<ul>
+					<li>函数表达式 var fnName = function () {…};使用function关键字声明一个函数，但未给函数命名，最后将匿名函数赋予一个变量，叫函数表达式，这是最常见的函数表达式语法形式。</li>
+				</ul>
+			</li>
+			<li><b>匿名函数</b>
+				<ul>
+					<li>匿名函数：function () {}; 使用function关键字声明一个函数，但未给函数命名，所以叫匿名函数，匿名函数属于函数表达式，匿名函数有很多作用，赋予一个变量则创建函数，赋予一个事件则成为事件处理程序或创建闭包等等。</li>
+				</ul>
+			</li>
+		</ul>
+		<div class="exm-t2"><b>函数声明和函数表达式的不同之处：</b></div>
+		<ol>
+			<li>Javascript引擎在解析javascript代码时会“函数声明提升”（Function declaration Hoisting）当前执行环境（作用域）上的函数声明，而函数表达式必须等到Javascirtp引擎执行到它所在行时，才会从上而下一行一行地解析函数表达式；</li>
+			<li>函数表达式后面可以加括号立即调用该函数，函数声明不可以，只能以fnName()形式调用。</li>
+			<li>函数调用可在函数声明之前，但是必须在函数表达式之后</li>
+		</ol>
+		<pre>var fnName=function(){
+    alert('Hello World');
+}();
+//函数表达式后面加括号，当javascript引擎解析到此处时能立即调用函数
+function fnName(){
+    alert('Hello World');
+}();
+//不会报错，但是javascript引擎只解析函数声明，忽略后面的括号，函数声明不会被调用
+function(){
+    console.log('Hello World');    
+}();
+//语法错误，虽然匿名函数属于函数表达式，但是未进行赋值操作，
+//所以javascript引擎将开头的function关键字当做函数声明，报错：要求需要一个函数名</pre>
+		<div class="exm-t2"><b>总结：</b></div>
+		<ol>
+			<li><span class="red">要在函数体后面加括号就能立即调用，则这个函数必须是函数表达式</span>，不能是函数声明；</li>
+			<li><span class="red">（）、！、+、-、=等运算符，都将函数声明转换成函数表达式</span>，消除了javascript引擎识别函数表达式和函数声明的歧义，告诉javascript引擎这是一个函数表达式，不是函数声明，可以在后面加括号，并立即执行函数的代码；</li>
+			<li><span class="red">加括号是最安全的做法</span>，因为！、+、-等运算符还会和函数的返回值进行运算，有时造成不必要的麻烦。</li>
+		</ol>
+		<pre>(function(a){
+    console.log(a);   //firebug输出123,使用（）运算符
+})(123);
+
+(function(a){
+    console.log(a);   //firebug输出1234，使用（）运算符
+}(1234));
+
+!function(a){
+    console.log(a);   //firebug输出12345,使用！运算符
+}(12345);
+
++function(a){
+    console.log(a);   //firebug输出123456,使用+运算符
+}(123456);
+
+-function(a){
+    console.log(a);   //firebug输出1234567,使用-运算符
+}(1234567);
+
+var fn=function(a){
+    console.log(a);   //firebug输出12345678，使用=运算符
+}(12345678)</pre>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">二、namespace命名空间 </h3>
+	<div class="example-demo">
+		<pre>/**
+* 创建全局对象MYAPP
+* @module MYAPP
+* @title MYAPP Global
+*/
+var MYAPP = MYAPP || {};
+
+/**
+* 返回指定的命名空间，如果命名空间不存在则创建命名空间。
+* 备注：命名时需小心，注意保留关键字，可能在一些浏览器无法使用。
+*
+* @method namespace
+* @param {String *} 至少需要创建一个命名空间
+* @return {Object} 最后一个命名空间创建的对象的引用
+*/
+MYAPP.namespace = function(str){
+    var parts = str.split("."),
+    parent = MYAPP,
+    i=0,
+    l=0;
+
+    if(parts[0]==="MYAPP"){
+        parts = parts.slice(1);
+    }
+    for(i=0,l=parts.length; i < l;i++){
+        if(typeof parent[parts[i]] === "undefined"){
+            parent[parts[i]] = {};
+        }
+        parent = parent[parts[i]];
+    }
+    return parent;
+}
+
+/**
+* bfun是Basic Functions Extended的缩写
+* 作用：包括数组、字符串等等数功能扩展
+*
+* @module bfun
+*/
+MYAPP.bfun = {
+    array:(function(){
+        return {
+            /**
+            * @method isArray 判断是否为数组
+            * @param {Array} 数组
+            * @return {Boolean} 真返回true，否则返回false
+            */
+            isArray: function(){
+                return Object.prototype.toString.call(arguments[0])  === '[object Array]'; 
+            },
+            /**
+            * @method inArray 检查值是否在数组中
+            * @param {value，Array} 值，数组
+            * @return {Boolean} 真返回true，否则返回undefined
+            */
+            inArray: function(val,arr){
+                for(var i=0,l=arr.length;i < l;i++){
+                    if(arr[i] === val){
+                        return true;
+                    }
+                }
+            }
+        }
+    })(),
+    string:(function(){
+        return {
+            /**
+            * @method trim 过滤字符串两边多余的空格
+            * @param {String} 字符串
+            * @return {String} 字符串
+            */
+            trim: function(){
+                return arguments[0].replace(/(^\s*)|(\s*$)/g, "");
+            },
+            /**
+            * @method ltrim 过滤字符串左边多余的空格
+            * @param {String} 字符串
+            * @return {String} 字符串
+            */
+            ltrim: function(){
+                return arguments[0].replace(/^s+/g, "");
+            },
+            /**
+            * @method rtrim 过滤字符串右边多余的空格
+            * @param {String} 字符串
+            * @return {String} 字符串
+            */
+            rtrim: function(){
+                return arguments[0].replace(/s+$/g, "");
+            }
+        }
+    })()
+}
+
+// 测试
+MYAPP.test = {
+    init: function(){
+        // 使用对应的模块先引用
+        var marray = MYAPP.namespace("MYAPP.bfun.array");
+        var mstring = MYAPP.namespace("MYAPP.bfun.string");
+
+        var arr =  ["a","b"];
+        var str = "   abc  ";
+
+        console.log("判断是否为数组：" + marray.isArray(arr));
+        console.log("值是否在数组中：" + marray.inArray("a",arr));
+        console.log("过滤左右空格：" + mstring.trim(str));
+    }
+}
+
+MYAPP.test.init();</pre>
+	</div>
+	<div class="example-desc">
+		<div class="exm-t2">命名空间有助于减少程序中所需要的全局变量的数量，并且同时有助于避免命名冲突或过长的名字前缀。当使用多个js库文件时，为了避免在调用时不同js库文件的同名函数的冲突，一般会使用命名空间来解决。</div>
+		<div class="exm-t2">使用命名空间的两点原则</div>
+		<ul>
+			<li>唯一性：
+				<ul>
+					<li>挑选一个独一无二的命名空间的名字（如Google Maps在所有的标识符中都添加了G前缀），<span class="red">注意js是大小写敏感的</span>。</li>
+				</ul>
+			</li>
+			<li>不共享：
+				<ul>
+					<li>不共享意味着什么都不共享；当你创建自己的$函数时你可能会与著名的库(如Prototype)中的$函数发生冲突而导致Prototype中的$无法使用，为了不与著名的一些库（jQuery、prototype）或者其他已有的一些函数冲突，使用匿名函数来实现代码的不共享。
+						<pre>(function($){
+     //code
+})(jQuery);</pre>这样定义了一个命名空间就不怕，js库有冲突</li>
+				</ul>
+			</li>
+		</ul>
+		<div class="exm-t2">参考一下jQuery源码结构：</div>
+		<pre>(function( window, undefined ) {
+   
+    var jQuery = (function() {
+       // 构建jQuery对象
+       var jQuery = function( selector, context ) {
+           return new jQuery.fn.init( selector, context, rootjQuery ); //构造函数
+       }
+   
+       // jQuery对象原型
+       jQuery.fn = jQuery.prototype = {
+           constructor: jQuery,
+           init: function( selector, context, rootjQuery ) {
+              // selector有以下7种分支情况：
+              // DOM元素
+              // body（优化）
+              // 字符串：HTML标签、HTML字符串、#id、选择器表达式
+              // 函数（作为ready回调函数）
+              // 最后返回伪数组
+           }
+       };
+   
+      //把jQuery的prototype赋值给init方法的prototype
+       jQuery.fn.init.prototype = jQuery.fn;
+   
+       // 合并内容到第一个参数中，后续大部分功能都通过该函数扩展
+       // 通过jQuery.fn.extend扩展的函数，大部分都会调用通过jQuery.extend扩展的同名函数
+       jQuery.extend = jQuery.fn.extend = function() {};
+      
+       // 在jQuery上扩展静态方法
+       jQuery.extend({
+           // ready bindReady
+           // isPlainObject isEmptyObject
+           // parseJSON parseXML
+           // globalEval
+           // each makeArray inArray merge grep map
+           // proxy
+           // access
+           // uaMatch
+           // sub
+           // browser
+       });
+
+       return jQuery;
+   
+    })();
+   
+    window.jQuery = window.$ = jQuery;
+})(window);</pre>
+		<ol>
+			<li>将window对象传入匿名函数，使匿名函数内部可以直接访问，防止匿名函数内部使用window对象的时候需要层层查找作用域链，最后才能找到window</li>
+			<li>没有一棍子打死，完全使用$，当出现$命名冲突的时候可以使用jQuery代替</li>
+			<li>定义jQuery.fn=jQuery.prototype，代码写起来方便了很多，也有利于压缩</li>
+			<li>没有使用elements属性，而是利用数组特性封装搜索结果集，在使用的时候更容易想到</li>
+			<li>定义each函数用于遍历结果集</li>
+			<li>提供extend函数用于向对象内部添加属性</li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">两种继承方式call和apply</h3>
+	<div class="example-demo">
+		<pre>Function.prototpe.apply(instance,args)  //args 数组
+Function.prototpe.call(instance,a1,a2)  //a1,a2 单个参数</pre>
+	</div>
+	<div class="example-desc">
+		<ol>
+			<li>定义：
+				<ul>
+					<li>apply:方法能劫持另外一个对象的方法，继承另外一个对象的属性
+						<ul>
+							<li>Function.apply(obj,args)方法能接收两个参数</li>
+							<li>obj：这个对象将代替Function类里this对象</li>
+							<li>args：这个是数组，它将作为参数传给Function（args-->arguments）</li>
+						</ul>
+					</li>
+					<li>call:和apply的意思一样,只不过是参数列表不一样
+						<ul>
+							<li>Function.call(obj,[param1[,param2[,…[,paramN]]]])</li>
+							<li>obj：这个对象将代替Function类里this对象</li>
+							<li>params：这个是一个参数列表</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>区别:
+				<ul>
+					<li>两者在作用上是相同的，但两者在参数上有区别的。</li>
+					<li>第一个参数都是需要调用的函数对象， call的第二个参数可以是任意类型，而apply的第二个参数必须是数组</li>
+				</ul>
+			</li>
+			<li>
+				妙用：
+				<ul>
+					<li>
+						<h5 class="mb10">call和apply可以用来改变函数中this的指向</h5>
+						<p>this表示当前对象，如果在全局范围内使用this，则指代当前页面对象window；如果在函数中使用this，则this指代什么是根据运行时此函数在什么对象上被调用。</p>
+						<p class="red">【注意】：函数中的this是在运行时决定的，而不是函数定义时。</p>
+						<div class="html">
+							<pre>function foo() {
+    console.log(this.fruit);
+}
+
+var fruit = "apple";
+var obj = {
+    fruit: "orange"
+};
+
+foo.apply(window); // "apple"
+foo.apply(obj); // "orange"</pre>
+						</div>
+					</li>
+					<li><h5 class="mb10">apply可以将数组作为参数传递</h5></li>
+				</ul>
+			</li>
+			<li>
+				拓展：
+				<ul>
+					<li>
+						<h5 class="mb10">this、constructor、prototype</h5>
+						<ul>
+							<li>this表示当前<b>对象</b></li>
+							<li>constructor始终指向创建当前对象的<b>构造函数</b>
+								<div class="html">
+									<pre>var arr = [1, 56, 34, 12];
+console.log(arr.constructor === Array); // true
+
+// 等价于 var foo = new Function();
+var Foo = function() { };
+console.log(Foo.constructor === Function); // true
+
+// 由构造函数实例化一个obj对象
+var obj = new Foo();
+console.log(obj.constructor === Foo); // true
+
+// 将上面两段代码合起来，就得到下面的结论
+console.log(obj.constructor.constructor === Function); // true</pre>
+								</div>
+								
+							</li>
+							<li>每个函数都有一个默认的属性prototype，而这个prototype的constructor默认指向这个函数
+								<div class="html">
+									<pre>function Person(name) {
+    this.name = name;
+};
+Person.prototype.getName = function() {
+    return this.name;
+};
+var p = new Person("ZhangSan");
+
+console.log(p.constructor === Person); // true
+console.log(Person.prototype.constructor === Person); // true
+// 将上两行代码合并就得到如下结果
+console.log(p.constructor.prototype.constructor === Person); // true</pre>
+								</div>
+								<p>当时当我们重新定义函数的prototype时<span class="red">（注意：和上例的区别，这里不是修改而是覆盖）</span>， constructor的行为就有点奇怪了，如下示例：</p>
+								<div class="html">
+									<pre>function Person(name) {
+    this.name = name;
+};
+Person.prototype = {
+    getName: function() {
+        return this.name;
+    }
+};
+var p = new Person("ZhangSan");
+console.log(p.constructor === Person); // false
+console.log(Person.prototype.constructor === Person); // false
+console.log(p.constructor.prototype.constructor === Person); // false</pre>
+								</div>
+								<p>为什么呢？<br>
+原来是因为覆盖Person.prototype时，等价于进行如下代码操作：</p>
+								<div class="html">
+									<pre>Person.prototype = new Object({
+								    getName: function() {
+								        return this.name;
+								    }
+								});</pre>
+								</div>
+								<p>而constructor始终指向创建自身的构造函数，所以此时Person.prototype.constructor === Object <span class="red">(自身(Person.prototype))</span>，即是：</p>
+								<div class="html">
+									<pre>function Person(name) {
+    this.name = name;
+};
+Person.prototype = {
+    getName: function() {
+        return this.name;
+    }
+};
+var p = new Person("ZhangSan");
+console.log(p.constructor === Object); // true
+console.log(Person.prototype.constructor === Object); // true
+console.log(p.constructor.prototype.constructor === Object); // true</pre>
+								</div>
+								<p>怎么修正这种问题呢？方法也很简单，重新覆盖Person.prototype.constructor即可：</p>
+								<div class="html">
+									<pre>function Person(name) {
+    this.name = name;
+};
+Person.prototype = new Object({
+    getName: function() {
+        return this.name;
+    }
+});
+Person.prototype.constructor = Person;
+var p = new Person("ZhangSan");
+console.log(p.constructor === Person); // true
+console.log(Person.prototype.constructor === Person); // true
+console.log(p.constructor.prototype.constructor === Person); // true</pre>
+								</div>
+							</li>
+						</ul>
+						
+					</li>
+				</ul>
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">Touch与Mouse事件</h3>
+	<div class="example-demo">
+		<div class="html">
+			<pre>$('.elem').on({
+	touchstart: function( e ) {
+		var evt = e.originalEvent;							      	
+		try {
+			var touch = evt.touches[0];
+			var x = Number(touch.pageX);
+			var y = Number(touch.pageY);
+			startX = x;
+			startY = y;
+		} catch (e) {}
+	},
+	touchend:function(e){
+		var evt = e.originalEvent;		
+		try {
+			for (var i = 0; i < evt.changedTouches.length; i++) {
+				var ot = evt.changedTouches[i];
+				if (!ot) return;
+				var dx = startX - ot.clientX,
+				dy = startY - ot.clientY;
+								
+				if ((Math.abs(dx) === 0 && Math.abs(dy) === 0)) {
+					$('#trans-record .popup').modal('show');
+				}
+			}
+		} catch (e) {}
+	},
+	mousedown:function(e){
+		var evt = e.originalEvent;	
+		try {
+			startX = evt.pageX;
+			startY = evt.pageY;
+		} catch (e) {}
+	},
+	mouseup:function(e){
+		var evt = e.originalEvent;	
+		if(e.button===0){
+			try {
+				var dx = startX - evt.pageX,
+				dy = startY - evt.pageY;
+				if ((Math.abs(dx) === 0 && Math.abs(dy) === 0)) {
+					$('#trans-record .popup').modal('show');
+				}
+			} catch (e) {}
+		}
+	}
+})</pre>
+		</div>
+	</div>
+	<div class="example-desc">
+		<ol>
+			<li>
+				<h3>简介</h3>
+				<ul>
+					<li>pc上的web页面鼠标会产生onmousedown、onmouseup、onmouseout、onmouseover、onmousemove的事件。</li>
+					<li>在移动终端的web页面触屏时会产生ontouchstart、ontouchmove、ontouchend、ontouchcancel事件，分别对应了触屏开始、拖拽及完成触屏事件和取消。
+						<ol>
+							<li>当按下手指时，触发ontouchstart；</li>
+							<li>当移动手指时，触发ontouchmove；</li>
+							<li>当移走手指时，触发ontouchend。</li>
+						</ol>
+					</li>
+					<li>当一些更高级别的事件发生的时候（如电话接入或者弹出信息）会取消当前的touch操作，即触发ontouchcancel。一般会在ontouchcancel时暂停游戏、存档等操作。</li>
+					<li>在触屏操作后，手指提起的一刹那（即发生ontouchend后），系统会判断接收到事件的element的内容是否被改变，如果内容被改变，接下来的事 件都不会触发，如果没有改变，会按照mousedown，mouseup，click的顺序触发事件。特别需要提到的是，只有再触发一个触屏事件时，才会 触发上一个事件的mouseout事件。</li>
+				</ul>
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">使定时器settimeout、setInterval能够执行带参数的函数</h3>
+	<div class="example-demo">
+		<pre>window.setTimeout("alert('ok')",1000);
+或者==========
+var msg = "ok";
+window.setTimeout("alertMsg(msg)", 1000);
+function alertMsg(pmsg) {
+	alert(pmsg);
+}
+</pre>
+		<pre>window.setTimeout(helpFn("ok"), 1000);
+function helpFn(pmsg) { return function() { alert(pmsg); } }</pre>
+	</div>
+	<div class="example-desc">
+		<ol>
+			<li>
+				<h3>使用字符串形式</h3>
+				<div class="html"><pre>window.setTimeout("alert('ok')",1000);
+或者==========
+var msg = "ok";
+window.setTimeout("alertMsg(msg)", 1000);
+function alertMsg(pmsg) {
+	alert(pmsg);
+}
+</pre></div>
+			</li>
+			<li>
+				<h3>借助嵌套匿名函数,返回无参函数</h3>
+				<div class="html">
+					<pre>window.setTimeout(helpFn("ok"), 1000);
+function helpFn(pmsg) { return function() { alert(pmsg); } }</pre>
+				</div>
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">$(document).on的一些疑惑</h3>
+	<div class="example-demo">
+
+	</div>
+	<div class="example-desc">
+		jquery中用on来绑定事件，经常的写法有 $(document).on('click','.classname',function(){}); $('.classname').on('click',function(){}); 上面两种都是给类是classname的元素添加了click事件，那这两个写法有什么区别呢？在效率上哪个更好呢？ 同样的， $(document).on('click','#idname',function(){}); $('#idname').on('click',function(){}); 这个是个id为idname的原始 绑定click事件，这两种写法又有什么不同呢？ $(document).on是把事件委托到了document上 ; $('#idname').on是把事件直接帮到#idname;
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">JS类的封装及实现</h3>
+	<div class="example-desc">
+		js并不是一种面向对向的语言, 没有提供对类的支持, 因此我们不能像在传统的语言里那样用class来定义类, 但我们可以利用js的闭包封装机制来实现js类, 我们来封装一个简单的Shape类
+		<ol>
+			<li>
+				<h5>js类的封装</h5>
+				<ol>
+					<li>
+						<h5>实例方法</h5>
+						<div class="html">
+							<pre>function ShapeBase() { 
+	this.show = function() { 
+		alert("ShapeBase show"); 
+	}; 
+	this.init = function(){ 
+		alert("ShapeBase init"); 
+	}; 
+} </pre>
+							<ul>
+								<li>这个类里定义了两个方法:show和init, 需要注意的是这里用到了<b>this来声明</b>, 而不是var, 因为用var是用来定义私有方法的</li>
+								<li>另外, 我们还可以用<b>prototype属性</b>来定义Shape的方法：
+									<div class="html">
+										<pre>var ShapeBase = function (){
+										
+};
+ShapeBase.prototype.show=function() { 
+	alert("ShapeBase show"); 
+} 
+ShapeBase.prototype.init=function() { 
+	alert("ShapeBase init"); 
+} </pre>
+									</div>
+								</li>
+								<li>上面这种写法看起来不太直观，我们可以将所有的方法写在一起
+									<div class="html">
+										<pre>var ShapeBase = function (){
+										
+};
+ShapeBase.prototype={ 
+	show:function() { 
+		alert("ShapeBase show"); 
+	}, 
+	init:function() { 
+		alert("ShapeBase init"); 
+	} 
+}; </pre>
+									</div>
+								</li>
+								<li>测试一下：
+									<div class="html">
+										<pre>ShapeBase.prototype={ 
+	show:function() { 
+		alert("ShapeBase show"); 
+	}, 
+	init:function() { 
+		alert("ShapeBase init"); 
+	} 
+};
+function test(src){ 
+	var s=new ShapeBase(); 
+	s.init(); 
+	s.show(); 
+} 
+//var ShapeBase = function(){}; 等同于 function ShapeBase(){}
+//前一种定义函数的方式没有名字，故而在var的后面跟上其名字，而后面function定义直接就跟了名字ShapeBase了</pre>
+
+									</div>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<h5>静态方法</h5>
+						<div class="html">
+							<pre>//静态方法 
+function ShapeBase(){
+	
+}
+ShapeBase.StaticDraw = function() { 
+	alert("method draw is static"); 
+}
+ShapeBase.StaticDraw();</pre>
+						</div>
+					</li>
+					<li>
+						<h5>静态方法与实例方法的区别</h5>
+						<div class="html">
+							<pre>function A(){
+ 
+}
+A.staticMethod = function(){
+  	alert('静态方法');
+}
+A.prototype.instaceMethod = function(){
+  	alert('实例方法');
+}
+A.staticMethod();
+var instace = new A();
+instace.instaceMethod();</pre>
+						</div>
+						<ul>
+							<li>静态方法是类直接调用，实例方法要new出来的对象才能调用</li>
+						</ul>
+					</li>
+				</ol>
+			</li>
+			<li>
+				<h5>js抽象类和继承</h5>
+				<ol>
+					<li>
+						和类的继承一样,JavaScript也没有任何机制用于支持抽象类，但利用JavaScript语言本身的性质，可以实现自己的抽象类
+						<div class="html">
+							<pre>//定义extend方法
+Object.extend = function(destination, source) { 
+  for (property in source) { 
+    destination[property] = source[property]; 
+  } 
+  return destination; 
+}
+Object.prototype.extend = function(object) { 
+  return Object.extend.apply(this, [this, object]); 
+}
+//定义一个抽象基类base，无构造函数
+function base(){}
+base.prototype={
+      initialize:function(){
+               this.oninit(); //调用了一个虚方法
+      }
+}
+//定义class1
+function class1(){
+      //构造函数
+}
+//让class1继承于base并实现其中的oninit方法
+class1.prototype=(new base()).extend({
+      oninit:function(){ //实现抽象基类中的oninit虚方法
+             //oninit函数的实现
+      }
+});</pre>
+这样，当在class1的实例中调用继承得到的initialize方法时，就会自动执行派生类中的oninit()方法。从这里也可以看到解释型语言执 行的特点，它们只有在运行到某一个方法调用时，才会检查该方法是否存在，而不会向编译型语言一样在编译阶段就检查方法存在与否。JavaScript中则 避免了这个问题。当然，如果希望在基类中添加虚方法的一个定义，也是可以的，只要在派生类中覆盖此方法即可。
+<pre>例如：
+//定义一个抽象基类base，无构造函数
+function base(){}
+base.prototype={
+     initialize:function(){
+          this.oninit(); //调用了一个虚方法
+     },
+     oninit:function(){} //虚方法是一个空方法，由派生类实现
+}	
+</pre>	
+</div>
+使用抽象类的示例:
+<div class="html">
+	<pre>以prototype-1.3.1为例，其中定义了一个类的创建模型：
+//Class是一个全局对象，有一个方法create，用于返回一个类
+var Class = { 
+   create: function() { 
+     return function() { 
+       this.initialize.apply(this, arguments); 
+     }
+   }
+}
+这里Class是一个全局对象，具有一个方法create，用于返回一个函数（类），从而声明一个类，可以用如下语法：
+var class1=Class.create();
+这样和函数的定义方式区分开来，使JavaScript语言能够更具备面向对象语言的特点。现在来看这个返回的函数（类）：
+function(){
+      this.initialize.apply(this, arguments);
+}
+这个函数也是一个类的构造函数，当new这个类时便会得到执行。它调用了一个initialize方法，从名字来看，是类的构造函数。而从类的角度来看， 它是一个虚方法，是未定义的。但这个虚方法的实现并不是在派生类中实现的，而是创建完一个类后，在prototype中定义的，例如prototype可 以这样写：
+var class1=Class.create();
+class1.prototype={
+      initialize:function(userName){
+                      alert(“hello,”+userName);
+      }
+}
+这样，每次创建类的实例时，initialize方法都会得到执行，从而实现了将类的构造函数和类成员一起定义的功能。其中，为了能够给构造函数传递参数，使用了这样的语句：
+function(){
+      this.initialize.apply(this, arguments);
+}
+实际上，这里的arguments是function()中所传进来的参数，也就是new class1(args)中传递进来的args，现在要把args传递给initialize，巧妙的使用了函数的apply方法，注意不能写成：
+this.initialize(arguments);
+这是将arguments数组作为一个参数传递给initialize方法，而apply方法则可以把arguments数组对象的元素作为一组参数传递过去，这是一种很巧妙的实现。
+尽管这个例子在prototype-1.3.1中不是一个抽象类的概念，而是类的一种设计模式。但实际上可以把Class.create()返回的类看作 所有类的共同基类，它在构造函数中调用了一个虚方法initialize，所有继承于它的类都必须实现这个方法，完成构造函数的功能。它们得以实现的本质 就是对prototype的操作。</pre>
+</div>
+					</li>
+					<li>js中不支持类继承机制，但我们可以通过将父类prototype中的成员方法复制到子类的prototype中来实现
+						<div class="html">
+							<pre>//ES6的类继承
+(function(global){
+  "use strict"
+
+  //类的定义
+  class Animal {
+    //ES6中新型构造器
+      constructor(name) {
+          this.name = name;
+      }
+      //实例方法
+      sayName() {
+          console.log("My name is "+this.name);
+      }
+  }
+
+  //类的继承
+  class Programmer extends Animal {
+      constructor(name) {
+        //直接调用父类构造器进行初始化
+          super(name);
+      }
+      sayName(){
+          super.sayName();
+      }
+      program() {
+          console.log("I\"m coding...");
+      }
+  }
+  //测试我们的类
+  var animal = new Animal("dummy"),
+      akira = new Programmer("akira");
+  animal.sayName();//输出 ‘My name is dummy’
+  akira.sayName();//输出 ‘My name is akira’
+  akira.program();//输出 ‘I"m coding...’
+
+})(this);</pre>
+						</div>
+						<ul>
+							<li><b>原型链方式</b></li>
+							<li><b>对象冒充方式</b></li>
+							<li><b>混合方式</b></li>
+						</ul>
+					</li>
+				</ol>
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10">JavaScript继承</h3>
+	<div class="example-demo">
+	</div>
+	<div class="example-desc">
+		<ol>
+			<li>
+				<h5>基于对象的继承</h5>
+				<div class="html">
+					<p>基于对象的继承也叫原型继承。我们知道通过JavaScript字面量创建的对象都会连接到Object.prototype，因此我们用Object.prototype来实现继承。本质上是摒弃类，不调用构造函数，而是用Object.create()，直接让新对象继承旧对象的属性。例如：</p>
+					<pre>var person = {
+    name: "Jack",
+    getName: function () { return this.name; }
+}
+var p1 = Object.create(person);
+console.log(p1.getName());    //Jack</pre>
+<p>代码很简单，person有一个属性和一个方法。对象p1通过Object.create()来继承，第一个参数prototype指向person的prototype，这样对象p1就继承了person的属性和方法。</p>
+<p>Object.create()还可以指定第二个参数，即数据属性，将其添加到新对象中。数据属性可设4个描述符value， writable，enumerable，configurable 。后3个看名字也能猜出意思，不指定的话默认为false。因为和本篇关系不大，就不跑题了，只看看设置value的情况：</p>
+<pre>var p2 = Object.create(person, {
+    name: {
+        value: "Zhang"
+    }
+});
+console.log(p2.getName());    //Zhang</pre>
+<p>用Object.create()相当于创建了一个全新的对象，你可以给该对象任意新增，重载它的属性和方法：</p>
+<pre>var person = {
+    name: "Jack",
+    getName: function () { return this.name; },
+    getAge: function() { return this.age; } //注意并没有age这个成员变量，依赖子类实现
+}
+
+var p3 = Object.create(person);
+p3.name = 'Rose';
+p3.age = 17;
+p3.location = '上海';
+p3.getLocation = function() { return this.location; }
+
+console.log(p3.getName());    //Rose
+console.log(p3.getAge());     //17
+console.log(p3.getLocation());    //上海</pre>
+<p>在person中并没有age这个属性，因此你调用person.getAge();将得到undefined。但在对象p3里新定义了age这个属性，于是就能正确地调用基类的getAge方法。另外子类重载了name的值，且新定义了location属性和getLocation方法。</p>
+				</div>
+			</li>
+			<li>
+				<h5>基于类型的继承</h5>
+				<div class="html">
+					<p>基于类型的继承是通过构造函数依赖于原型的继承，而非依赖于对象。例如：</p>
+					<pre>function Person(name) {
+    this.name = name;
+    this.getName = function () { return this.name; };  
+}
+function Student(name, age) {
+    Person.call(this, name);
+    this.age = age;
+    this.getAge = function () { return this.age; }; 
+}
+Student.prototype = new Person();    //需要通过new来访问基类的构造函数
+
+var p = new Person('Cathy');
+var s = new Student('Bill', 23);
+
+console.log(p.getName());    //Cathy
+console.log(s.getName());    //Bill
+console.log(s.getAge());     //23</pre>
+<p>Student继承自Person。name虽然是在基类Person里被定义的，但用new调用Person的构造函数后，this将被绑定到子类Student对象上，因此name最终是定义在子类Student对象上的。</p>
+				<h5 class="mt20"><b>保护隐私</b></h5>
+				<p>之所以定义getName，getAge等方法就是不想让用户直接访问name，age等属性。可惜上面两种继承均无法保护隐私，均可像p.name，p.age这样直接访问属性。如果认为这些属性的隐私非常重要，希望模拟出OO语言中private属性的效果，可以用函数模块化。</p>
+				<p>所谓函数模块化，本质上就是在函数内新建一个对象，新对象的方法里使用参数对象的属性，然后将新对象返回。此时新对象里是没有参数对象的属性的，达到了保护隐私的目的。代码如下：</p>
+				<pre>var person = function(spec) {
+    var that = {};        //新对象
+    that.getName = function () { return spec.name; };  //使用参数的属性
+    that.getAge = function() { return spec.age; };  //使用参数的属性
+    return that;        //返回新对象
+}
+
+var p4 = person({name: 'Jane', age: 20});
+
+console.log(p4.name);    //undefined
+console.log(p4.age);     //undefined
+console.log(p4.getName());    //Jane
+console.log(p4.getAge());     //20</pre>
+<p>因为函数person返回的是新对象that，而that里并没有name和age属性，因此直接访问会得到undefined。只能通过that暴露出的两个接口来获取name和age。</p>
+<p>进一步实现多层继承也非常方便，效果如下，不赘述：</p>
+<pre>var student = function(spec) {
+    var that = person(spec);        //新对象继承自person
+    that.getRole = function() { return 'student'; };  //新对象增加方法
+    that.getInfo = function() {
+        return spec.name + ' ' + spec.age + ' ' + that.getRole();
+    };
+    return that;    //返回新对象
+};
+
+var p5 = student({name:'Andy', age:12});
+
+console.log(p5.name);       //undefined
+console.log(p5.getName());  //Andy
+console.log(p5.getRole());  //student
+console.log(p5.getInfo());  //Andy 12 student</pre>
+				</div>
+
+			</li>
+		</ol>
+	</div>
+</div>
+
+<div class="mswitch">
+	<h3 class="mb10">JS赋值运算</h3>
+	<div class="example-demo">
+	</div>
+	<div class="example-desc">
+		<ol>
+			<li>
+		<h3>引用类型的赋值运算：</h3>
+		<div class="html">
+			<pre>var foo = { n: 1 };
+var bar = foo;
+foo.x = foo = { n: 2 };
+console.log(foo.x); // undefined</pre>
+		</div>
+		<h5>解释上面的现象：</h5>
+		<ul>
+			<li>
+				<p>首先是两个变量的声明和初始化，var foo = { n: 1 }; var bar = foo;，这个很好理解，就是foo和bar同时指向了一个相同的对象{ n: 1 }。</p>
+			</li>
+			<li>
+				<p>对于表达式foo.x = foo = { n: 2 };，我们都知道它实际上等于是foo.x = (foo = { n: 2 })。<span class="red">* 赋值运算符具有右结合性</span></p>
+			</li>
+			<li>
+				<p>虽然赋值运算符具有右结合性，然而它首先做的是得到表达式foo.x的值，它返回一个指向对象{ n: 1}的x成员的引用，需要注意的是，这个时候foo并没有改变引用的指向。</p>
+			</li>
+			<li>
+				<p>计算右边的结果，就是让foo指向另外的一个对象{n: 2}，返回值就是其右边运算式的结果，即对象{n: 2}</p>
+			</li>
+			<li>
+				<p>那么现在应该清楚了，赋值语句中foo.x的结果是指向对象一成员x的引用。<span class="red">{n: 2}只有成员n,没有x</span>，而下面的console.log(foo.x)中的foo指向的是对象二，所以这里foo.x返回undefined就理所当然了。</p>
+			</li>
+		</ul>
+		<h5>试着输出对象一，即bar（因为它从始至终指向的是对象一）：</h5>
+		<div class="html">
+			<pre>var foo = { n: 1 };
+var bar = foo;
+foo.x = foo = { n: 2 };
+console.log(bar); // { n: 1, x: { n: 2 } }</pre>
+		</div>
+		
+		<h5>工作步骤图解：</h5>
+		<div class="html">
+			<pre><script>
+var a = {n:1}; 
+var b = a;  
+a.x = a = {n:2}; 
+console.log(a.x);// --> undefined 
+console.log(b.x);// --> [object Object] 
+</script></pre>
+		</div>
+		<ul>
+			<li>首先是<b>var a = {n:1}; var b = a;</b>
+				<p>在这里a指向了一个对象{n:1}（我们姑且称它为对象A），b指向了a所指向的对象，也就是说，在这时候a和b都是指向对象A的。</p>
+			</li>
+			<li><b>a.x = a = {n:2};</b>
+				<p>我们知道js的赋值运算顺序永远都是从右往左的，不过由于“.”是优先级最高的运算符，所以这行代码先“计算”了a.x。</p>
+				<p>这时候发生了这个事情——a指向的对象{n:1}新增了属性x（虽然这个x是undefined的）：</p>
+				<img src="assets/img/js-fz01.png"/>
+				<p>从图上可以看到，由于b跟a一样是指向对象A的，要表示A的x属性除了用a.x，自然也可以使用b.x来表示了。</p>
+			</li>
+			<li>
+				<p>接着，依循“从右往左”的赋值运算顺序先执行 a={n:2} ，这时候，a指向的对象发生了改变，变成了新对象{n:2}（我们称为对象B）：</p>
+				<img src="assets/img/js-fz02.png"/>
+				<p>接着继续执行 a.x=a，很多人会认为这里是“对象B也新增了一个属性x，并指向对象B自己”</p>
+				<p>但实际上并非如此，<span class="red">由于（ .  运算符最先计算）一开始js已经先计算了a.x，便已经解析了这个a.x是对象A的x，所以在同一条公式的情况下再回来给a.x赋值，也不会说重新解析这个a.x为对象B的x。</span></p>
+				<p>所以 a.x=a 应理解为对象A的属性x指向了对象B:</p>
+				<img src="assets/img/js-fz03.png"/>
+				<p>那么这时候结果就显而易见了。当console.log(a.x)的时候，a是指向对象B的，但对象B没有属性x。</p>
+				<p>而在console.log(b.x)的时候，由于b.x表示对象A的x属性，该属性是指向对象B，自然也输出了[object Object]了</p>
+			</li>
+		</ul>
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="mswitch">
+	<h3 class="mb10"></h3>
+	<div class="example-demo">
+	</div>
+	<div class="example-desc">
+	</div>
+</div>

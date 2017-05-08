@@ -1,0 +1,80 @@
+<div class="docs-header">
+	<div class="container animation-scale-up" id="docs-con">
+		<h2>{{docsTit}}</h2>
+		<p>{{docsMsg}}</p>		
+	</div>
+</div>
+<div class="container">
+
+	<div class="row main-container clearfix">
+
+		<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
+			<div class="sidebar-menu sidebar-slide">
+				<section class="sidebar-slide-overlay">
+						<dl>
+							<dt><a href="javascript:;">基本组件</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="component.pages({pageid: 'buttons'})">按钮组</a></dd>
+							<dd ui-sref-active="active">
+								<a href="javascript:;" data-toggleclass="active">输入框组 <i class="f-keyboard_arrow_down"></i></a>
+								<p class="subnav">
+									<a ui-sref="component.pages({pageid: 'input-text'})">- 文本框</a>
+									<a ui-sref="component.pages({pageid: 'input-radiocheckbox'})">- 单/复选框</a>
+									<a ui-sref="component.pages({pageid: 'input-file'})">- 文件上传</a>
+								</p>
+							</dd>
+							<!--<dd ui-sref-active="active"><a ui-sref="component.select">下拉框</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="component.textarea">文本域</a></dd>-->
+							<dd ui-sref-active="active">
+								<a href="javascript:;" data-toggleclass="active">标签组 <i class="f-keyboard_arrow_down"></i></a>
+								<p class="subnav">
+									<a ui-sref="component.pages({pageid: 'label-text'})">- 文本标签</a>
+									<a ui-sref="component.pages({pageid: 'label-tag'})">- 角标</a>
+									<a ui-sref="component.pages({pageid: 'label-badge'})">- 徽标</a>
+								</p>
+							</dd>
+						</dl>
+						<dl>
+							<dt><a href="javascript:;">web组件</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="component.pages({pageid: 'web-header'})">头部页头</a></dd>
+							<!--<dd ui-sref-active="active"><a ui-sref="component.webnav">导航</a></dd>-->
+							<!--<dd ui-sref-active="active"><a ui-sref="component.webmenu">菜单</a></dd>-->
+							<dd ui-sref-active="active"><a ui-sref="component.pages({pageid: 'web-search'})">搜索框</a></dd>
+							<dd ui-sref-active="active">
+								<a href="javascript:;" data-toggleclass="active">提示 <i class="f-keyboard_arrow_down"></i></a>
+								<p class="subnav">
+									<a ui-sref="component.pages({pageid: 'web-tips-status'})">- 状态警告</a>
+									<a ui-sref="component.pages({pageid: 'web-tips-news'})">- 新消息提示</a>
+									<a ui-sref="component.pages({pageid: 'web-tips-float'})">- 浮层提示</a>
+								</p>
+							</dd>
+							<dd ui-sref-active="active"><a ui-sref="component.pages({pageid: 'web-tabs'})">选项卡</a></dd>
+							<!--<dd ui-sref-active="active"><a ui-sref="component.webfold">折叠面板</a></dd>-->
+							<dd ui-sref-active="active"><a ui-sref="component.pages({pageid: 'web-title'})">标题栏</a></dd>
+							<!--<dd ui-sref-active="active"><a ui-sref="component.websidebar">侧边栏</a></dd>-->
+							<dd ui-sref-active="active">
+								<a href="javascript:;" data-toggleclass="active">列表 <i class="f-keyboard_arrow_down"></i></a>
+								<p class="subnav">
+									<a ui-sref="component.pages({pageid: 'web-list-text'})">- 文字列表</a>
+									<a ui-sref="component.pages({pageid: 'web-list-textimg'})">- 图文列表</a>
+									<a ui-sref="component.pages({pageid: 'web-list-comment'})">- 评论列表</a>
+								</p>
+							</dd>
+							<!--<dd ui-sref-active="active"><a ui-sref="component.webprogress">进度条加载</a></dd>-->
+							<!--<dd ui-sref-active="active"><a ui-sref="component.webpop">弹出层</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="component.webad">广告</a></dd>-->
+							<dd ui-sref-active="active"><a ui-sref="component.pages({pageid: 'web-pagination'})">分页</a></dd>
+							<dd ui-sref-active="active"><a ui-sref="component.pages({pageid: 'web-footer'})">底部页脚</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="javascript:;">App实例</a></dt>
+							<dd ui-sref-active="active"><a ui-sref="component.pages({pageid: 'app-login'})">登录</a></dd>
+						</dl>
+				</section>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-9 col-md-9">
+			<div ui-view></div>
+		</div>
+
+	</div>
+</div>

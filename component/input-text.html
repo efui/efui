@@ -1,0 +1,29 @@
+<ol>
+	<li>
+		<h3>number box（数字输入框）</h3>
+		<div class="example-desc">
+			<div class="example-visualize">
+				<div class="numbox">
+					<span class="btn-numbox-minus">-</span>
+					<input class="input-numbox" type="text" value="1">
+					<span class="btn-numbox-plus">+</span>
+				</div>
+			</div>
+		</div>
+	</li>
+</ol>
+<script type="text/javascript">
+	$('.numbox').each(function(){
+		var _minus = $(this).find('[class$="-minus"]');
+		var _plus = $(this).find('[class$="-plus"]');
+		var _obj = $(this).find('.input-numbox');
+		var _val = Number(_obj.val());
+		_minus.click(function(){
+			_val>0 && (_val = _val-1,_obj.val(_val))
+		});
+		_plus.click(function(){
+			_val = _val+1;
+			_obj.val(_val)
+		});
+	});
+</script>

@@ -1,0 +1,244 @@
+<ol>
+	<li>
+		<h3>页面编码规范</h3>
+		<ol>
+			<li>
+				<h5>css文件</h5>
+				应放到body的前面head里面。而且要使用rel属性。
+				<div class="html">
+					<pre>&lt;link href="assets/css/index.css" rel="stylesheet"></pre>
+				</div>
+			</li>
+			<li>
+				<h5>统一使用 UTF-8 编码,用@charset "utf-8"指定页面编码。</h5>
+			</li>
+			<li>
+				<h5>全局字体设置：</h5>
+				<ul>
+					<li>windows 7系统：微软雅黑, Arial</li>
+					<li>windows XP及以下：新宋体，宋体，Arial</li>
+					<li>MAC默认字体：Helvetica Neue和Helvetica Hiragino Sans GB</li>
+					<li>font-family:"Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";</li>
+				</ul>
+			</li>
+			<li>
+				<h5>中文字体使用编码转换</h5>
+			</li>
+		</ol>
+	</li>
+	<li>
+		<h3>书写规范</h3>
+		<ol>
+			<li>
+				<h5>书写建议：</h5>
+				<ul>
+					<li>选择符、属性、值均用小写（格式的颜色值除外）,在xhtml标准中规定了所有标签、属性和值都小写，CSS也是如此</li>
+					<li>属性写在一行内，属性之间、属性名和值之间以及属性与“{}”之间应减少空格，最后一个值也以分号结尾
+						<div class="html">
+							<pre>例如：
+.class{width:200px;height:100px;}</pre>
+						</div>
+					</li>
+					<li>省略值为0时的单位
+						<div class="html">
+							<pre>.m-box{margin:0 10px;background-position:  50% 0;} </pre>
+						</div>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h5>书写顺序：</h5>
+				<ol>
+					<li>
+						<h6>按照元素模型由外及内，由整体到细节书写，大致分为五组：(显示属性->自身属性->文本属性和其他修饰)</h6>
+						<ul>
+							<li>位置：position,left,right,float</li>
+							<li>盒模型属性：display,margin,padding,width,height</li>
+							<li>边框与背景：border,background</li>
+							<li>段落与文本：line-height,text-indent,font,color,text-decoration,...</li>
+							<li>其他属性：overflow,cursor,visibility,...</li>
+						</ul>
+						<table class="table">
+				<thead>
+					<tr>
+						<th> </th>
+						<th>显示属性</th>
+						<th>自身属性</th>
+						<th>文本属性和其他修饰</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>&nbsp;</td>
+						<td>display</td>
+						<td>width</td>
+						<td>font</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>visibility</td>
+						<td>height</td>
+						<td>text-align</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>position</td>
+						<td>margin</td>
+						<td>text-decoration</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>float</td>
+						<td>padding</td>
+						<td>vertical-align</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>clear</td>
+						<td>border</td>
+						<td>white-space</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>list-style</td>
+						<td>overflow</td>
+						<td>color</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>top</td>
+						<td>min-width</td>
+						<td>background </td>
+					</tr>
+				</tbody>
+			</table>
+						<div class="html"><span class="red">针对特殊浏览器的属性，应写在标准属性之前，遵循<b>私有在前，标准在后</b>原则</span>
+							<pre>例如：
+-webkit-box-shadow:;
+-moz-box-shadow:;
+box-shaow:;</pre>
+						</div>
+					</li>
+					<li>
+						<h6>伪类书写顺序：</h6>
+						<ul>
+							<li>:link :visited :hover :active书写顺序 L-V-H-A，速记：LoVe（喜欢）HAte（讨厌）</li>
+						</ul>
+					</li>
+				</ol>
+			</li>
+		</ol>
+	</li>
+	<li>
+		<h3>注释格式</h3>
+		<ol>
+			<li>
+				<h5>对选择器的注释统一写在被注释对象的上一行</h5>
+				<div class="html">
+					<pre>/* 单行注释文字 */
+.m-list li em{color:#666;} </pre>
+				</div>
+			</li>
+			<li>
+				<h5>对属性及值的注释写于分号后</h5>
+				<div class="html">
+					<pre>.m-list li{height:20px;line-height:  20px;/* 这里是对line-height的一个注释 */overflow:hidden;}  </pre>
+				</div>
+			</li>
+			<li>
+				<h5>块状注释，块状注释保持统一的缩进对齐</h5>
+				<div class="html">
+					<pre>/* 块状注释文字 
+ * 块状注释文字 
+ * 块状注释文字 
+ */
+.m-list{width:500px;} </pre>
+				</div>
+			</li>
+		</ol>
+	</li>
+	<li>
+		<h3>原则上不允许使用Hack</h3>
+		很多不兼容问题可以通过改变方法和思路来解决，并非一定需要Hack，根据经验你完全可以绕过某些兼容问题。
+一种合理的结构和合理的样式，是极少会碰到兼容问题的。
+由于浏览器自身缺陷，我们无法避开的时候，可以允许使用适当的Hack。
+		<h5>统一Hack方法：</h5>
+		<ul>
+			<li>统一使用“*”和“_”分别对IE7和6进行Hack
+				<div class="html">
+					<pre>/* IE7会显示灰色#888，IE6会显示白色#fff，其他浏览器显示黑色#000 */
+.m-list{color:#000;*color:  #888;_color:#fff;} </pre>
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<h3>选择器优先级</h3>
+		<ul>
+			<li>a = 行内样式style。</li>
+			<li>b = ID选择器的数量。</li>
+			<li>c = 类、伪类和属性选择器的数量。</li>
+			<li>d = 类型选择器和伪元素选择器的数量。</li>
+		</ul>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>选择器</th>
+					<th>等级(a,b,c,d)</th>
+				</tr>
+				<tr>
+					<td>style=”” </td>
+					<td>1,0,0,0</td>
+				</tr>
+				<tr>
+					<td>#wrapper #content {}</td>
+					<td>0,2,0,0</td>
+				</tr>
+				<tr>
+					<td>#content .dateposted {}</td>
+					<td>0,1,1,0</td>
+				</tr>
+				<tr>
+					<td>div#content {}</td>
+					<td>0,1,0,1</td>
+				</tr>
+				<tr>
+					<td>#content p {}</td>
+					<td>0,1,0,1</td>
+				</tr>
+				<tr>
+					<td>#content {}</td>
+					<td>0,1,0,0</td>
+				</tr>
+				<tr>
+					<td>p.comment .dateposted {}</td>
+					<td>0,0,2,1</td>
+				</tr>
+				<tr>
+					<td>div.comment p {}</td>
+					<td>0,0,1,2</td>
+				</tr>
+				<tr>
+					<td>.comment p {}</td>
+					<td>0,0,1,1</td>
+				</tr>
+				<tr>
+					<td>p.comment {}</td>
+					<td>0,0,1,1</td>
+				</tr>
+				<tr>
+					<td>.comment {}</td>
+					<td>0,0,1,0</td>
+				</tr>
+				<tr>
+					<td>div p {}</td>
+					<td>0,0,0,2</td>
+				</tr>
+				<tr>
+					<td>p {}</td>
+					<td>0,0,0,1</td>
+				</tr>
+			</tbody>
+		</table>
+	</li>
+</ol> 

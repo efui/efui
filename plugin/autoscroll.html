@@ -1,0 +1,35 @@
+<link rel="stylesheet" type="text/css" href="assets/css/plugin-auto.min.css"/>
+<ol>
+	<li>
+		<h3 class="mb15">自动淡入淡出显示</h3>
+		<div class="example-demo">
+			<div class="example-visualize">
+				<div class="infos-play">
+					<div class="info-item">
+						<p class="p1">白银<i class="f-arrow_down"></i>16.8060</p>
+						<p class="p2">SSL<span>0.086(0.36%)</span></p>
+					</div>
+					<div class="up info-item">
+						<p class="p1">伦敦金<i class="f-arrow_up"></i>16.8060</p>
+						<p class="p2">LLG<span>0.086(0.36%)</span></p>
+					</div>
+				</div>
+				<script type="text/javascript">
+					//信息轮播
+					var curIndex = 0;
+				    var timeInterval = 3000; 
+				    var _obj = $(".infos-play .info-item"); 
+					setInterval(changeinfos,timeInterval); 
+				    function changeinfos() { 
+				       if (curIndex == _obj.length-1) { 
+				         curIndex = 0; 
+				       } else { 
+				         curIndex += 1; 
+				       } 
+				       _obj.eq(curIndex).fadeIn().siblings().fadeOut(); 
+				    } 
+				</script>
+			</div>
+		</div>
+	</li>
+</ol>

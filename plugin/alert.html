@@ -1,0 +1,24 @@
+<ol>
+	<li>
+		<h3>基本使用</h3>
+		<div class="example-visualize">
+			<button type="button" class="btn btn-default btn-cancel">取消订单</button>
+		</div>
+	</li>
+</ol>
+<script type="text/javascript">
+				$('.btn-cancel').click(function(){
+					var _this = $(this);
+					_this.confirm({
+                      	content: '取消#45订单将视为此次交易无效，不会打印加油小票。确认取消？',
+                      	confirmButton: '确定',
+        				cancelButton: '我点错了',
+        				cancelButtonClass: 'popup-button-bold',
+                        icon: 'f-notification',
+                        opacity: 0.5,
+                        confirm: function () {
+                           	confirm();
+                      	}
+                	});
+				});
+</script>

@@ -1,0 +1,55 @@
+
+
+<div top-Title></div> 
+<div ng-click="toggle()"><span ng-show="showMe">{{title2}}<i class="f-arrow_up"></i></span><span ng-show="!showMe">{{title}}<i class="f-arrow_down"></i></span></div>
+<expander class='expander' expander-title='title' ng-show="showMe">
+    {{text}}
+	<div tabpanel="tabpanel" class='tabpanel'>
+		<panel>
+		<div ng-repeat='thing in things'>
+            {{thing}}.子面板1
+        </div>
+        </panel>
+	</div>		
+	<hello-world></hello-world> 
+	<hello-world2 title = '我是第二个directive' mycolor="red"><label for="">gdfgd</label></hello-world2> 
+	<div ng-controller='MainController'> 
+	 	父亲:{{name}}<input ng-model="name" /> 
+	 	<div my-directive></div> 
+	</div> 
+	<form name="userForm" ng-submit="submitForm(userForm.$valid)">
+		<!-- NAME -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" ng-model="user.name" required>
+            <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
+        </div>      
+	    <div ng-form="form1">
+			姓名:<input type="text" ng-required="true" ng-model="name"/><br>
+	  		证件号码:<input type="number" ng-minLength="15" ng-maxLength="18" ng-required="true" ng-model="idnum"/>
+	    </div>
+	    <div ng-form="form2">
+	  		监护人姓名:<input type="text" ng-required="true" ng-model="gname"/><br>
+	       	监护人证件号码:<input type="number" ng-minLength="15" ng-maxLength="18" ng-required="true" ng-model="gidnum"/>
+	    </div>
+	    <button ng-disabled="form1.$invalid && form2.$invalid" type="submit">submit all</button>
+	</form>
+</expander>
+ <div id="expander" class="mt25">
+    	<expander ng-repeat="item in data" ng-class="className()">
+    		{{$index+1}}.{{item.str}}
+	     	<form class="form-horizontal" role="form" id="custom_form" name="custom_form" novalidate>
+	            <div class="form-group">
+	                <label class="col-sm-2 control-label">多个email</label>
+	
+	                <div class="col-sm-10">
+	                    <input multiple-email name="user_email" ng-model="user.email" required class="form-control" placeholder="自定义验证，多个邮箱地址，以“；”或者“;”分割" />
+	                    {{item.str}}验证通过：{{custom_form.user_email.$valid}}
+	                </div>
+	            </div>
+	            <div class="btn-group  al-c">
+	                <input class="btn btn-primary" ng-disabled="custom_form.$invalid" type="submit" value="提交" />
+	            </div>
+	        </form>
+    	</expander>
+    </div>

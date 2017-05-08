@@ -1,0 +1,21 @@
+<h5>原则上不允许使用Hack</h5>
+<p>很多不兼容问题可以通过改变方法和思路来解决，并非一定需要Hack，根据经验你完全可以绕过某些兼容问题。</p>
+<p>一种合理的结构和合理的样式，是极少会碰到兼容问题的。</p>
+<p>由于浏览器自身缺陷，我们无法避开的时候，可以允许使用适当的Hack。</p>
+<h5>统一Hack方法</h5>
+<p>统一使用“*”和“_”分别对IE7和6进行Hack。如下代码所示：</p>
+<pre class="prettyprint linenums">/* IE7会显示灰色#888，IE6会显示白色#fff，其他浏览器显示黑色#000 */
+.m-list{color:#000;*color:#888;_color:#fff;}</pre>
+
+<pre>  1. _          IE6
+  2. *          IE6/7
+  3. !important IE7/Firefox
+  4. *+         IE7
+  5. \9         IE6/7/8
+  6. \0         IE8
+  7. 条件hack
+      &lt;!--[if lt IE 7]&gt;&lt;html class="no-js lt-ie9 lt-ie8 lt-ie7"&gt;&lt;![endif]--&gt; IE7以下版本
+      &lt;!--[if IE 7]&gt;&lt;html class="no-js lt-ie9 lt-ie8"&gt;&lt;![endif]--&gt; IE7
+      &lt;!--[if IE 8]&gt; &lt;html class="no-js lt-ie9"&gt;&lt;![endif]--&gt; IE8
+      &lt;!--[if gt IE 8]&gt;&lt;!--&gt;&lt;html class="no-js"&gt;&lt;!--&lt;![endif]--&gt; IE8以上
+</pre>

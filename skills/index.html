@@ -1,0 +1,33 @@
+<div class="docs-header">
+	<div class="container animation-scale-up" id="docs-con">
+		<h2>{{docsTit}}</h2>
+		<p>{{docsMsg}}</p>		
+	</div>
+</div>
+<div class="container">
+
+	<div class="row main-container clearfix">
+
+		<div class="col-xs-12 col-sm-3 col-md-3" id="sidebar">
+			<panel class="sidebar-menu sidebar-slide">
+				<dl ng-repeat="ritem in menulist">
+					<dt><a href="javascript:;">{{ritem.firstName}}</a></dt>
+					<dd ui-sref-active="active" ng-repeat='item in ritem.likes'>
+						<a ui-sref="skills.pages({pageid:item.url})" ng-if="!item.submenu">{{item.title}}</a>
+						<a href="javascript:;" data-toggleclass="active" ng-if="item.submenu">
+			        		<span ng-bind="item.title"></span>
+			        		<i class="f-keyboard_arrow_down"></i>
+			        	</a>
+			        	<p class="subnav" ng-repeat='subitem in item.submenu'>
+			        		<a ui-sref="skills.pages({pageid:subitem.url})">{{subitem.name}}</a>
+			        	</p>							
+					</dd>
+				</dl>
+		    </panel>
+		</div>
+		<div class="col-xs-12 col-sm-9 col-md-9">
+			<div ui-view></div>
+		</div>
+
+	</div>
+</div>
