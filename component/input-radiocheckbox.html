@@ -11,6 +11,39 @@
 			<pre><input type="radio" name="radioname">
 <input type="radio" name="radioname"></pre>
 		</div>
+		<h3>js+css全兼容：</h3>
+		<!--<div class="example-demo">-->
+			<!--<div class="radio-group">-->
+				<!--<span class="radio-item"><input type="radio" name="radio1" id="radio1" checked><label for="radio1">A 第3代</label></span>-->
+				<!--<span class="radio-item"><input type="radio" name="radio1" id="radio2"><label for="radio2">B 第4代</label></span>-->
+				<!--<span class="radio-item"><input type="radio" name="radio1" id="radio3"><label for="radio3">C 第5代</label></span>-->
+			<!--</div>-->
+		<!--</div>-->
+		<div class="html">
+			<pre><div class="radio-group">
+	<span class="radio-item"><input type="radio" name="radio1" id="radio1" checked><label for="radio1">A 第3代</label></span>
+	<span class="radio-item"><input type="radio" name="radio1" id="radio2"><label for="radio2">B 第4代</label></span>
+	<span class="radio-item"><input type="radio" name="radio1" id="radio3"><label for="radio3">C 第5代</label></span>
+</div></pre>
+			<pre>less:
+.radio-group{
+	.radio-item{
+		input[type="radio"]{opacity: 0;filter: alpha(opacity=0);}
+		label{padding:1px 0;background-image: url(../images/radio_icon_default.png);background-position: center left;background-repeat: no-repeat;padding-left: 30px;}
+		.checked_label{background-image: url(../images/radio_icon_checked.png);}
+	}
+}
+</pre>
+			<pre>jquery:
+$('.radio-group .radio-item').each(function () {
+	$(this).find('input').eq(0).prop('checked') && $(this).find('label').addClass('checked_label');
+	$(this).find('label').click(function () {
+		$(this).closest('.radio-item').siblings().find('label').removeClass('checked_label');
+		!$(this).siblings('input').eq(0).prop('checked') && $(this).addClass('checked_label');
+	})
+})
+</pre>
+		</div>
 	</li>
 	<li>
 		<h3>复选框(checkbox):</h3>
