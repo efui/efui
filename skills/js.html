@@ -12,6 +12,9 @@
 				<a href="">两种继承方式call和apply</a>
 			</li>
 			<li>
+				<a href="">注册注销事件</a>
+			</li>
+			<li>
 				<a href="">Touch与Mouse事件</a>
 			</li>
 			<li>
@@ -460,6 +463,31 @@ console.log(p.constructor.prototype.constructor === Person); // true</pre>
 	</div>
 </div>
 <div class="mswitch">
+	<h3 class="mb10">注册注销事件</h3>
+	<div class="example-desc">
+		<div class="html">
+			<pre>/*注册滑动事件(pc鼠标滚动，移动手指滑动)*/
+if(document.addEventListener){
+	document.addEventListener('DOMMouseScroll',scrollFunc,false);
+	document.addEventListener('touchmove',scrollFunc, false);
+}
+window.onmousewheel=document.onmousewheel=scrollFunc;
+
+/*注销滑动事件*/
+if(document.removeEventListener){
+	document.removeEventListener('DOMMouseScroll',scrollFunc,false);
+	document.removeEventListener('touchmove',scrollFunc, false);
+}
+window.onmousewheel=document.onmousewheel=null;
+
+var scrollFunc=function(){
+	//code here...
+};</pre>
+		</div>
+	</div>
+
+</div>
+<div class="mswitch">
 	<h3 class="mb10">Touch与Mouse事件</h3>
 	<div class="example-demo">
 		<div class="html">
@@ -548,13 +576,18 @@ function helpFn(pmsg) { return function() { alert(pmsg); } }</pre>
 	<div class="example-desc">
 		<ol>
 			<li>
+				<h3>函数形式 </h3>
+				<div class="html"><pre>setTimeout(hideAD,1000);使用指针形式作为参数
+function hideAD(){
+	$("#ad").hide();
+}
+</pre></div>
+			</li>
+			<li>
 				<h3>使用字符串形式</h3>
-				<div class="html"><pre>window.setTimeout("alert('ok')",1000);
-或者==========
-var msg = "ok";
-window.setTimeout("alertMsg(msg)", 1000);
-function alertMsg(pmsg) {
-	alert(pmsg);
+				<div class="html"><pre>setTimeout("hideAD()",1000);
+function hideAD(){
+	$("#ad").hide();
 }
 </pre></div>
 			</li>
